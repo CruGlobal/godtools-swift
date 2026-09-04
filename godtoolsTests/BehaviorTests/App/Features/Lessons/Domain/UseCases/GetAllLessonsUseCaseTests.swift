@@ -27,14 +27,6 @@ struct GetAllLessonsUseCaseTests {
 
         let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
 
-        let spanishLanguageFilter = LessonFilterLanguageDomainModel(
-            languageId: spanishLanguageId,
-            languageNameTranslatedInLanguage: "",
-            languageNameTranslatedInAppLanguage: "",
-            lessonsAvailableText: "",
-            lessonsAvailableCount: 0
-        )
-
         let getAllLessonsUseCase: GetAllLessonsUseCase = try getAllLessonsUseCase()
 
         var cancellables: Set<AnyCancellable> = Set()
@@ -52,7 +44,7 @@ struct GetAllLessonsUseCaseTests {
             getAllLessonsUseCase
                 .execute(
                     appLanguage: appLanguageEnglish,
-                    filterLessonsByLanguage: spanishLanguageFilter
+                    filterLessonsByLanguageId: spanishLanguageId
                 )
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
@@ -109,7 +101,7 @@ struct GetAllLessonsUseCaseTests {
             getAllLessonsUseCase
                 .execute(
                     appLanguage: appLanguageArabic,
-                    filterLessonsByLanguage: nil
+                    filterLessonsByLanguageId: nil
                 )
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
@@ -148,14 +140,6 @@ struct GetAllLessonsUseCaseTests {
 
         let appLanguageEnglish: AppLanguageDomainModel = LanguageCodeDomainModel.english.rawValue
 
-        let spanishLanguageFilter = LessonFilterLanguageDomainModel(
-            languageId: LanguageCodeDomainModel.spanish.rawValue,
-            languageNameTranslatedInLanguage: "",
-            languageNameTranslatedInAppLanguage: "",
-            lessonsAvailableText: "",
-            lessonsAvailableCount: 0
-        )
-
         let getAllLessonsUseCase: GetAllLessonsUseCase = try getAllLessonsUseCase()
 
         var cancellables: Set<AnyCancellable> = Set()
@@ -173,7 +157,7 @@ struct GetAllLessonsUseCaseTests {
             getAllLessonsUseCase
                 .execute(
                     appLanguage: appLanguageEnglish,
-                    filterLessonsByLanguage: spanishLanguageFilter
+                    filterLessonsByLanguageId: LanguageCodeDomainModel.spanish.rawValue
                 )
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in

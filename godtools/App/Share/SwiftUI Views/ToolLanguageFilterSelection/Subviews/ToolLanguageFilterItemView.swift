@@ -1,27 +1,26 @@
 //
-//  ToolFilterLanguageSelectionRowView.swift
+//  ToolLanguageFilterItemView.swift
 //  godtools
 //
-//  Created by Rachael Skeath on 8/30/23.
-//  Copyright © 2023 Cru. All rights reserved.
+//  Created by Levi Eggert on 9/1/26.
+//  Copyright © 2026 Cru. All rights reserved.
 //
 
 import SwiftUI
 
-struct ToolFilterLanguageSelectionRowView: View {
+struct ToolLanguageFilterItemView<Language: ToolLanguageFilterItemDomainModelInterface>: View {
     
-    private static let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
-    
-    private let language: ToolFilterLanguageDomainModel
+    private let language: Language
     private let isSelected: Bool
+    private let lightGrey = Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1)
     
-    init(language: ToolFilterLanguageDomainModel, isSelected: Bool) {
+    init(language: Language, isSelected: Bool) {
+        
         self.language = language
         self.isSelected = isSelected
     }
     
     var body: some View {
-        
         HStack {
             VStack(alignment: .leading, spacing: 10) {
                 
@@ -30,29 +29,35 @@ struct ToolFilterLanguageSelectionRowView: View {
                     let titleFontLibrary: FontLibrary = isSelected ? FontLibrary.sfProTextBold : FontLibrary.sfProTextRegular
                     let titleFont: Font = titleFontLibrary.font(size: 15)
                     
-                    if let languageName = language.languageName, !languageName.isEmpty {
-                     
+                    let nameInOwnLanguage: String = language.languageNamePair.nameInOwnLanguage
+                    let nameInAppLanguage: String = language.languageNamePair.nameInAppLanguage
+                    
+                    if !nameInOwnLanguage.isEmpty {
+                                         
                         getPrimaryText(
-                            text: languageName,
+                            text: nameInOwnLanguage,
                             font: titleFont
                         )
                         
-                        Text(language.languageNameTranslatedInAppLanguage)
+                        Text(nameInAppLanguage)
                             .font(FontLibrary.sfProTextRegular.font(size: 15))
-                            .foregroundColor(ToolFilterLanguageSelectionRowView.lightGrey)
+                            .foregroundColor(lightGrey)
                     }
                     else {
                         
                         getPrimaryText(
-                            text: language.languageNameTranslatedInAppLanguage,
+                            text: nameInAppLanguage,
                             font: titleFont
                         )
                     }
                 }
                 
-                Text(language.toolsAvailable)
-                    .font(FontLibrary.sfProTextRegular.font(size: 12))
-                    .foregroundColor(ToolFilterLanguageSelectionRowView.lightGrey)
+                if let availableText = language.availableText {
+                    
+                    Text(availableText)
+                        .font(FontLibrary.sfProTextRegular.font(size: 12))
+                        .foregroundColor(lightGrey)
+                }
             }
             .padding(.vertical, 7)
             

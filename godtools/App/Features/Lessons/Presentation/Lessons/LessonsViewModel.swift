@@ -21,7 +21,8 @@ final class LessonsViewModel: ObservableObject {
     private let getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase
     private let getLessonsStringsUseCase: GetLessonsStringsUseCase
     private let getAllLessonsUseCase: GetAllLessonsUseCase
-    private let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase
+    private let getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase
+    private let getUserPersonalizedLessonFilterLanguageUseCase: GetUserPersonalizedLessonFilterLanguageUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let getToolBannerUseCase: GetToolBannerUseCase
@@ -31,13 +32,14 @@ final class LessonsViewModel: ObservableObject {
     private var pullToRefreshLessonsTask: Task<Void, Error>?
         
     @Published private var appLanguage = AppLanguageDomainModel.english
-    @Published private var lessonFilterLanguageSelection: LessonFilterLanguageDomainModel?
     @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
     @Published private var allLessonsList: [LessonListItemDomainModel] = Array()
+    @Published private var selectedAllLessonsFilterLanguage: LessonFilterLanguageDomainModel?
+    @Published private var selectedPersonalizedLessonsFilterLanguage: PersonalizedLessonFilterLanguageDomainModel?
     
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
     @Published private(set) var strings: LessonsStringsDomainModel = .emptyValue
-    @Published private(set) var languageFilterButtonTitle: String = ""
+    @Published private(set) var languageFilterActionTitle: String = ""
     @Published private(set) var personalizedLessons = PersonalizedLessonsDomainModel.emptyValue
     @Published private(set) var lessonsList: [LessonListItemDomainModel] = []
 
@@ -51,7 +53,8 @@ final class LessonsViewModel: ObservableObject {
         getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase,
         getLessonsStringsUseCase: GetLessonsStringsUseCase,
         getAllLessonsUseCase: GetAllLessonsUseCase,
-        getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase,
+        getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase,
+        getUserPersonalizedLessonFilterLanguageUseCase: GetUserPersonalizedLessonFilterLanguageUseCase,
         trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
         trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase,
         getToolBannerUseCase: GetToolBannerUseCase,
@@ -65,7 +68,8 @@ final class LessonsViewModel: ObservableObject {
         self.getPersonalizedLessonsUseCase = getPersonalizedLessonsUseCase
         self.getLessonsStringsUseCase = getLessonsStringsUseCase
         self.getAllLessonsUseCase = getAllLessonsUseCase
-        self.getUserLessonFiltersUseCase = getUserLessonFiltersUseCase
+        self.getUserLessonFilterLanguageUseCase = getUserLessonFilterLanguageUseCase
+        self.getUserPersonalizedLessonFilterLanguageUseCase = getUserPersonalizedLessonFilterLanguageUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
@@ -93,15 +97,15 @@ final class LessonsViewModel: ObservableObject {
         Publishers.CombineLatest3(
             $appLanguage.dropFirst(),
             $localizationSettings,
-            $lessonFilterLanguageSelection
+            $selectedPersonalizedLessonsFilterLanguage
         )
-        .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?, languageFilter: LessonFilterLanguageDomainModel?) in
+        .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?, languageFilter: PersonalizedLessonFilterLanguageDomainModel?) in
             
             getPersonalizedLessonsUseCase
                 .execute(
                     appLanguage: appLanguage,
                     country: localizationSettings?.selectedCountry,
-                    filterLessonsByLanguage: languageFilter
+                    filterLessonsByLanguageId: languageFilter?.languageId
                 )
         }
         .switchToLatest()
@@ -116,14 +120,14 @@ final class LessonsViewModel: ObservableObject {
         
         Publishers.CombineLatest(
             $appLanguage.dropFirst(),
-            $lessonFilterLanguageSelection
+            $selectedAllLessonsFilterLanguage
         )
         .map { (appLanguage: AppLanguageDomainModel, languageFilter: LessonFilterLanguageDomainModel?) in
             
             getAllLessonsUseCase
                 .execute(
                     appLanguage: appLanguage,
-                    filterLessonsByLanguage: languageFilter
+                    filterLessonsByLanguageId: languageFilter?.languageId
                 )
         }
         .switchToLatest()
@@ -152,10 +156,8 @@ final class LessonsViewModel: ObservableObject {
                 lessonsList = allLessons
             }
             
-            return Just(lessonsList)
-                .eraseToAnyPublisher()
+            return lessonsList
         }
-        .switchToLatest()
         .receive(on: DispatchQueue.main)
         .sink { [weak self] (lessonsList: [LessonListItemDomainModel]) in
             
@@ -167,7 +169,7 @@ final class LessonsViewModel: ObservableObject {
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
             
-                getUserLessonFiltersUseCase
+                getUserLessonFilterLanguageUseCase
                     .execute(
                         appLanguage: appLanguage
                     )
@@ -176,12 +178,60 @@ final class LessonsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                     
-            }, receiveValue: { [weak self] (userFilters: UserLessonFiltersDomainModel) in
+            }, receiveValue: { [weak self] (languageFilter: LessonFilterLanguageDomainModel?) in
                 
-                self?.languageFilterButtonTitle = userFilters.languageFilter?.languageNameTranslatedInAppLanguage ?? ""
-                self?.lessonFilterLanguageSelection = userFilters.languageFilter
+                self?.selectedAllLessonsFilterLanguage = languageFilter
             })
             .store(in: &cancellables)
+        
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) in
+            
+                getUserPersonalizedLessonFilterLanguageUseCase
+                    .execute(
+                        appLanguage: appLanguage
+                    )
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { _ in
+                    
+            }, receiveValue: { [weak self] (languageFilter: PersonalizedLessonFilterLanguageDomainModel?) in
+                
+                self?.selectedPersonalizedLessonsFilterLanguage = languageFilter
+            })
+            .store(in: &cancellables)
+        
+        Publishers.CombineLatest3(
+            $selectedAllLessonsFilterLanguage,
+            $selectedPersonalizedLessonsFilterLanguage,
+            $selectedToggle
+        )
+        .map { (
+            lessonsLanguageFilter: LessonFilterLanguageDomainModel?,
+            personalizedLessonsLanguageFilter: PersonalizedLessonFilterLanguageDomainModel?,
+            selectedToggle: PersonalizationToggleOptionValue
+        ) in
+            
+            let languageNamePair: TranslatedLanguageNamePairDomainModel?
+            
+            switch selectedToggle {
+                
+            case .personalized:
+                languageNamePair = personalizedLessonsLanguageFilter?.languageNamePair
+            case .all:
+                languageNamePair = lessonsLanguageFilter?.languageNamePair
+            }
+                        
+            return languageNamePair?.nameInAppLanguage ?? ""
+        }
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (title: String) in
+            
+            self?.languageFilterActionTitle = title
+        }
+        .store(in: &cancellables)
     }
     
     deinit {
@@ -306,7 +356,7 @@ final class LessonsViewModel: ObservableObject {
                 .execute(
                     appLanguage: weakSelf.appLanguage,
                     country: weakSelf.localizationSettings?.selectedCountry,
-                    filterLessonsByLanguage: weakSelf.lessonFilterLanguageSelection
+                    languageFilterLanguageId: weakSelf.selectedAllLessonsFilterLanguage?.languageId
                 )
         }
     }
@@ -340,9 +390,18 @@ extension LessonsViewModel {
         stepEmitter.emit(step: AppFlowStep.lessonLanguageFilterTappedFromLessons)
     }
     
+    func personalizedLessonLanguageFilterTapped() {
+        stepEmitter.emit(step: AppFlowStep.personalizedLessonLanguageFilterTappedFromLessons)
+    }
+    
     func lessonCardTapped(lessonListItem: LessonListItemDomainModel) {
 
-        stepEmitter.emit(step: AppFlowStep.lessonTappedFromLessonsList(lessonListItem: lessonListItem, languageFilter: lessonFilterLanguageSelection))
+        stepEmitter.emit(
+            step: AppFlowStep.lessonTappedFromLessonsList(
+                lessonListItem: lessonListItem,
+                languageFilterLanguageId: selectedAllLessonsFilterLanguage?.languageId
+            )
+        )
 
         trackLessonTappedAnalytics(lessonListItem: lessonListItem)
     }

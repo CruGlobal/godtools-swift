@@ -55,7 +55,13 @@ struct ToolsFilterSectionView: View {
                     width: buttonWidth,
                     tappedClosure: {
                         
-                        viewModel.toolLanguageFilterTapped()
+                        switch viewModel.selectedToggle {
+                            
+                        case .personalized:
+                            viewModel.personalizedToolLanguageFilterTapped()
+                        case .all:
+                            viewModel.toolLanguageFilterTapped()
+                        }
                     }
                 )
                 

@@ -66,7 +66,7 @@ struct GetPersonalizedLessonsUseCaseTests {
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: LocalizationSettingsCountryDomainModel(isoRegionCode: "us"),
-            filterLessonsByLanguage: nil
+            filterLessonsByLanguageId: nil
         )
 
         #expect(personalizedLessons.lessons.map({ $0.dataModelId }).sorted() == ["lesson-1", "lesson-3"])
@@ -86,7 +86,7 @@ struct GetPersonalizedLessonsUseCaseTests {
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: nil,
-            filterLessonsByLanguage: nil
+            filterLessonsByLanguageId: nil
         )
 
         #expect(personalizedLessons.lessons.map({ $0.dataModelId }).sorted() == ["lesson-1", "lesson-2"])
@@ -106,7 +106,7 @@ struct GetPersonalizedLessonsUseCaseTests {
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: nil,
-            filterLessonsByLanguage: nil
+            filterLessonsByLanguageId: nil
         )
 
         #expect(!personalizedLessons.lessons.map({ $0.dataModelId }).contains("tool-1"))
@@ -125,13 +125,7 @@ struct GetPersonalizedLessonsUseCaseTests {
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: nil,
-            filterLessonsByLanguage: LessonFilterLanguageDomainModel(
-                languageId: TestPersonalizedLessonsLanguageId.french,
-                languageNameTranslatedInLanguage: "",
-                languageNameTranslatedInAppLanguage: "",
-                lessonsAvailableText: "",
-                lessonsAvailableCount: 0
-            )
+            filterLessonsByLanguageId: TestPersonalizedLessonsLanguageId.french
         )
 
         #expect(personalizedLessons.lessons.map({ $0.dataModelId }) == ["lesson-4"])
@@ -163,7 +157,7 @@ struct GetPersonalizedLessonsUseCaseTests {
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: argument.appLanguage,
             country: nil,
-            filterLessonsByLanguage: nil
+            filterLessonsByLanguageId: nil
         )
 
         let unavailableStrings: PersonalizedLessonsUnavailableDomainModel = try #require(personalizedLessons.unavailableStrings)
@@ -186,7 +180,7 @@ struct GetPersonalizedLessonsUseCaseTests {
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: LocalizationSettingsCountryDomainModel(isoRegionCode: "ca"),
-            filterLessonsByLanguage: nil
+            filterLessonsByLanguageId: nil
         )
 
         #expect(personalizedLessons.lessons.isEmpty)
@@ -206,7 +200,7 @@ struct GetPersonalizedLessonsUseCaseTests {
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: LocalizationSettingsCountryDomainModel(isoRegionCode: ""),
-            filterLessonsByLanguage: nil
+            filterLessonsByLanguageId: nil
         )
 
         #expect(personalizedLessons.lessons.map({ $0.dataModelId }).sorted() == ["lesson-1", "lesson-2"])
@@ -219,7 +213,7 @@ struct GetPersonalizedLessonsUseCaseTests {
 extension GetPersonalizedLessonsUseCaseTests {
 
     @available(iOS 17.4, *)
-    @MainActor private func getPersonalizedLessons(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) async throws -> PersonalizedLessonsDomainModel {
+    @MainActor private func getPersonalizedLessons(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguageId: String?) async throws -> PersonalizedLessonsDomainModel {
 
         let dependencies: TestDependencies = try getTestDependencies()
 
@@ -247,7 +241,7 @@ extension GetPersonalizedLessonsUseCaseTests {
                 .execute(
                     appLanguage: appLanguage,
                     country: country,
-                    filterLessonsByLanguage: filterLessonsByLanguage
+                    filterLessonsByLanguageId: filterLessonsByLanguageId
                 )
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in

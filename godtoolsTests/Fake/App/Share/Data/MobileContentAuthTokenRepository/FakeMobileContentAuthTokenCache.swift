@@ -16,11 +16,18 @@ final class FakeMobileContentAuthTokenCache: AuthTokenCacheInterface {
         
     }
     
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
+        
+        return Just(Void())
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+    
     func getUserId() -> String? {
         return nil
     }
     
-    func getCachedAuthToken() throws -> CachedAuthToken? {
+    func getAuthToken() throws -> CachedAuthToken? {
         return nil
     }
     
@@ -30,10 +37,5 @@ final class FakeMobileContentAuthTokenCache: AuthTokenCacheInterface {
     
     func deleteAuthToken(userId: String) async throws {
         
-    }
-    
-    func getAuthTokenChangedPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel?, Never> {
-        return Just(nil)
-            .eraseToAnyPublisher()
     }
 }

@@ -82,9 +82,9 @@ struct GetToolFilterLanguagesUseCaseTests {
         let anyLanguage: ToolFilterLanguageDomainModel = try #require(languages.first)
 
         #expect(anyLanguage.languageType == .any)
-        #expect(anyLanguage.filterId == nil)
-        #expect(anyLanguage.languageName == nil)
-        #expect(anyLanguage.languageNameTranslatedInAppLanguage == englishAnyLanguageName)
+        #expect(anyLanguage.id == ToolFilterLanguageDomainModel.anyId)
+        #expect(anyLanguage.languageNamePair.nameInOwnLanguage.isEmpty)
+        #expect(anyLanguage.languageNamePair.nameInAppLanguage == englishAnyLanguageName)
     }
 
     @available(iOS 17.4, *)
@@ -118,9 +118,9 @@ struct GetToolFilterLanguagesUseCaseTests {
 
         let languageNames: [String] = languages
             .filter({ $0.languageType == .language })
-            .map({ $0.languageNameTranslatedInAppLanguage })
+            .map({ $0.languageNamePair.nameInAppLanguage })
 
-        #expect(anyLanguage.languageNameTranslatedInAppLanguage == argument.expectedAnyLanguageName)
+        #expect(anyLanguage.languageNamePair.nameInAppLanguage == argument.expectedAnyLanguageName)
         #expect(languageNames == argument.expectedLanguageNamesTranslatedInAppLanguage)
     }
 
@@ -139,22 +139,22 @@ struct GetToolFilterLanguagesUseCaseTests {
             filterByCategoryId: nil
         )
 
-        let afrikaansLanguage: ToolFilterLanguageDomainModel = try #require(languages.first(where: { $0.filterId == TestLanguageFilterLanguageId.afrikaans }))
-        let czechLanguage: ToolFilterLanguageDomainModel = try #require(languages.first(where: { $0.filterId == TestLanguageFilterLanguageId.czech }))
-        let frenchLanguage: ToolFilterLanguageDomainModel = try #require(languages.first(where: { $0.filterId == TestLanguageFilterLanguageId.french }))
-        let spanishLanguage: ToolFilterLanguageDomainModel = try #require(languages.first(where: { $0.filterId == TestLanguageFilterLanguageId.spanish }))
+        let afrikaansLanguage: ToolFilterLanguageDomainModel = try #require(languages.first(where: { $0.languageId == TestLanguageFilterLanguageId.afrikaans }))
+        let czechLanguage: ToolFilterLanguageDomainModel = try #require(languages.first(where: { $0.languageId == TestLanguageFilterLanguageId.czech }))
+        let frenchLanguage: ToolFilterLanguageDomainModel = try #require(languages.first(where: { $0.languageId == TestLanguageFilterLanguageId.french }))
+        let spanishLanguage: ToolFilterLanguageDomainModel = try #require(languages.first(where: { $0.languageId == TestLanguageFilterLanguageId.spanish }))
 
-        #expect(afrikaansLanguage.languageName == "Afrikaans")
-        #expect(afrikaansLanguage.languageNameTranslatedInAppLanguage == "Afrikaans")
+        #expect(afrikaansLanguage.languageNamePair.nameInOwnLanguage == "Afrikaans")
+        #expect(afrikaansLanguage.languageNamePair.nameInAppLanguage == "Afrikaans")
 
-        #expect(czechLanguage.languageName == "čeština")
-        #expect(czechLanguage.languageNameTranslatedInAppLanguage == "Czech")
+        #expect(czechLanguage.languageNamePair.nameInOwnLanguage == "čeština")
+        #expect(czechLanguage.languageNamePair.nameInAppLanguage == "Czech")
 
-        #expect(frenchLanguage.languageName == "Français")
-        #expect(frenchLanguage.languageNameTranslatedInAppLanguage == "French")
+        #expect(frenchLanguage.languageNamePair.nameInOwnLanguage == "Français")
+        #expect(frenchLanguage.languageNamePair.nameInAppLanguage == "French")
 
-        #expect(spanishLanguage.languageName == "Español")
-        #expect(spanishLanguage.languageNameTranslatedInAppLanguage == "Spanish")
+        #expect(spanishLanguage.languageNamePair.nameInOwnLanguage == "Español")
+        #expect(spanishLanguage.languageNamePair.nameInAppLanguage == "Spanish")
     }
 
     @available(iOS 17.4, *)
@@ -212,7 +212,10 @@ struct GetToolFilterLanguagesUseCaseTests {
             filterByCategoryId: argument.filterByCategoryId
         )
 
-        let languageIds: [String] = languages.compactMap({ $0.filterId }).sorted()
+        let languageIds: [String] = languages
+            .filter({ $0.languageType == .language })
+            .compactMap({ $0.languageId })
+            .sorted()
 
         #expect(languageIds == argument.expectedLanguageIds)
     }
@@ -272,15 +275,15 @@ struct GetToolFilterLanguagesUseCaseTests {
 
         let anyLanguage: ToolFilterLanguageDomainModel = try #require(languages.first(where: { $0.languageType == .any }))
 
-        #expect(anyLanguage.numberOfToolsAvailable == argument.expectedToolsAvailableCountForAnyLanguage)
-        #expect(anyLanguage.toolsAvailable == "\(englishToolsAvailableText) \(argument.expectedToolsAvailableCountForAnyLanguage)")
+        #expect(anyLanguage.toolsAvailableCount == argument.expectedToolsAvailableCountForAnyLanguage)
+        #expect(anyLanguage.toolsAvailableText == "\(englishToolsAvailableText) \(argument.expectedToolsAvailableCountForAnyLanguage)")
 
         for (languageId, expectedCount) in argument.expectedToolsAvailableCountByLanguageId {
 
-            let language: ToolFilterLanguageDomainModel = try #require(languages.first(where: { $0.filterId == languageId }))
+            let language: ToolFilterLanguageDomainModel = try #require(languages.first(where: { $0.languageId == languageId }))
 
-            #expect(language.numberOfToolsAvailable == expectedCount)
-            #expect(language.toolsAvailable == "\(englishToolsAvailableText) \(expectedCount)")
+            #expect(language.toolsAvailableCount == expectedCount)
+            #expect(language.toolsAvailableText == "\(englishToolsAvailableText) \(expectedCount)")
         }
     }
 
@@ -300,11 +303,11 @@ struct GetToolFilterLanguagesUseCaseTests {
         )
 
         let anyLanguage: ToolFilterLanguageDomainModel = try #require(languages.first(where: { $0.languageType == .any }))
-        let englishLanguage: ToolFilterLanguageDomainModel = try #require(languages.first(where: { $0.filterId == TestLanguageFilterLanguageId.english }))
+        let englishLanguage: ToolFilterLanguageDomainModel = try #require(languages.first(where: { $0.languageId == TestLanguageFilterLanguageId.english }))
 
-        #expect(anyLanguage.languageNameTranslatedInAppLanguage == spanishAnyLanguageName)
-        #expect(anyLanguage.toolsAvailable == "\(spanishToolsAvailableText) 6")
-        #expect(englishLanguage.toolsAvailable == "\(spanishToolsAvailableText) 3")
+        #expect(anyLanguage.languageNamePair.nameInAppLanguage == spanishAnyLanguageName)
+        #expect(anyLanguage.toolsAvailableText == "\(spanishToolsAvailableText) 6")
+        #expect(englishLanguage.toolsAvailableText == "\(spanishToolsAvailableText) 3")
     }
 
     @available(iOS 17.4, *)
@@ -322,13 +325,15 @@ struct GetToolFilterLanguagesUseCaseTests {
             filterByCategoryId: nil
         )
 
-        let languageIds: [String] = languages.compactMap({ $0.filterId })
+        let languageIds: [String] = languages
+            .filter({ $0.languageType == .language })
+            .compactMap({ $0.languageId })
 
         let anyLanguage: ToolFilterLanguageDomainModel = try #require(languages.first(where: { $0.languageType == .any }))
 
         #expect(!languageIds.contains(TestLanguageFilterLanguageId.russian))
         #expect(!languageIds.contains(TestLanguageFilterLanguageId.vietnamese))
-        #expect(anyLanguage.numberOfToolsAvailable == 6)
+        #expect(anyLanguage.toolsAvailableCount == 6)
     }
 }
 

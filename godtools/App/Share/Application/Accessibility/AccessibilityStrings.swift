@@ -35,6 +35,8 @@ class AccessibilityStrings {
         case onboardingTutorial = "Onboarding Tutorial Screen"
         case onboardingTutorialPage = "Onboarding Tutorial Page"
         case menu = "Menu"
+        case personalizedLessonsLanguageFilters = "Personalized Lessons Language Filters"
+        case personalizedToolsLanguageFilters = "Personalized Tools Language Filters"
         case privacyPolicy = "Privacy Policy"
         case reportABug = "Report A Bug"
         case sendFeedback = "Send Feedback"

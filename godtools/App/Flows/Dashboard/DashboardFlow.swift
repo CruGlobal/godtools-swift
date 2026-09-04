@@ -75,13 +75,23 @@ final class DashboardFlow: GTFlow {
         case .doneTappedFromMenu:
             closeMenu(animated: true)
             
-        case .lessonTappedFromLessonsList(let lessonListItem, let languageFilter):
-            navigateToLesson(lessonListItem: lessonListItem, languageFilter: languageFilter, toolOpenedFrom: .dashboardLessons)
+        case .lessonTappedFromLessonsList(let lessonListItem, let languageFilterLanguageId):
+            navigateToLesson(
+                lessonListItem: lessonListItem,
+                languageFilterLanguageId: languageFilterLanguageId,
+                toolOpenedFrom: .dashboardLessons
+            )
             
         case .lessonLanguageFilterTappedFromLessons:
             navigationController.pushViewController(getLessonLanguageFilterSelection(), animated: true)
             
+        case .personalizedLessonLanguageFilterTappedFromLessons:
+            navigationController.pushViewController(getPersonalizedLessonFilterLanguageSelectionView(), animated: true)
+            
         case .backTappedFromLessonLanguageFilter:
+            navigationController.popViewController(animated: true)
+            
+        case .backTappedFromPersonalizedLessonLanguageFilter:
             navigationController.popViewController(animated: true)
 
         case .changeLocalizationSettingsTappedFromLessons:
@@ -98,6 +108,9 @@ final class DashboardFlow: GTFlow {
         case .languageTappedFromLessonLanguageFilter:
             navigationController.popViewController(animated: true)
             
+        case .languageTappedFromPersonalizedLanguageFilter:
+            navigationController.popViewController(animated: true)
+            
         case .featuredLessonTappedFromFavorites(let featuredLesson):
             navigateToToolInAppLanguage(
                 toolDataModelId: featuredLesson.dataModelId,
@@ -105,10 +118,7 @@ final class DashboardFlow: GTFlow {
                 toolOpenedFrom: .dashboardFavoritesFeaturedLesson,
                 persistToolLanguageSettings: nil
             )
-            
-        case .viewAllFavoriteToolsTappedFromFavorites:
-            navigationController.pushViewController(getAllFavoriteTools(), animated: true)
-            
+                        
         case .toolDetailsTappedFromFavorites(let tool):
             navigateToToolDetails(toolId: tool.dataModelId)
         
@@ -136,13 +146,7 @@ final class DashboardFlow: GTFlow {
             
         case .goToToolsTappedFromFavorites:
             navigateToDashboard(startingTab: .tools)
-            
-        case .backTappedFromAllYourFavoriteTools:
-            navigationController.popViewController(animated: true)
-            
-        case .toolDetailsTappedFromAllYourFavoriteTools(let tool):
-            navigateToToolDetails(toolId: tool.dataModelId)
-        
+                                
         case .openTutorialTappedFromTools:
             presentFlow(
                 flow: TutorialFlow(appDiContainer: appDiContainer)
@@ -150,34 +154,21 @@ final class DashboardFlow: GTFlow {
             
         case .tutorialFlowCompleted( _):
             dismissFlow()
-
-        case .openToolTappedFromAllYourFavoriteTools(let tool):
-            navigateToToolWithToolLanguageSettingsAppliedForFavoritedTool(
-                toolDataModelId: tool.dataModelId,
-                trainingTipsEnabled: false,
-                toolOpenedFrom: .dashboardFavoritesFavoritedTool
-            )
-            
-        case .toolTappedFromAllYourFavoritedTools(let tool):
-            navigateToToolWithToolLanguageSettingsAppliedForFavoritedTool(
-                toolDataModelId: tool.dataModelId,
-                trainingTipsEnabled: false,
-                toolOpenedFrom: .dashboardFavoritesFavoritedTool
-            )
-            
-        case .unfavoriteToolTappedFromAllYourFavoritedTools(let tool, let didConfirmToolRemovalSubject):
-            
-            presentConfirmRemoveToolFromFavoritesAlertView(
-                toolId: tool.dataModelId,
-                didConfirmToolRemovalSubject: didConfirmToolRemovalSubject,
-                animated: true
-            )
-            
+                        
         case .toolCategoryFilterTappedFromTools:
             navigationController.pushViewController(getToolCategoryFilterSelection(), animated: true)
             
         case .toolLanguageFilterTappedFromTools:
             navigationController.pushViewController(getToolLanguageFilterSelection(), animated: true)
+            
+        case .personalizedToolLanguageFilterTappedFromTools:
+            navigationController.pushViewController(getPersonalizedToolFilterLanguageSelectionView(), animated: true)
+            
+        case .backTappedFromPersonalizedToolLanguageFilter:
+            navigationController.popViewController(animated: true)
+            
+        case .languageTappedFromPersonalizedToolLanguageFilter:
+            navigationController.popViewController(animated: true)
         
         case .categoryTappedFromToolCategoryFilter:
             navigationController.popViewController(animated: true)
@@ -191,11 +182,11 @@ final class DashboardFlow: GTFlow {
         case .backTappedFromToolLanguageFilter:
             navigationController.popViewController(animated: true)
             
-        case .spotlightToolTappedFromTools(let spotlightTool, let toolFilterLanguage):
+        case .spotlightToolTappedFromTools(let spotlightTool, let toolFilterLanguageId):
             
             let toolFilterLanguageDataModel: LanguageDataModel?
             
-            if let languageId = toolFilterLanguage?.id {
+            if let languageId = toolFilterLanguageId {
                 toolFilterLanguageDataModel = appDiContainer.core.dataLayer.getLanguagesRepository().getLanguageById(id: languageId)
             }
             else {
@@ -208,11 +199,11 @@ final class DashboardFlow: GTFlow {
                 selectedLanguageIndex: 1
             )
                         
-        case .toolTappedFromTools(let tool, let toolFilterLanguage):
+        case .toolTappedFromTools(let tool, let toolFilterLanguageId):
             
             let toolFilterLanguageDataModel: LanguageDataModel?
             
-            if let languageId = toolFilterLanguage?.id {
+            if let languageId = toolFilterLanguageId {
                 toolFilterLanguageDataModel = appDiContainer.core.dataLayer.getLanguagesRepository().getLanguageById(id: languageId)
             }
             else {
@@ -494,8 +485,8 @@ extension DashboardFlow {
             stepEmitter: stepEmitter,
             getLessonFilterLanguagesStringsUseCase: appDiContainer.feature.lessonFilter.domainLayer.getLessonFilterLanguagesStringsUseCase(),
             getLessonFilterLanguagesUseCase: appDiContainer.feature.lessonFilter.domainLayer.getLessonFilterLanguagesUseCase(),
-            getUserLessonFiltersUseCase: appDiContainer.feature.lessonFilter.domainLayer.getUserLessonFiltersUseCase(),
-            storeUserLessonFiltersUseCase: appDiContainer.feature.lessonFilter.domainLayer.getStoreUserLessonFiltersUseCase(),
+            getUserLessonFilterLanguageUseCase: appDiContainer.feature.lessonFilter.domainLayer.getUserLessonFilterLanguageUseCase(),
+            setUserLessonFilterLanguageUseCase: appDiContainer.feature.lessonFilter.domainLayer.getSetUserLessonFilterLanguageUseCase(),
             getSearchBarStringsUseCase: appDiContainer.core.domainLayer.getSearchBarStringsUseCase(),
             searchLessonFilterLanguagesUseCase: appDiContainer.feature.lessonFilter.domainLayer.getSearchLessonFilterLanguagesUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
@@ -504,6 +495,55 @@ extension DashboardFlow {
         let view = LessonFilterLanguageSelectionView(viewModel: viewModel)
         
         let hostingView = AppHostingController<LessonFilterLanguageSelectionView>(
+            rootView: view
+        )
+        
+        return hostingView
+    }
+}
+
+// MARK: - Personalized Lesson Filter Language Selection
+
+extension DashboardFlow {
+    
+    private func getPersonalizedLessonFilterLanguageSelectionView() -> UIViewController {
+        
+        let viewModel = PersonalizedLessonFilterLanguageSelectionViewModel(
+            stepEmitter: stepEmitter,
+            getPersonalizedLessonFilterLanguagesStringsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedLessonFilterLanguagesStringsUseCase(),
+            getPersonalizedLessonFilterLanguagesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedLessonFilterLanguagesUseCase(),
+            getUserPersonalizedLessonFilterLanguageUseCase: appDiContainer.feature.personalizedTools.domainLayer.getUserPersonalizedLessonFilterLanguageUseCase(),
+            setUserPersonalizedLessonFilterLanguageUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSetUserPersonalizedLessonFilterLanguageUseCase(),
+            getSearchBarStringsUseCase: appDiContainer.core.domainLayer.getSearchBarStringsUseCase(),
+            searchPersonalizedLessonFilterLanguagesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSearchPersonalizedLessonFilterLanguagesUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
+        )
+        
+        let view = PersonalizedLessonFilterLanguageSelectionView(viewModel: viewModel)
+        
+        let hostingView = AppHostingController<PersonalizedLessonFilterLanguageSelectionView>(
+            rootView: view
+        )
+        
+        return hostingView
+    }
+    
+    private func getPersonalizedToolFilterLanguageSelectionView() -> UIViewController {
+        
+        let viewModel = PersonalizedToolFilterLanguageSelectionViewModel(
+            stepEmitter: stepEmitter,
+            getPersonalizedToolFilterLanguagesStringsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedToolFilterLanguagesStringsUseCase(),
+            getPersonalizedToolFilterLanguagesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedToolFilterLanguagesUseCase(),
+            getUserPersonalizedToolFilterLanguageUseCase: appDiContainer.feature.personalizedTools.domainLayer.getUserPersonalizedToolFilterLanguageUseCase(),
+            setUserPersonalizedToolFilterLanguageUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSetUserPersonalizedToolFilterLanguageUseCase(),
+            getSearchBarStringsUseCase: appDiContainer.core.domainLayer.getSearchBarStringsUseCase(),
+            searchPersonalizedToolFilterLanguagesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSearchPersonalizedToolFilterLanguagesUseCase(),
+            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase()
+        )
+        
+        let view = PersonalizedToolFilterLanguageSelectionView(viewModel: viewModel)
+        
+        let hostingView = AppHostingController<PersonalizedToolFilterLanguageSelectionView>(
             rootView: view
         )
         
@@ -559,35 +599,6 @@ extension DashboardFlow {
         )
         
         return overlayNavigationController
-    }
-}
-
-// MARK: - Tool Favorites
-
-extension DashboardFlow {
-    
-    func getAllFavoriteTools() -> UIViewController {
-        
-        let viewModel = AllYourFavoriteToolsViewModel(
-            stepEmitter: stepEmitter,
-            getAllYourFavoritedToolsStringsUseCase: appDiContainer.feature.favorites.domainLayer.getAllYourFavoritedToolsStringsUseCase(),
-            getYourFavoritedToolsUseCase: appDiContainer.feature.favorites.domainLayer.getYourFavoritedToolsUseCase(),
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getToolIsFavoritedUseCase: appDiContainer.feature.favorites.domainLayer.getToolIsFavoritedUseCase(),
-            reorderFavoritedToolUseCase: appDiContainer.feature.favorites.domainLayer.getReorderFavoritedToolUseCase(),
-            getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
-            imageCache: appDiContainer.core.dataLayer.getSharedImageCache(),
-            trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()
-        )
-        
-        let view = AllYourFavoriteToolsView(viewModel: viewModel)
-        
-        let hostingView = AppHostingController<AllYourFavoriteToolsView>(
-            rootView: view
-        )
-        
-        return hostingView
     }
 }
 
@@ -756,15 +767,15 @@ extension DashboardFlow {
     
     private func navigateToLesson(
         lessonListItem: LessonListItemDomainModel,
-        languageFilter: LessonFilterLanguageDomainModel?,
+        languageFilterLanguageId: String?,
         toolOpenedFrom: ToolOpenedFrom
     ) {
         
-        if let languageFilter = languageFilter {
+        if let languageFilterLanguageId = languageFilterLanguageId {
             
             navigateToTool(
                 toolDataModelId: lessonListItem.dataModelId,
-                languageIds: [languageFilter.languageId],
+                languageIds: [languageFilterLanguageId],
                 selectedLanguageIndex: 0,
                 trainingTipsEnabled: false,
                 toolOpenedFrom: toolOpenedFrom,

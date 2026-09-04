@@ -317,7 +317,7 @@ extension GetToolFilterCategoriesUseCaseTests {
             useCase
                 .execute(
                     appLanguage: appLanguage,
-                    filteredByLanguage: getLanguageFilter(languageId: filterByLanguageId)
+                    filteredByLanguageId: filterByLanguageId
                 )
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
@@ -365,21 +365,6 @@ extension GetToolFilterCategoriesUseCaseTests {
                 localizationServices: getLocalizationServices(),
                 stringWithLocaleCount: FakeStringWithLocaleCount()
             )
-        )
-    }
-
-    private func getLanguageFilter(languageId: String?) -> ToolFilterLanguageDomainModel {
-
-        guard let languageId = languageId else {
-            return ToolFilterLanguageDomainModel.emptyValue
-        }
-
-        return ToolFilterLanguageDomainModel.createLanguage(
-            id: languageId,
-            languageName: "",
-            languageNameTranslatedInAppLanguage: "",
-            toolsAvailable: "",
-            numberOfToolsAvailable: 0
         )
     }
 

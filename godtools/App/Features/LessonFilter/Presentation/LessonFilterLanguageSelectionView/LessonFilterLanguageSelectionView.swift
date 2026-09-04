@@ -22,25 +22,16 @@ struct LessonFilterLanguageSelectionView: View {
             
             AccessibilityScreenElementView(screenAccessibility: .lessonsLanguageFilters)
             
-            SearchBarView(searchText: $viewModel.searchText, strings: viewModel.searchBarStrings)
-            
-            List {
-                ForEach(viewModel.languageSearchResults) { language in
+            ToolLanguageFilterSelectionView(
+                searchText: $viewModel.searchText,
+                searchBarStrings: viewModel.searchBarStrings,
+                languages: viewModel.languageSearchResults,
+                selectedLanguage: viewModel.selectedLanguage,
+                languageTapped: { (language: LessonFilterLanguageDomainModel) in
                     
-                    Button {
-                        
-                        viewModel.languageTapped(language: language)
-                        
-                    } label: {
-                        
-                        LessonFilterLanguageSelectionRowView(
-                            language: language,
-                            isSelected: viewModel.selectedLanguage?.id == language.id
-                        )
-                    }
+                    viewModel.languageTapped(language: language)
                 }
-            }
-            .listStyle(.inset)
+            )
         }
         .navBar(
             title: viewModel.strings.navTitle,

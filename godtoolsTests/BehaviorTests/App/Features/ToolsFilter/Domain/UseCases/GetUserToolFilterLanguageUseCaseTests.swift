@@ -68,11 +68,11 @@ struct GetUserToolFilterLanguageUseCaseTests {
         )
 
         #expect(language.languageType == .any)
-        #expect(language.filterId == nil)
-        #expect(language.languageName == nil)
-        #expect(language.languageNameTranslatedInAppLanguage == englishAnyLanguageName)
-        #expect(language.numberOfToolsAvailable == 4)
-        #expect(language.toolsAvailable == "\(englishToolsAvailableText) 4")
+        #expect(language.id == ToolFilterLanguageDomainModel.anyId)
+        #expect(language.languageNamePair.nameInOwnLanguage.isEmpty)
+        #expect(language.languageNamePair.nameInAppLanguage == englishAnyLanguageName)
+        #expect(language.toolsAvailableCount == 4)
+        #expect(language.toolsAvailableText == "\(englishToolsAvailableText) 4")
     }
 
     @available(iOS 17.4, *)
@@ -111,11 +111,11 @@ struct GetUserToolFilterLanguageUseCaseTests {
         )
 
         #expect(language.languageType == .language)
-        #expect(language.filterId == argument.storedLanguageId)
-        #expect(language.languageName == argument.expectedLanguageName)
-        #expect(language.languageNameTranslatedInAppLanguage == argument.expectedLanguageNameTranslatedInAppLanguage)
-        #expect(language.numberOfToolsAvailable == argument.expectedToolsAvailableCount)
-        #expect(language.toolsAvailable == "\(englishToolsAvailableText) \(argument.expectedToolsAvailableCount)")
+        #expect(language.languageId == argument.storedLanguageId)
+        #expect(language.languageNamePair.nameInOwnLanguage == argument.expectedLanguageName)
+        #expect(language.languageNamePair.nameInAppLanguage == argument.expectedLanguageNameTranslatedInAppLanguage)
+        #expect(language.toolsAvailableCount == argument.expectedToolsAvailableCount)
+        #expect(language.toolsAvailableText == "\(englishToolsAvailableText) \(argument.expectedToolsAvailableCount)")
     }
 
     @available(iOS 17.4, *)
@@ -134,9 +134,9 @@ struct GetUserToolFilterLanguageUseCaseTests {
         )
 
         #expect(language.languageType == .any)
-        #expect(language.filterId == nil)
-        #expect(language.languageNameTranslatedInAppLanguage == englishAnyLanguageName)
-        #expect(language.numberOfToolsAvailable == 4)
+        #expect(language.id == ToolFilterLanguageDomainModel.anyId)
+        #expect(language.languageNamePair.nameInAppLanguage == englishAnyLanguageName)
+        #expect(language.toolsAvailableCount == 4)
     }
 
     @available(iOS 17.4, *)
@@ -173,12 +173,12 @@ struct GetUserToolFilterLanguageUseCaseTests {
             storeLanguageId: TestUserFilterLanguageId.french
         )
 
-        #expect(anyLanguage.languageNameTranslatedInAppLanguage == argument.expectedAnyLanguageName)
-        #expect(anyLanguage.toolsAvailable == "\(argument.expectedToolsAvailableText) 4")
+        #expect(anyLanguage.languageNamePair.nameInAppLanguage == argument.expectedAnyLanguageName)
+        #expect(anyLanguage.toolsAvailableText == "\(argument.expectedToolsAvailableText) 4")
 
-        #expect(frenchLanguage.languageName == "Français")
-        #expect(frenchLanguage.languageNameTranslatedInAppLanguage == argument.expectedFrenchNameTranslatedInAppLanguage)
-        #expect(frenchLanguage.toolsAvailable == "\(argument.expectedToolsAvailableText) 2")
+        #expect(frenchLanguage.languageNamePair.nameInOwnLanguage == "Français")
+        #expect(frenchLanguage.languageNamePair.nameInAppLanguage == argument.expectedFrenchNameTranslatedInAppLanguage)
+        #expect(frenchLanguage.toolsAvailableText == "\(argument.expectedToolsAvailableText) 2")
     }
 }
 

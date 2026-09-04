@@ -54,14 +54,19 @@ actor TractRemoteShareSubscriber {
         }
     }
     
-    func getSubscribedStream() async -> AsyncStream<WebSocketChannel> {
+    func getConnectionStateStream() async -> AsyncStream<WebSocketConnectionState> {
+        
+        return await channelSubscriber.getConnectionStateStream()
+    }
+    
+    func getSubscribedStream() async -> AsyncThrowingStream<WebSocketChannel, Error> {
         
         return await channelSubscriber.getSubscribedStream()
     }
     
     func getNavigationEventStream() async -> AsyncStream<TractRemoteShareNavigationEvent> {
         
-        return await navigationEventStream.getNewStream()
+        return await navigationEventStream.getNewStream(bufferingPolicy: .bufferingNewest(1))
     }
     
     private func sendNavigationEvent(event: TractRemoteShareNavigationEvent) async {

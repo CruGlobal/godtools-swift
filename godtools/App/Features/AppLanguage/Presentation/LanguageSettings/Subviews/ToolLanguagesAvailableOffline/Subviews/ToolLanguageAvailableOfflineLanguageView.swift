@@ -22,12 +22,12 @@ struct ToolLanguageAvailableOfflineLanguageView: View {
             
             HStack(alignment: .center, spacing: 11) {
             
-                Text(downloadedLanguage.languageNameInOwnLanguage)
+                Text(downloadedLanguage.languageNamePair.nameInOwnLanguage)
                     .font(FontLibrary.sfProTextRegular.font(size: 17))
                     .foregroundColor(ColorPalette.gtGrey.color)
                     .multilineTextAlignment(.leading)
                 
-                Text(downloadedLanguage.languageNameInAppLanguage)
+                Text(downloadedLanguage.languageNamePair.nameInAppLanguage)
                     .font(FontLibrary.sfProTextRegular.font(size: 17))
                     .foregroundColor(Color.getColorWithRGB(red: 151, green: 151, blue: 151, opacity: 1))
                     .multilineTextAlignment(.leading)

@@ -79,15 +79,18 @@ final class MenuViewModel: ObservableObject {
                     .execute(appLanguage: appLanguage)
                                 
                 return Publishers.CombineLatest(
-                    Just(accountCreationIsSupported),
+                    Just(accountCreationIsSupported)
+                        .setFailureType(to: Error.self),
                     getUserIsAuthenticatedUseCase
                         .execute()
                 )
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (accountCreationIsSupportedDomainModel: AccountCreationIsSupportedDomainModel, userIsAuthenticatedDomainModel: UserIsAuthenticatedDomainModel) in
-                            
+            .sink { _ in
+                
+            } receiveValue: { [weak self] (accountCreationIsSupportedDomainModel: AccountCreationIsSupportedDomainModel, userIsAuthenticatedDomainModel: UserIsAuthenticatedDomainModel) in
+                
                 if accountCreationIsSupportedDomainModel.isSupported {
                     
                     self?.accountSectionVisibility = userIsAuthenticatedDomainModel.isAuthenticated ? .visibleLoggedIn : .visibleLoggedOut

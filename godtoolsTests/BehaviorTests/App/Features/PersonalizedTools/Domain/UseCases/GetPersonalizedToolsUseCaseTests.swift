@@ -65,7 +65,7 @@ struct GetPersonalizedToolsUseCaseTests {
         let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: LocalizationSettingsCountryDomainModel(isoRegionCode: "us"),
-            filterToolsByLanguage: ToolFilterLanguageDomainModel.emptyValue
+            filterByLanguageId: nil
         )
 
         #expect(personalizedTools.tools.map({ $0.id }).sorted() == ["tool-1", "tool-3"])
@@ -85,7 +85,7 @@ struct GetPersonalizedToolsUseCaseTests {
         let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: nil,
-            filterToolsByLanguage: ToolFilterLanguageDomainModel.emptyValue
+            filterByLanguageId: nil
         )
 
         #expect(personalizedTools.tools.map({ $0.id }).sorted() == ["tool-1", "tool-2"])
@@ -105,7 +105,7 @@ struct GetPersonalizedToolsUseCaseTests {
         let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: nil,
-            filterToolsByLanguage: ToolFilterLanguageDomainModel.emptyValue
+            filterByLanguageId: nil
         )
 
         #expect(!personalizedTools.tools.map({ $0.id }).contains("lesson-1"))
@@ -124,13 +124,7 @@ struct GetPersonalizedToolsUseCaseTests {
         let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: nil,
-            filterToolsByLanguage: ToolFilterLanguageDomainModel.createLanguage(
-                id: TestPersonalizedToolsLanguageId.french,
-                languageName: "",
-                languageNameTranslatedInAppLanguage: "",
-                toolsAvailable: "",
-                numberOfToolsAvailable: 0
-            )
+            filterByLanguageId: TestPersonalizedToolsLanguageId.french
         )
 
         #expect(personalizedTools.tools.map({ $0.id }) == ["tool-4"])
@@ -162,7 +156,7 @@ struct GetPersonalizedToolsUseCaseTests {
         let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
             appLanguage: argument.appLanguage,
             country: nil,
-            filterToolsByLanguage: ToolFilterLanguageDomainModel.emptyValue
+            filterByLanguageId: nil
         )
 
         let unavailableStrings: PersonalizedToolsUnavailableDomainModel = try #require(personalizedTools.unavailableStrings)
@@ -185,7 +179,7 @@ struct GetPersonalizedToolsUseCaseTests {
         let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: LocalizationSettingsCountryDomainModel(isoRegionCode: "ca"),
-            filterToolsByLanguage: ToolFilterLanguageDomainModel.emptyValue
+            filterByLanguageId: nil
         )
 
         #expect(personalizedTools.tools.isEmpty)
@@ -205,7 +199,7 @@ struct GetPersonalizedToolsUseCaseTests {
         let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: LocalizationSettingsCountryDomainModel(isoRegionCode: ""),
-            filterToolsByLanguage: ToolFilterLanguageDomainModel.emptyValue
+            filterByLanguageId: nil
         )
 
         #expect(personalizedTools.tools.map({ $0.id }).sorted() == ["tool-1", "tool-2"])
@@ -218,7 +212,7 @@ struct GetPersonalizedToolsUseCaseTests {
 extension GetPersonalizedToolsUseCaseTests {
 
     @available(iOS 17.4, *)
-    @MainActor private func getPersonalizedTools(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterToolsByLanguage: ToolFilterLanguageDomainModel) async throws -> PersonalizedToolsDomainModel {
+    @MainActor private func getPersonalizedTools(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterByLanguageId: String?) async throws -> PersonalizedToolsDomainModel {
 
         let dependencies: TestDependencies = try getTestDependencies()
 
@@ -245,7 +239,7 @@ extension GetPersonalizedToolsUseCaseTests {
                 .execute(
                     appLanguage: appLanguage,
                     country: country,
-                    filterToolsByLanguage: filterToolsByLanguage
+                    filterByLanguageId: filterByLanguageId
                 )
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
