@@ -43,6 +43,7 @@ struct GetLocalizationSettingsCountryListUseCaseTests {
         let countryListItems: [LocalizationSettingsCountryListItem] = useCase
             .execute(
                 appLanguage: "en",
+                selectedCountryIsoRegionCode: nil,
                 showsPreferNotToSay: argument.showsPreferNotToSay
             )
 
@@ -105,6 +106,7 @@ struct GetLocalizationSettingsCountryListUseCaseTests {
         let countryListItems: [LocalizationSettingsCountryListItem] = useCase
             .execute(
                 appLanguage: argument.appLanguage,
+                selectedCountryIsoRegionCode: nil,
                 showsPreferNotToSay: true
             )
 
@@ -138,6 +140,7 @@ struct GetLocalizationSettingsCountryListUseCaseTests {
         let countryListItems: [LocalizationSettingsCountryListItem] = useCase
             .execute(
                 appLanguage: "en",
+                selectedCountryIsoRegionCode: nil,
                 showsPreferNotToSay: argument.showsPreferNotToSay
             )
 
@@ -150,6 +153,109 @@ struct GetLocalizationSettingsCountryListUseCaseTests {
                 Issue.record("First item should be preferNotToSay")
             }
         }
+    }
+
+    struct SelectedCountryTestArgument {
+        let selectedCountryIsoRegionCode: String?
+        let showsPreferNotToSay: Bool
+        let expectedListItemIds: [String]
+    }
+
+    @Test(
+        """
+        Given: User has previously selected a country in the Localization Settings
+        When: The country list is retrieved
+        Then: The selected country should be first in the list and the remaining countries should keep their original order
+        """,
+        arguments: [
+            SelectedCountryTestArgument(
+                selectedCountryIsoRegionCode: "ES",
+                showsPreferNotToSay: false,
+                expectedListItemIds: ["ES", "US", "JP"]
+            ),
+            SelectedCountryTestArgument(
+                selectedCountryIsoRegionCode: "JP",
+                showsPreferNotToSay: true,
+                expectedListItemIds: ["JP", "prefer_not_to_say", "US", "ES"]
+            ),
+            SelectedCountryTestArgument(
+                selectedCountryIsoRegionCode: "US",
+                showsPreferNotToSay: false,
+                expectedListItemIds: ["US", "ES", "JP"]
+            )
+        ]
+    )
+    func shouldMoveSelectedCountryToTopOfList(argument: SelectedCountryTestArgument) {
+
+        let useCase = Self.createUseCase(countries: Self.createCountries())
+
+        let countryListItems: [LocalizationSettingsCountryListItem] = useCase
+            .execute(
+                appLanguage: "en",
+                selectedCountryIsoRegionCode: argument.selectedCountryIsoRegionCode,
+                showsPreferNotToSay: argument.showsPreferNotToSay
+            )
+
+        #expect(countryListItems.map { $0.id } == argument.expectedListItemIds)
+    }
+
+    @Test(
+        """
+        Given: User has not selected a country or the selected country is not in the country list
+        When: The country list is retrieved
+        Then: The list order should remain unchanged
+        """,
+        arguments: [
+            SelectedCountryTestArgument(
+                selectedCountryIsoRegionCode: nil,
+                showsPreferNotToSay: false,
+                expectedListItemIds: ["US", "ES", "JP"]
+            ),
+            SelectedCountryTestArgument(
+                selectedCountryIsoRegionCode: "FR",
+                showsPreferNotToSay: false,
+                expectedListItemIds: ["US", "ES", "JP"]
+            ),
+            SelectedCountryTestArgument(
+                selectedCountryIsoRegionCode: "FR",
+                showsPreferNotToSay: true,
+                expectedListItemIds: ["prefer_not_to_say", "US", "ES", "JP"]
+            )
+        ]
+    )
+    func shouldKeepOriginalListOrderWhenSelectedCountryIsNotInList(argument: SelectedCountryTestArgument) {
+
+        let useCase = Self.createUseCase(countries: Self.createCountries())
+
+        let countryListItems: [LocalizationSettingsCountryListItem] = useCase
+            .execute(
+                appLanguage: "en",
+                selectedCountryIsoRegionCode: argument.selectedCountryIsoRegionCode,
+                showsPreferNotToSay: argument.showsPreferNotToSay
+            )
+
+        #expect(countryListItems.map { $0.id } == argument.expectedListItemIds)
+    }
+
+    @Test(
+        """
+        Given: User has previously selected "Prefer not to say" in the Localization Settings
+        When: The country list is retrieved
+        Then: "Prefer not to say" should remain at the top of the list
+        """
+    )
+    func shouldKeepPreferNotToSayAtTopOfListWhenSelected() {
+
+        let useCase = Self.createUseCase(countries: Self.createCountries())
+
+        let countryListItems: [LocalizationSettingsCountryListItem] = useCase
+            .execute(
+                appLanguage: "en",
+                selectedCountryIsoRegionCode: "",
+                showsPreferNotToSay: true
+            )
+
+        #expect(countryListItems.map { $0.id } == ["prefer_not_to_say", "US", "ES", "JP"])
     }
 }
 

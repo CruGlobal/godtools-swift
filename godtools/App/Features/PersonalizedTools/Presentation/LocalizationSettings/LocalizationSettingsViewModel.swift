@@ -68,23 +68,26 @@ final class LocalizationSettingsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$selectedCountryIsoRegionCode)
 
-        $appLanguage
-            .dropFirst()
-            .map { appLanguage in
-                getCountryListUseCase
-                    .execute(
-                        appLanguage: appLanguage,
-                        showsPreferNotToSay: showsPreferNotToSay
-                    )
-            }
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { [weak self] (countriesList: [LocalizationSettingsCountryListItem]) in
-                
-                self?.countriesList = countriesList
-            })
-            .store(in: &cancellables)
+        Publishers.CombineLatest(
+            $appLanguage.dropFirst(),
+            $selectedCountryIsoRegionCode.dropFirst()
+        )
+        .map { (appLanguage: AppLanguageDomainModel, selectedCountryIsoRegionCode: String?) in
+            getCountryListUseCase
+                .execute(
+                    appLanguage: appLanguage,
+                    selectedCountryIsoRegionCode: selectedCountryIsoRegionCode,
+                    showsPreferNotToSay: showsPreferNotToSay
+                )
+        }
+        .receive(on: DispatchQueue.main)
+        .sink(receiveCompletion: { _ in
+            
+        }, receiveValue: { [weak self] (countriesList: [LocalizationSettingsCountryListItem]) in
+            
+            self?.countriesList = countriesList
+        })
+        .store(in: &cancellables)
         
         Publishers.CombineLatest(
             $searchText,

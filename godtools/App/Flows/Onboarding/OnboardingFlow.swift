@@ -219,8 +219,7 @@ final class OnboardingFlow: GTFlow {
         
         pushFlow(
             flow: LocalizationSettingsFlow(
-                appDiContainer: appDiContainer,
-                shouldStoreCountryWhenSelected: false
+                appDiContainer: appDiContainer
             )
         )
     }
