@@ -35,12 +35,12 @@ final class GetPersonalizedToolsUseCase: Sendable {
     @MainActor func execute(
         appLanguage: AppLanguageDomainModel,
         country: LocalizationSettingsCountryDomainModel?,
-        filterToolsByLanguage: ToolFilterLanguageDomainModel
+        filterByLanguageId: String?
     ) -> AnyPublisher<PersonalizedToolsDomainModel, Error> {
         
         let languageCode: String = getLanguageElseAppLanguage
             .getLanguageCode(
-                languageId: filterToolsByLanguage.filterId,
+                languageId: filterByLanguageId,
                 appLanguage: appLanguage
             )
         
@@ -50,8 +50,6 @@ final class GetPersonalizedToolsUseCase: Sendable {
             }
             return nil
         }()
-        
-        let hasCountry: Bool = countryIsoRegionCode != nil
         
         return Publishers.CombineLatest(
             personalizedToolsRepository
@@ -68,10 +66,11 @@ final class GetPersonalizedToolsUseCase: Sendable {
             
             return AnyPublisher() {
                 try await self.personalizedToolsRepository
-                    .getPersistedPersonalizedTools(
-                        country: countryIsoRegionCode,
-                        language: languageCode,
-                        resourceTypes: ResourceType.toolTypes
+                    .getTools(
+                        requestPriority: .high,
+                        type: self.getPersonalizedToolsType(countryIsoRegionCode: countryIsoRegionCode, languageCode: languageCode),
+                        resourceTypes: ResourceType.toolTypes,
+                        sortByResponse: true
                     )
             }
         }
@@ -81,10 +80,10 @@ final class GetPersonalizedToolsUseCase: Sendable {
                 .mapToolsToListItems(
                     tools: resources,
                     appLanguage: appLanguage,
-                    languageIdForAvailabilityText: filterToolsByLanguage.filterId
+                    languageIdForAvailabilityText: filterByLanguageId
                 )
 
-            let showsPersonalizationUnavailable: Bool = !hasCountry && tools.isEmpty
+            let showsPersonalizationUnavailable: Bool = tools.isEmpty
             let unavailableStrings: PersonalizedToolsUnavailableDomainModel? = showsPersonalizationUnavailable ? self.getToolsUnavailable(appLanguage: appLanguage) : nil
 
             return PersonalizedToolsDomainModel(
@@ -93,6 +92,18 @@ final class GetPersonalizedToolsUseCase: Sendable {
             )
         }
         .eraseToAnyPublisher()
+    }
+
+    private func getPersonalizedToolsType(
+        countryIsoRegionCode: String?,
+        languageCode: String
+    ) -> PersonalizedToolsType {
+
+        guard let countryIsoRegionCode = countryIsoRegionCode else {
+            return .defaultOrder(language: languageCode)
+        }
+
+        return .ranked(country: countryIsoRegionCode, language: languageCode)
     }
 
     private func getToolsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedToolsUnavailableDomainModel {

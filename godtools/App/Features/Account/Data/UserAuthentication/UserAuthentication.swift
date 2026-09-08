@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import Combine
 import SocialAuthentication
+import Combine
 
 final class UserAuthentication: Sendable {
         
@@ -31,7 +31,7 @@ final class UserAuthentication: Sendable {
         
         get throws {
             
-            guard let authTokenData = try mobileContentAuthTokenRepository.getCachedAuthTokenModel() else {
+            guard let authTokenData = try mobileContentAuthTokenRepository.getAuthToken() else {
                 return false
             }
             
@@ -39,17 +39,11 @@ final class UserAuthentication: Sendable {
         }
     }
     
-    func getIsAuthenticatedChangedPublisher() -> AnyPublisher<Bool, Never> {
-        
+    @MainActor func getIsAuthenticatedPublisher() -> AnyPublisher<Bool, Error> {
         return mobileContentAuthTokenRepository
-            .getAuthTokenChangedPublisher()
-            .map { (authToken: MobileContentAuthTokenDataModel?) in
-                
-                guard let authToken = authToken else {
-                    return false
-                }
-                
-                return !authToken.isExpired
+            .observeCollectionChangesPublisher()
+            .tryMap { _ in
+                return try self.isAuthenticated
             }
             .eraseToAnyPublisher()
     }
@@ -176,7 +170,7 @@ final class UserAuthentication: Sendable {
             name: authUserDomainModel?.name
         )
         
-        let persistedAppleRefreshToken = try mobileContentAuthTokenRepository.getCachedAuthTokenModel()?.appleRefreshToken
+        let persistedAppleRefreshToken = try mobileContentAuthTokenRepository.getAuthToken()?.appleRefreshToken
         
         let appleAuthProviderResponse = AuthenticationProviderResponse(
             accessToken: nil,

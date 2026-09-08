@@ -12,6 +12,7 @@ import GodToolsShared
 import Combine
 import Flow
 
+@MainActor
 enum AppFlowStep: FlowStep {
     
     // app
@@ -32,15 +33,23 @@ enum AppFlowStep: FlowStep {
     case videoButtonTappedFromOnboardingTutorial(youtubeVideoId: String)
     case closeVideoPlayerTappedFromOnboardingTutorial
     case videoEndedOnOnboardingTutorial
+    case continueTappedFromOnboardingTutorial
     case skipTappedFromOnboardingTutorial
     case endTutorialFromOnboardingTutorial
     
     // lessons list
     case lessonLanguageFilterTappedFromLessons
-    case lessonTappedFromLessonsList(lessonListItem: LessonListItemDomainModel, languageFilter: LessonFilterLanguageDomainModel?)
-    case languageTappedFromLessonLanguageFilter
-    case backTappedFromLessonLanguageFilter
+    case personalizedLessonLanguageFilterTappedFromLessons
+    case lessonTappedFromLessonsList(lessonListItem: LessonListItemDomainModel, languageFilterLanguageId: String?)
     case changeLocalizationSettingsTappedFromLessons
+    
+    // lesson filter language
+    case backTappedFromLessonLanguageFilter
+    case languageTappedFromLessonLanguageFilter
+    
+    // personalized lesson filter language
+    case backTappedFromPersonalizedLessonLanguageFilter
+    case languageTappedFromPersonalizedLanguageFilter
 
     // lesson
     case closeLessonSwipeTutorial
@@ -57,29 +66,30 @@ enum AppFlowStep: FlowStep {
     
     // favorites
     case featuredLessonTappedFromFavorites(featuredLesson: FeaturedLessonDomainModel)
-    case viewAllFavoriteToolsTappedFromFavorites
     case toolDetailsTappedFromFavorites(tool: YourFavoritedToolDomainModel)
     case openToolTappedFromFavorites(tool: YourFavoritedToolDomainModel)
     case toolTappedFromFavorites(tool: YourFavoritedToolDomainModel)
     case unfavoriteToolTappedFromFavorites(tool: YourFavoritedToolDomainModel)
     case goToToolsTappedFromFavorites
     
-    // allYourFavoritedTools
-    case backTappedFromAllYourFavoriteTools
-    case toolDetailsTappedFromAllYourFavoriteTools(tool: YourFavoritedToolDomainModel)
-    case openToolTappedFromAllYourFavoriteTools(tool: YourFavoritedToolDomainModel)
-    case toolTappedFromAllYourFavoritedTools(tool: YourFavoritedToolDomainModel)
-    case unfavoriteToolTappedFromAllYourFavoritedTools(tool: YourFavoritedToolDomainModel, didConfirmToolRemovalSubject: PassthroughSubject<Void, Never>)
+    // tool filter category
+    case categoryTappedFromToolCategoryFilter
+    case backTappedFromToolCategoryFilter
     
-    // tools
+    // tool filter language
+    case backTappedFromToolLanguageFilter
+    case languageTappedFromToolLanguageFilter
+    
+    // personalized tool filter language
+    case backTappedFromPersonalizedToolLanguageFilter
+    case languageTappedFromPersonalizedToolLanguageFilter
+        
+    // tools list
     case toolCategoryFilterTappedFromTools
     case toolLanguageFilterTappedFromTools
-    case categoryTappedFromToolCategoryFilter
-    case languageTappedFromToolLanguageFilter
-    case backTappedFromToolCategoryFilter
-    case backTappedFromToolLanguageFilter
-    case spotlightToolTappedFromTools(spotlightTool: SpotlightToolListItemDomainModel, toolFilterLanguage: ToolFilterLanguageDomainModel?)
-    case toolTappedFromTools(tool: ToolListItemDomainModel, toolFilterLanguage: ToolFilterLanguageDomainModel?)
+    case personalizedToolLanguageFilterTappedFromTools
+    case spotlightToolTappedFromTools(spotlightTool: SpotlightToolListItemDomainModel, toolFilterLanguageId: String?)
+    case toolTappedFromTools(tool: ToolListItemDomainModel, toolFilterLanguageId: String?)
     case changeLocalizationSettingsTappedFromTools
     
     // toolDetails
@@ -223,8 +233,6 @@ enum AppFlowStep: FlowStep {
     case shareLinkTappedFromToolScreenShareTutorial
     case closeTappedFromCreatingToolScreenShareSession
     case didCreateSessionFromCreatingToolScreenShareSession(result: Result<WebSocketChannel, Error>, createSessionTrigger: ToolScreenShareFlowCreateSessionTrigger)
-    case cancelTappedFromCreateToolScreenShareSessionTimeout
-    case acceptTappedFromCreateToolScreenShareSessionTimeout
     case shareQRCodeTappedFromToolScreenShareSession(shareUrl: String)
     case dismissedShareToolScreenShareActivityViewController
     case closeTappedFromShareToolScreenQRCode

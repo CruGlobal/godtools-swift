@@ -58,9 +58,9 @@ final class PersonalizedToolsDataLayerDependencies: Sendable {
     func getPersonalizedToolsRepository() -> PersonalizedToolsRepository {
 
         return PersonalizedToolsRepository(
-            api: getPersonalizedToolsApi(),
             cache: getPersonalizedToolsCache(),
-            resourcesRepository: coreDataLayer.getResourcesRepository()
+            resourcesRepository: coreDataLayer.getResourcesRepository(),
+            sync: getPersonalizedToolsSync()
         )
     }
     

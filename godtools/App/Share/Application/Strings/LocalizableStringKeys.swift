@@ -70,7 +70,6 @@ enum LocalizableStringKeys: String {
     case favoritesNoToolsButton = "favorites.noTools.button"
     case favoritesNoToolsDescription = "favorites.noTools.description"
     case favoritesNoToolsTitle = "favorites.noTools.title"
-    case favoritesPageTitle = "favorites.pageTitle"
     case languageSettingsNavTitle = "language_settings"
     case languageSettingsAppInterfaceTitle = "languageSettings.appInterface.title"
     case languageSettingsAppInterfaceMessage = "languageSettings.appInterface.message"

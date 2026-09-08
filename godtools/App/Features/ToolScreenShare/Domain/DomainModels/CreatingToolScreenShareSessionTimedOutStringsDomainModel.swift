@@ -12,9 +12,8 @@ struct CreatingToolScreenShareSessionTimedOutStringsDomainModel: Sendable {
     
     let title: String
     let message: String
-    let acceptActionTitle: String
     
     static var emptyValue: CreatingToolScreenShareSessionTimedOutStringsDomainModel {
-        return CreatingToolScreenShareSessionTimedOutStringsDomainModel(title: "", message: "", acceptActionTitle: "")
+        return CreatingToolScreenShareSessionTimedOutStringsDomainModel(title: "", message: "")
     }
 }

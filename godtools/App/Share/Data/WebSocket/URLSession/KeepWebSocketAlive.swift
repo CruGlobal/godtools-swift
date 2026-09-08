@@ -26,11 +26,11 @@ actor KeepWebSocketAlive {
 
                 try? await Task.sleep(for: .seconds(Self.pingIntervalSeconds))
                 
-                guard !Task.isCancelled, let self = self else {
+                guard !Task.isCancelled else {
                     return
                 }
                 
-                await self.sendPing(webSocketTask: webSocketTask)
+                await self?.sendPing(webSocketTask: webSocketTask)
             }
         }
     }

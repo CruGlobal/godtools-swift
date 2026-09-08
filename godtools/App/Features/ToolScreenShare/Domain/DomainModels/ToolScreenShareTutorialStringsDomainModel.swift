@@ -13,12 +13,14 @@ struct ToolScreenShareTutorialStringsDomainModel: Sendable {
     let generateQRCodeActionTitle: String
     let nextTutorialPageActionTitle: String
     let shareLinkActionTitle: String
+    let skipActionTitle: String
     
     static var emptyValue: ToolScreenShareTutorialStringsDomainModel {
         return ToolScreenShareTutorialStringsDomainModel(
             generateQRCodeActionTitle: "",
             nextTutorialPageActionTitle: "",
-            shareLinkActionTitle: ""
+            shareLinkActionTitle: "",
+            skipActionTitle: ""
         )
     }
 }

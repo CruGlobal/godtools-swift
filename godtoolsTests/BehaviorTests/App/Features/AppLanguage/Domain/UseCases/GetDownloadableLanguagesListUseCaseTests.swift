@@ -128,7 +128,7 @@ struct GetDownloadableLanguagesListUseCaseTests {
 
         for listItem in downloadableLanguages {
 
-            #expect(listItem.languageNameInOwnLanguage == expectedLanguageNames[listItem.languageId])
+            #expect(listItem.languageNamePair.nameInOwnLanguage == expectedLanguageNames[listItem.languageId])
         }
     }
 
@@ -173,7 +173,7 @@ struct GetDownloadableLanguagesListUseCaseTests {
 
         for listItem in downloadableLanguages {
 
-            #expect(listItem.languageNameInAppLanguage == argument.expectedLanguageNames[listItem.languageId])
+            #expect(listItem.languageNamePair.nameInAppLanguage == argument.expectedLanguageNames[listItem.languageId])
         }
     }
 

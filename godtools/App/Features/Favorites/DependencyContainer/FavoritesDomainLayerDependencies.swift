@@ -19,12 +19,6 @@ final class FavoritesDomainLayerDependencies: Sendable {
         self.dataLayer = dataLayer
     }
     
-    func getAllYourFavoritedToolsStringsUseCase() -> GetAllYourFavoritedToolsStringsUseCase {
-        return GetAllYourFavoritedToolsStringsUseCase(
-            localizationServices: core.dataLayer.getLocalizationServices()
-        )
-    }
-    
     func getConfirmRemoveToolFromFavoritesStringsUseCase() -> GetConfirmRemoveToolFromFavoritesStringsUseCase {
         return GetConfirmRemoveToolFromFavoritesStringsUseCase(
             localizationServices: core.dataLayer.getLocalizationServices(),

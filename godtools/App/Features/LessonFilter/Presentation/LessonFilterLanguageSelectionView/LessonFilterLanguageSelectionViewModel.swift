@@ -16,8 +16,8 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
     private let stepEmitter: FlowStepEmitter
     private let getLessonFilterLanguagesStringsUseCase: GetLessonFilterLanguagesStringsUseCase
     private let getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase
-    private let getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase
-    private let storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase
+    private let getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase
+    private let setUserLessonFilterLanguageUseCase: SetUserLessonFilterLanguageUseCase
     private let getSearchBarStringsUseCase: GetSearchBarStringsUseCase
     private let searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
@@ -29,17 +29,17 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
     
     @Published private(set) var searchBarStrings = SearchBarStringsDomainModel.emptyValue
     @Published private(set) var strings = LessonFilterLanguagesStringsDomainModel.emptyValue
+    @Published private(set) var languageSearchResults: [LessonFilterLanguageDomainModel] = Array()
+    @Published private(set) var selectedLanguage: LessonFilterLanguageDomainModel?
     
     @Published var searchText: String = ""
-    @Published var languageSearchResults: [LessonFilterLanguageDomainModel] = Array()
-    @Published var selectedLanguage: LessonFilterLanguageDomainModel?
     
     init(
         stepEmitter: FlowStepEmitter,
         getLessonFilterLanguagesStringsUseCase: GetLessonFilterLanguagesStringsUseCase,
         getLessonFilterLanguagesUseCase: GetLessonFilterLanguagesUseCase,
-        getUserLessonFiltersUseCase: GetUserLessonFiltersUseCase,
-        storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase,
+        getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase,
+        setUserLessonFilterLanguageUseCase: SetUserLessonFilterLanguageUseCase,
         getSearchBarStringsUseCase: GetSearchBarStringsUseCase,
         searchLessonFilterLanguagesUseCase: SearchLessonFilterLanguagesUseCase,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
@@ -48,8 +48,8 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
         self.stepEmitter = stepEmitter
         self.getLessonFilterLanguagesStringsUseCase = getLessonFilterLanguagesStringsUseCase
         self.getLessonFilterLanguagesUseCase = getLessonFilterLanguagesUseCase
-        self.getUserLessonFiltersUseCase = getUserLessonFiltersUseCase
-        self.storeUserLessonFiltersUseCase = storeUserLessonFiltersUseCase
+        self.getUserLessonFilterLanguageUseCase = getUserLessonFilterLanguageUseCase
+        self.setUserLessonFilterLanguageUseCase = setUserLessonFilterLanguageUseCase
         self.getSearchBarStringsUseCase = getSearchBarStringsUseCase
         self.searchLessonFilterLanguagesUseCase = searchLessonFilterLanguagesUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
@@ -84,9 +84,9 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
         
         $appLanguage
             .dropFirst()
-            .map { appLanguage in
-            
-                getUserLessonFiltersUseCase
+            .map { (appLanguage: AppLanguageDomainModel) in
+                
+                getUserLessonFilterLanguageUseCase
                     .execute(
                         appLanguage: appLanguage
                     )
@@ -95,11 +95,7 @@ final class LessonFilterLanguageSelectionViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
-            }, receiveValue: { [weak self] (userFilters: UserLessonFiltersDomainModel) in
-                
-                guard self?.selectedLanguage == nil, let languageFilter = userFilters.languageFilter else {
-                    return
-                }
+            }, receiveValue: { [weak self] (languageFilter: LessonFilterLanguageDomainModel?) in
                 
                 self?.selectedLanguage = languageFilter
             })
@@ -145,12 +141,12 @@ extension LessonFilterLanguageSelectionViewModel {
         
         selectedLanguage = language
         
-        let storeUserLessonFiltersUseCase: StoreUserLessonFiltersUseCase = self.storeUserLessonFiltersUseCase
+        let setUserLessonFilterLanguageUseCase: SetUserLessonFilterLanguageUseCase = self.setUserLessonFilterLanguageUseCase
         
         Task.detached {
             
-            try await storeUserLessonFiltersUseCase
-                .execute(languageFilter: language)
+            try await setUserLessonFilterLanguageUseCase
+                .execute(language: language)
         }
         
         stepEmitter.emit(step: AppFlowStep.languageTappedFromLessonLanguageFilter)

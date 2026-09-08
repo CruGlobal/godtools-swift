@@ -104,9 +104,9 @@ protocol MobileContentRendererNavigationDelegate: AnyObject {
         delegate?.mobileContentRendererNavigationDismissRenderer(navigation: self, event: event)
     }
     
-    func presentError(error: Error, appLanguage: AppLanguageDomainModel) {
+    func presentError(error: Error, appLanguage: AppLanguageDomainModel, acceptTapped: (() -> Void)? = nil) {
         
-        toolFlow?.presentError(appLanguage: appLanguage, error: error)
+        toolFlow?.presentError(appLanguage: appLanguage, error: error, acceptTapped: acceptTapped)
     }
     
     func errorOccurred(error: LegacyMobileContentErrorViewModel) {

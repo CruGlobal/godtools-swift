@@ -13,17 +13,17 @@ final class GetLessonFilterLanguagesUseCase: Sendable {
     
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
-    private let getLessonFilterLangauge: GetLessonFilterLanguage
+    private let mapLanguageToLessonFilterLanguage: MapLanguageToLessonFilterLanguage
     
     init(
         resourcesRepository: ResourcesRepository,
         languagesRepository: LanguagesRepository,
-        getLessonFilterLangauge: GetLessonFilterLanguage
+        mapLanguageToLessonFilterLanguage: MapLanguageToLessonFilterLanguage
     ) {
         
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
-        self.getLessonFilterLangauge = getLessonFilterLangauge
+        self.mapLanguageToLessonFilterLanguage = mapLanguageToLessonFilterLanguage
     }
     
     @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[LessonFilterLanguageDomainModel], Error> {
@@ -50,7 +50,7 @@ final class GetLessonFilterLanguagesUseCase: Sendable {
 
         for language in languages {
 
-            let domainModel: LessonFilterLanguageDomainModel = self.getLessonFilterLangauge.mapLanguageToLessonFilterLanguageDomainModel(
+            let domainModel: LessonFilterLanguageDomainModel = self.mapLanguageToLessonFilterLanguage.map(
                 language: language,
                 translatedInAppLanguage: appLanguage
             )
@@ -65,7 +65,7 @@ final class GetLessonFilterLanguagesUseCase: Sendable {
         return domainModels
             .sorted { (language1: LessonFilterLanguageDomainModel, language2: LessonFilterLanguageDomainModel) in
                 
-                return language1.languageNameTranslatedInAppLanguage.lowercased() < language2.languageNameTranslatedInAppLanguage.lowercased()
+                return language1.languageNamePair.nameInAppLanguage.lowercased() < language2.languageNamePair.nameInAppLanguage.lowercased()
             }
     }
 }

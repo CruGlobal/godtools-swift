@@ -95,7 +95,7 @@ struct LocalizationSettingsConfirmationView: View {
                             fontSize: buttonFontSize,
                             width: buttonWidth,
                             height: buttonHeight,
-                            accessibility: AccessibilityStrings.Button.continueForward,
+                            accessibility: AccessibilityStrings.Button.confirmLocalizationSetting,
                             tapped: {
                                 viewModel.confirmTapped()
                             }

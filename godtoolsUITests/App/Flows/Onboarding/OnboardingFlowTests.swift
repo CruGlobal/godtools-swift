@@ -21,6 +21,46 @@ final class OnboardingFlowTests: BaseFlowTests {
         )
     }
     
+    private func navigateToWatchOnboardingVideoTutorial(app: XCUIApplication) {
+                
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .watchOnboardingTutorialVideo)
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .watchOnboardingTutorialVideo)
+    }
+    
+    private func navigateBackToOnboardingTutorialFromWatchOnboardingTutorialVideo(app: XCUIApplication) {
+        
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .close)
+        
+        super.assertIfInitialScreenDoesntExist()
+    }
+    
+    private func chooseAppLanguageFromTutorial() {
+        
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .continueForward, buttonQueryType: .exactMatch)
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
+        
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .appLanguageListItem, buttonQueryType: .firstMatch)
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .confirmAppLanguage)
+                
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .changeLanguage)
+    }
+    
+    private func chooseAppLanguageAndCountryFromTutorial() {
+        
+        chooseAppLanguageFromTutorial()
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .localizationSettings)
+        
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .localizationSettingsCountryListItem, buttonQueryType: .firstMatch)
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .confirmLocalizationSettings)
+        
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .confirmLocalizationSetting)
+    }
+    
     func testAppLaunchedToOnboardingTutorial() {
         
         launchAppToOnboardingTutorial()
@@ -44,29 +84,6 @@ final class OnboardingFlowTests: BaseFlowTests {
         navigateBackToOnboardingTutorialFromWatchOnboardingTutorialVideo(app: app)
     }
     
-    private func navigateToWatchOnboardingVideoTutorial(app: XCUIApplication) {
-                
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .watchOnboardingTutorialVideo)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .watchOnboardingTutorialVideo)
-    }
-    
-    private func navigateBackToOnboardingTutorialFromWatchOnboardingTutorialVideo(app: XCUIApplication) {
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .close)
-        
-        super.assertIfInitialScreenDoesntExist()
-    }
-    
-    func testFirstContinueButtonTapNavigatesToChooseAppLanguage() {
-        
-        launchAppToOnboardingTutorial()
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .continueForward, buttonQueryType: .exactMatch)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
-    }
-    
     func testChooseAppLanguageNavigatesToConfirmAppLanguage() {
         
         launchAppToOnboardingTutorial()
@@ -84,15 +101,7 @@ final class OnboardingFlowTests: BaseFlowTests {
         
         launchAppToOnboardingTutorial()
         
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .continueForward, buttonQueryType: .exactMatch)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .appLanguageListItem, buttonQueryType: .firstMatch)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .confirmAppLanguage)
-                
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .changeLanguage)
+        chooseAppLanguageFromTutorial()
         
         assertIfScreenDoesNotExist(screenAccessibility: .localizationSettings)
     }
@@ -101,23 +110,7 @@ final class OnboardingFlowTests: BaseFlowTests {
         
         launchAppToOnboardingTutorial()
         
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .continueForward, buttonQueryType: .exactMatch)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .appLanguageListItem, buttonQueryType: .firstMatch)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .confirmAppLanguage)
-                
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .changeLanguage)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .localizationSettings)
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .localizationSettingsCountryListItem, buttonQueryType: .firstMatch)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .confirmLocalizationSettings)
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .continueForward)
+        chooseAppLanguageAndCountryFromTutorial()
         
         assertIfScreenDoesNotExist(screenAccessibility: .onboardingTutorial)
     }
@@ -126,11 +119,7 @@ final class OnboardingFlowTests: BaseFlowTests {
         
         launchAppToOnboardingTutorial()
         
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .continueForward, buttonQueryType: .exactMatch)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .back, buttonQueryType: .exactMatch)
+        chooseAppLanguageAndCountryFromTutorial()
         
         assertIfScreenDoesNotExist(screenAccessibility: .onboardingTutorial)
         
@@ -143,11 +132,7 @@ final class OnboardingFlowTests: BaseFlowTests {
      
         launchAppToOnboardingTutorial()
         
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .continueForward)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
-        
-        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .back, buttonQueryType: .exactMatch)
+        chooseAppLanguageAndCountryFromTutorial()
         
         assertIfScreenDoesNotExist(screenAccessibility: .onboardingTutorial)
         
@@ -156,5 +141,30 @@ final class OnboardingFlowTests: BaseFlowTests {
         assertIfButtonDoesNotExistElseTap(buttonAccessibility: .skip)
         
         assertIfScreenDoesNotExist(screenAccessibility: .dashboardFavorites)
+    }
+    
+    func testContinueButtonNavigatesToAppLanguagesUntilAppLanguageIsConfirmed() {
+        
+        launchAppToOnboardingTutorial()
+        
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .continueForward, buttonQueryType: .exactMatch)
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .appLanguages)
+        
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .back)
+        
+        assertIfInitialScreenDoesntExist()
+        
+        chooseAppLanguageFromTutorial()
+        
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .back)
+        
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .back)
+        
+        assertIfInitialScreenDoesntExist()
+        
+        assertIfButtonDoesNotExistElseTap(buttonAccessibility: .continueForward, buttonQueryType: .exactMatch)
+        
+        assertIfScreenDoesNotExist(screenAccessibility: .localizationSettings)
     }
 }

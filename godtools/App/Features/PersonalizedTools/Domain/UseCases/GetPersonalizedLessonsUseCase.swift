@@ -38,10 +38,13 @@ final class GetPersonalizedLessonsUseCase: Sendable {
     @MainActor func execute(
         appLanguage: AppLanguageDomainModel,
         country: LocalizationSettingsCountryDomainModel?,
-        filterLessonsByLanguage: LessonFilterLanguageDomainModel?
+        filterLessonsByLanguageId: String?
     ) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> {
 
-        let languageCode: String = getLanguageElseAppLanguage.getLanguageCode(languageId: filterLessonsByLanguage?.languageId, appLanguage: appLanguage)
+        let languageCode: String = getLanguageElseAppLanguage.getLanguageCode(
+            languageId: filterLessonsByLanguageId,
+            appLanguage: appLanguage
+        )
 
         let countryIsoRegionCode: String? = {
             if let isoRegionCode = country?.isoRegionCode, !isoRegionCode.isEmpty {
@@ -54,12 +57,16 @@ final class GetPersonalizedLessonsUseCase: Sendable {
             countryIsoRegionCode: countryIsoRegionCode,
             languageCode: languageCode,
             appLanguage: appLanguage,
-            filterLessonsByLanguage: filterLessonsByLanguage,
-            hasCountry: countryIsoRegionCode != nil
+            filterLessonsByLanguageId: filterLessonsByLanguageId
         )
     }
 
-    @MainActor private func getPersonalizedLessonsPublisher(countryIsoRegionCode: String?, languageCode: String, appLanguage: AppLanguageDomainModel, filterLessonsByLanguage: LessonFilterLanguageDomainModel?, hasCountry: Bool) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> {
+    @MainActor private func getPersonalizedLessonsPublisher(
+        countryIsoRegionCode: String?,
+        languageCode: String,
+        appLanguage: AppLanguageDomainModel,
+        filterLessonsByLanguageId: String?
+    ) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> {
 
         return Publishers.CombineLatest3(
             personalizedToolsRepository
@@ -78,10 +85,11 @@ final class GetPersonalizedLessonsUseCase: Sendable {
 
             return AnyPublisher() {
                 try await self.personalizedToolsRepository
-                    .getPersistedPersonalizedTools(
-                        country: countryIsoRegionCode,
-                        language: languageCode,
-                        resourceTypes: [.lesson]
+                    .getTools(
+                        requestPriority: .high,
+                        type: self.getPersonalizedToolsType(countryIsoRegionCode: countryIsoRegionCode, languageCode: languageCode),
+                        resourceTypes: [.lesson],
+                        sortByResponse: true
                     )
             }
         })
@@ -90,10 +98,10 @@ final class GetPersonalizedLessonsUseCase: Sendable {
             let lessons = try self.getLessonsListItems.mapLessonsToListItems(
                 lessons: resources,
                 appLanguage: appLanguage,
-                filterLessonsByLanguage: filterLessonsByLanguage
+                filterLessonsByLanguageId: filterLessonsByLanguageId
             )
 
-            let showsPersonalizationUnavailable: Bool = !hasCountry && lessons.isEmpty
+            let showsPersonalizationUnavailable: Bool = lessons.isEmpty
             let unavailableStrings: PersonalizedLessonsUnavailableDomainModel? = showsPersonalizationUnavailable ? self.getLessonsUnavailable(appLanguage: appLanguage) : nil
 
             return PersonalizedLessonsDomainModel(
@@ -104,6 +112,18 @@ final class GetPersonalizedLessonsUseCase: Sendable {
         .eraseToAnyPublisher()
     }
     
+    private func getPersonalizedToolsType(
+        countryIsoRegionCode: String?,
+        languageCode: String
+    ) -> PersonalizedToolsType {
+
+        guard let countryIsoRegionCode = countryIsoRegionCode else {
+            return .defaultOrder(language: languageCode)
+        }
+
+        return .ranked(country: countryIsoRegionCode, language: languageCode)
+    }
+
     private func getLessonsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedLessonsUnavailableDomainModel {
 
         let titleKey: String = LocalizableStringKeys.lessonsPersonalizationUnavailableTitle.key

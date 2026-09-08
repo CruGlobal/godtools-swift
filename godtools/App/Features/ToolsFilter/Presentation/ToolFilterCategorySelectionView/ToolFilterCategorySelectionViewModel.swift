@@ -11,7 +11,7 @@ import Combine
 import Flow
 
 @MainActor
-class ToolFilterCategorySelectionViewModel: ObservableObject {
+final class ToolFilterCategorySelectionViewModel: ObservableObject {
         
     private let stepEmitter: FlowStepEmitter
     private let getToolFilterCategoriesStringsUseCase: GetToolFilterCategoriesStringsUseCase
@@ -30,7 +30,7 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
     
     @Published private(set) var searchBarStrings = SearchBarStringsDomainModel.emptyValue
     @Published private(set) var strings = ToolFilterCategoriesStringsDomainModel.emptyValue
-    @Published private(set) var selectedLanguage = ToolFilterLanguageDomainModel.emptyValue
+    @Published private(set) var selectedLanguageId: String?
     @Published private(set) var selectedCategory = ToolFilterCategoryDomainModel.emptyValue
     @Published private(set) var categorySearchResults: [ToolFilterCategoryDomainModel] = Array()
     
@@ -81,20 +81,20 @@ class ToolFilterCategorySelectionViewModel: ObservableObject {
             .sink { [weak self] (categoryFilter: ToolFilterCategoryDomainModel, languageFilter: ToolFilterLanguageDomainModel) in
             
                 self?.selectedCategory = categoryFilter
-                self?.selectedLanguage = languageFilter
+                self?.selectedLanguageId = languageFilter.languageId
             }
             .store(in: &cancellables)
         
         Publishers.CombineLatest(
             $appLanguage.dropFirst(),
-            $selectedLanguage
+            $selectedLanguageId
         )
-        .map { (appLanguage: AppLanguageDomainModel, selectedLanguage: ToolFilterLanguageDomainModel) in
+        .map { (appLanguage: AppLanguageDomainModel, selectedLanguageId: String?) in
             
             getToolFilterCategoriesUseCase
                 .execute(
                     appLanguage: appLanguage,
-                    filteredByLanguage: selectedLanguage
+                    filteredByLanguageId: selectedLanguageId
                 )
         }
         .switchToLatest()

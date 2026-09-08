@@ -57,7 +57,7 @@ final class MobileContentApiAuthSession: MobileContentApiAuthSessionInterface {
     
     private func getAuthToken() async throws -> String {
         
-        if let cachedAuthTokenDataModel = try mobileContentAuthTokenRepository.getCachedAuthTokenModel(), !cachedAuthTokenDataModel.isExpired {
+        if let cachedAuthTokenDataModel = try mobileContentAuthTokenRepository.getAuthToken(), !cachedAuthTokenDataModel.isExpired {
             
             return cachedAuthTokenDataModel.token
         }

@@ -18,10 +18,10 @@ final class GetUserIsAuthenticatedUseCase: Sendable {
         self.userAuthentication = userAuthentication
     }
     
-    func execute() -> AnyPublisher<UserIsAuthenticatedDomainModel, Never> {
+    @MainActor func execute() -> AnyPublisher<UserIsAuthenticatedDomainModel, Error> {
         
         return userAuthentication
-            .getIsAuthenticatedChangedPublisher()
+            .getIsAuthenticatedPublisher()
             .map { (isAuthenticated: Bool) in
                 
                 return UserIsAuthenticatedDomainModel(isAuthenticated: isAuthenticated)

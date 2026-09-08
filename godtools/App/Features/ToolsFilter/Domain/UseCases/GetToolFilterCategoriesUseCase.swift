@@ -20,7 +20,10 @@ final class GetToolFilterCategoriesUseCase: Sendable {
         self.getToolFilterCategory = getToolFilterCategory
     }
     
-    @MainActor func execute(appLanguage: AppLanguageDomainModel, filteredByLanguage: ToolFilterLanguageDomainModel) -> AnyPublisher<[ToolFilterCategoryDomainModel], Error> {
+    @MainActor func execute(
+        appLanguage: AppLanguageDomainModel,
+        filteredByLanguageId: String?
+    ) -> AnyPublisher<[ToolFilterCategoryDomainModel], Error> {
         
         return resourcesRepository
             .observeCollectionChangesPublisher()
@@ -30,12 +33,12 @@ final class GetToolFilterCategoriesUseCase: Sendable {
                 return AnyPublisher() {
 
                     let categoryIds = self.resourcesRepository
-                        .getAllToolCategoryIds(filteredByLanguageId: filteredByLanguage.filterId)
+                        .getAllToolCategoryIds(filteredByLanguageId: filteredByLanguageId)
 
                     return self.getToolFilterCategory.createCategoryFilters(
                         from: categoryIds,
                         translatedInAppLanguage: appLanguage,
-                        filteredByLanguageId: filteredByLanguage.filterId
+                        filteredByLanguageId: filteredByLanguageId
                     )
                 }
             }

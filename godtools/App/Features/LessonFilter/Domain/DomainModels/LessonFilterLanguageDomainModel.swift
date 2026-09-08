@@ -8,25 +8,19 @@
 
 import Foundation
 
-struct LessonFilterLanguageDomainModel: Sendable {
+struct LessonFilterLanguageDomainModel: ToolLanguageFilterItemDomainModelInterface {
     
+    let id: String
     let languageId: String
-    let languageNameTranslatedInLanguage: String
-    let languageNameTranslatedInAppLanguage: String
+    let languageNamePair: TranslatedLanguageNamePairDomainModel
     let lessonsAvailableText: String
     let lessonsAvailableCount: Int
-}
-
-extension LessonFilterLanguageDomainModel: StringSearchable {
     
-    var searchableStrings: [String] {
-        return [languageNameTranslatedInLanguage, languageNameTranslatedInAppLanguage]
-    }
-}
-
-extension LessonFilterLanguageDomainModel: Identifiable {
-    
-    var id: String {
+    var filterLanguageId: String? {
         return languageId
+    }
+    
+    var availableText: String? {
+        return lessonsAvailableText
     }
 }

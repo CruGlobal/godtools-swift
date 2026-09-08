@@ -1,5 +1,5 @@
 //
-//  StoreUserLessonFiltersUseCase.swift
+//  SetUserLessonFilterLanguageUseCase.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 7/8/24.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class StoreUserLessonFiltersUseCase: Sendable {
+final class SetUserLessonFilterLanguageUseCase: Sendable {
     
     private let userLessonFiltersRepository: UserLessonFiltersRepository
     
@@ -16,10 +16,10 @@ final class StoreUserLessonFiltersUseCase: Sendable {
         self.userLessonFiltersRepository = userLessonFiltersRepository
     }
     
-    func execute(languageFilter: LessonFilterLanguageDomainModel) async throws {
+    func execute(language: LessonFilterLanguageDomainModel) async throws {
         
         try await userLessonFiltersRepository.storeUserLessonLanguageFilter(
-            languageId: languageFilter.languageId
+            languageId: language.languageId
         )
     }
 }

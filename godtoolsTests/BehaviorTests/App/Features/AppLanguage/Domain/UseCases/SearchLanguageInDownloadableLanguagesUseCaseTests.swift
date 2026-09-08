@@ -68,57 +68,49 @@ extension SearchLanguageInDownloadableLanguagesUseCaseTests {
         let downloadableLanguagesList = [
             DownloadableLanguageListItemDomainModel(
                 languageId: "0",
-                languageNameInOwnLanguage: "Apple",
-                languageNameInAppLanguage: "Orange",
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "Apple", nameInAppLanguage: "Orange"),
                 toolsAvailableText: "",
                 downloadStatus: .notDownloaded
             ),
             DownloadableLanguageListItemDomainModel(
                 languageId: "1",
-                languageNameInOwnLanguage: "Cherry",
-                languageNameInAppLanguage: "Blue",
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "Cherry", nameInAppLanguage: "Blue"),
                 toolsAvailableText: "",
                 downloadStatus: .notDownloaded
             ),
             DownloadableLanguageListItemDomainModel(
                 languageId: "2",
-                languageNameInOwnLanguage: "Strawberry",
-                languageNameInAppLanguage: "Black",
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "Strawberry", nameInAppLanguage: "Black"),
                 toolsAvailableText: "",
                 downloadStatus: .notDownloaded
             ),
             DownloadableLanguageListItemDomainModel(
                 languageId: "3",
-                languageNameInOwnLanguage: "Kiwi",
-                languageNameInAppLanguage: "Yellow",
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "Kiwi", nameInAppLanguage: "Yellow"),
                 toolsAvailableText: "",
                 downloadStatus: .notDownloaded
             ),
             DownloadableLanguageListItemDomainModel(
                 languageId: "4",
-                languageNameInOwnLanguage: "Pink",
-                languageNameInAppLanguage: "Spinach",
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "Pink", nameInAppLanguage: "Spinach"),
                 toolsAvailableText: "",
                 downloadStatus: .notDownloaded
             ),
             DownloadableLanguageListItemDomainModel(
                 languageId: "5",
-                languageNameInOwnLanguage: "Green",
-                languageNameInAppLanguage: "Grape",
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "Green", nameInAppLanguage: "Grape"),
                 toolsAvailableText: "",
                 downloadStatus: .notDownloaded
             ),
             DownloadableLanguageListItemDomainModel(
                 languageId: "6",
-                languageNameInOwnLanguage: "Berry",
-                languageNameInAppLanguage: "Brown",
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "Berry", nameInAppLanguage: "Brown"),
                 toolsAvailableText: "",
                 downloadStatus: .notDownloaded
             ),
             DownloadableLanguageListItemDomainModel(
                 languageId: "7",
-                languageNameInOwnLanguage: "Cucumber",
-                languageNameInAppLanguage: "Purple",
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "Cucumber", nameInAppLanguage: "Purple"),
                 toolsAvailableText: "",
                 downloadStatus: .notDownloaded
             )

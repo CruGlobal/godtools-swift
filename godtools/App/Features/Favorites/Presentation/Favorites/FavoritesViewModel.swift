@@ -20,10 +20,11 @@ final class FavoritesViewModel: ObservableObject {
     private let getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
+    private let reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase
     private let getToolBannerUseCase: GetToolBannerUseCase
     private let imageCache: ImageCacheInterface
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
-    private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase
+    private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase // TODO: Can remove in GT-2880. ~Levi
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
@@ -35,8 +36,8 @@ final class FavoritesViewModel: ObservableObject {
     
     @Published private(set) var strings = FavoritesStringsDomainModel.emptyValue
     @Published private(set) var showsOpenTutorialBanner: Bool = false
-    @Published private(set) var featuredLessons: [FeaturedLessonDomainModel] = Array()
-    @Published private(set) var yourFavoritedTools: [YourFavoritedToolDomainModel] = Array()
+    @Published private(set) var featuredLessons: [FeaturedLessonDomainModel] = Array() // TODO: Can remove in GT-2880. ~Levi
+    @Published private(set) var favoritedTools: [YourFavoritedToolDomainModel] = Array()
     
     init(
         stepEmitter: FlowStepEmitter,
@@ -45,6 +46,7 @@ final class FavoritesViewModel: ObservableObject {
         getYourFavoritedToolsUseCase: GetYourFavoritedToolsUseCase,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
         getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase,
+        reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase,
         getToolBannerUseCase: GetToolBannerUseCase,
         imageCache: ImageCacheInterface,
         disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase,
@@ -60,6 +62,7 @@ final class FavoritesViewModel: ObservableObject {
         self.resourcesRepository = resourcesRepository
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
+        self.reorderFavoritedToolUseCase = reorderFavoritedToolUseCase
         self.getToolBannerUseCase = getToolBannerUseCase
         self.imageCache = imageCache
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
@@ -100,20 +103,19 @@ final class FavoritesViewModel: ObservableObject {
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
-                
+
                 getYourFavoritedToolsUseCase
                     .execute(
-                        appLanguage: appLanguage,
-                        maxCount: 5
+                        appLanguage: appLanguage
                     )
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { _ in
                 
-            }, receiveValue: { [weak self] (yourFavoritedTools: [YourFavoritedToolDomainModel]) in
+            }, receiveValue: { [weak self] (favoritedTools: [YourFavoritedToolDomainModel]) in
                 
-                self?.yourFavoritedTools = yourFavoritedTools
+                self?.favoritedTools = favoritedTools
             })
             .store(in: &cancellables)
         
@@ -200,6 +202,8 @@ final class FavoritesViewModel: ObservableObject {
     
     private func trackFeaturedLessonTappedAnalytics(featuredLesson: FeaturedLessonDomainModel) {
        
+        // TODO: This method we may want in GT-2880. ~Levi
+        
         let analyticsProperties = AnalyticsProperties(
             screenName: analyticsScreenName,
             siteSection: "",
@@ -287,6 +291,17 @@ final class FavoritesViewModel: ObservableObject {
 
 extension FavoritesViewModel {
     
+    func getToolViewModel(tool: YourFavoritedToolDomainModel) -> ToolCardViewModel {
+                
+        return ToolCardViewModel(
+            tool: tool,
+            accessibility: .favoriteTool,
+            getToolIsFavoritedUseCase: getToolIsFavoritedUseCase,
+            getToolBannerUseCase: getToolBannerUseCase,
+            imageCache: imageCache
+        )
+    }
+    
     func pageViewed() {
         
         trackPageView()
@@ -344,6 +359,8 @@ extension FavoritesViewModel {
     
     func getFeaturedLessonViewModel(featuredLesson: FeaturedLessonDomainModel) -> LessonCardViewModel  {
                 
+        // TODO: This method we may want in GT-2880. ~Levi
+        
         return LessonCardViewModel(
             lessonListItem: featuredLesson,
             getToolBannerUseCase: getToolBannerUseCase,
@@ -353,6 +370,8 @@ extension FavoritesViewModel {
     
     func featuredLessonTapped(featuredLesson: FeaturedLessonDomainModel) {
                 
+        // TODO: This method we may want in GT-2880. Step featuredLessonTappedFromLessons. ~Levi
+        
         stepEmitter.emit(step: AppFlowStep.featuredLessonTappedFromFavorites(featuredLesson: featuredLesson))
         trackFeaturedLessonTappedAnalytics(featuredLesson: featuredLesson)
     }
@@ -366,11 +385,6 @@ extension FavoritesViewModel {
             getToolBannerUseCase: getToolBannerUseCase,
             imageCache: imageCache
         )
-    }
-    
-    func viewAllFavoriteToolsTapped() {
-        
-        stepEmitter.emit(step: AppFlowStep.viewAllFavoriteToolsTappedFromFavorites)
     }
     
     func toolDetailsTapped(tool: YourFavoritedToolDomainModel) {
@@ -397,5 +411,31 @@ extension FavoritesViewModel {
         trackOpenFavoritedToolButtonAnalytics(tool: tool)
         
         stepEmitter.emit(step: AppFlowStep.toolTappedFromFavorites(tool: tool))
+    }
+    
+    func toolMoved(fromOffsets source: IndexSet, toOffset destination: Int) {
+        
+        for index in source {
+            
+            guard index < favoritedTools.count && index >= 0 else {
+                continue
+            }
+            
+            let toolToMove: YourFavoritedToolDomainModel = favoritedTools[index]
+            
+            let newPosition: Int = index < destination ? destination - 1 : destination
+            
+            let reorderFavoritedToolUseCase: ReorderFavoritedToolUseCase = self.reorderFavoritedToolUseCase
+            
+            Task.detached {
+                
+                try await reorderFavoritedToolUseCase
+                    .execute(
+                        toolId: toolToMove.id,
+                        originalPosition: index,
+                        newPosition: newPosition
+                    )
+            }
+        }
     }
 }

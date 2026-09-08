@@ -60,21 +60,16 @@ final class GetDownloadedLanguagesListUseCase: Sendable {
 
         for language in languages {
 
-            let languageNameInOwnLanguage = getTranslatedLanguageName.getLanguageName(
+            let languageNamePair: TranslatedLanguageNamePairDomainModel = getTranslatedLanguageName.getLanguageNamePair(
                 language: language,
-                translatedInLanguage: language.code
-            )
-            let languageNameInAppLanguage = getTranslatedLanguageName.getLanguageName(
-                language: language,
-                translatedInLanguage: appLanguage
+                appLanguage: appLanguage
             )
 
             languagesList.append(
                 DownloadedLanguageListItemDomainModel(
                     languageId: language.id,
                     languageCode: language.code,
-                    languageNameInOwnLanguage: languageNameInOwnLanguage,
-                    languageNameInAppLanguage: languageNameInAppLanguage
+                    languageNamePair: languageNamePair
                 )
             )
         }

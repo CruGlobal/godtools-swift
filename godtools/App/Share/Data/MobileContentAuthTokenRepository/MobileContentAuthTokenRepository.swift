@@ -20,6 +20,11 @@ final class MobileContentAuthTokenRepository: Sendable {
         self.cache = cache
     }
     
+    @MainActor func observeCollectionChangesPublisher() -> AnyPublisher<Void, Error> {
+        return cache
+            .observeCollectionChangesPublisher()
+    }
+    
     func fetchRemoteAuthToken(providerToken: MobileContentAuthProviderToken, createUser: Bool) async throws -> Result<MobileContentAuthTokenDataModel, MobileContentApiError> {
         
         let result: Result<MobileContentAuthTokenCodable, MobileContentApiError> = try await api.fetchAuthToken(
@@ -45,24 +50,18 @@ final class MobileContentAuthTokenRepository: Sendable {
         return cache.getUserId()
     }
     
-    func getAuthTokenChangedPublisher() -> AnyPublisher<MobileContentAuthTokenDataModel?, Never> {
+    func getAuthToken() throws -> MobileContentAuthTokenDataModel? {
         
-        return cache.getAuthTokenChangedPublisher()
-            .eraseToAnyPublisher()
-    }
-    
-    func getCachedAuthTokenModel() throws -> MobileContentAuthTokenDataModel? {
-        
-        guard let cachedAuthToken =  try cache.getCachedAuthToken() else {
+        guard let cachedAuthToken =  try cache.getAuthToken() else {
             return nil
         }
         
         return cachedAuthToken.toModel()
     }
     
-    func getCachedAuthToken() throws -> String? {
+    func getAuthTokenString() throws -> String? {
         
-        return try getCachedAuthTokenModel()?.token
+        return try getAuthToken()?.token
     }
     
     func deleteCachedAuthToken() async throws {

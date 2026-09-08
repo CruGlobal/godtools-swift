@@ -12,8 +12,7 @@ struct DownloadedLanguageListItemDomainModel: Sendable {
     
     let languageId: String
     let languageCode: BCP47LanguageIdentifier
-    let languageNameInOwnLanguage: String
-    let languageNameInAppLanguage: String
+    let languageNamePair: TranslatedLanguageNamePairDomainModel
 }
 
 extension DownloadedLanguageListItemDomainModel: Identifiable {

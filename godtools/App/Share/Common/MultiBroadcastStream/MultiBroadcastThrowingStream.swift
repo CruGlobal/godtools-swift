@@ -28,9 +28,12 @@ actor MultiBroadcastThrowingStream<Element: Sendable> {
         continuations[continuationId] = nil
     }
     
-    func getNewStream(sendValue: Element? = nil) -> AsyncThrowingStream<Element, Error> {
+    func getNewStream(
+        sendValue: Element? = nil,
+        bufferingPolicy: AsyncThrowingStream<Element, Error>.Continuation.BufferingPolicy = .unbounded
+    ) -> AsyncThrowingStream<Element, Error> {
         
-        let (stream, continuation) = AsyncThrowingStream<Element, Error>.makeStream()
+        let (stream, continuation) = AsyncThrowingStream<Element, Error>.makeStream(bufferingPolicy: bufferingPolicy)
         let continuationId: UUID = UUID()
         
         continuations[continuationId] = continuation

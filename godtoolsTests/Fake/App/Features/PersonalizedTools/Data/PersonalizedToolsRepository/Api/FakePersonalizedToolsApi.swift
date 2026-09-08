@@ -22,17 +22,24 @@ struct FakePersonalizedToolsApi: PersonalizedToolsApiInterface {
         self.resourceIdsByPersonalizedToolsId = resourceIdsByPersonalizedToolsId
     }
 
-    func getAllRankedResources(requestPriority: RequestPriority, country: TwoLetterCountryCode?, language: TwoLetterLanguageCode?, resourceTypes: [ResourceType]?) async throws -> [ResourceCodable] {
+    func getDefaultOrderResources(requestPriority: RequestPriority, language: TwoLetterLanguageCode, resourceTypes: [ResourceType]?) async throws -> [ResourceCodable] {
 
-        return getResources(personalizedToolsId: "\(country ?? "")_\(language ?? "")")
+        return try getResources(type: .defaultOrder(language: language))
     }
 
-    func getDefaultOrderResources(requestPriority: RequestPriority, language: TwoLetterLanguageCode?, resourceTypes: [ResourceType]?) async throws -> [ResourceCodable] {
+    func getFeaturedResources(requestPriority: RequestPriority, country: TwoLetterCountryCode, language: TwoLetterLanguageCode, resourceTypes: [ResourceType]?) async throws -> [ResourceCodable] {
 
-        return getResources(personalizedToolsId: language ?? "")
+        return try getResources(type: .featured(country: country, language: language))
     }
 
-    private func getResources(personalizedToolsId: PersonalizedToolsIdValue) -> [ResourceCodable] {
+    func getRankedResources(requestPriority: RequestPriority, country: TwoLetterCountryCode, language: TwoLetterLanguageCode, resourceTypes: [ResourceType]?) async throws -> [ResourceCodable] {
+
+        return try getResources(type: .ranked(country: country, language: language))
+    }
+
+    private func getResources(type: PersonalizedToolsType) throws -> [ResourceCodable] {
+
+        let personalizedToolsId: PersonalizedToolsIdValue = try PersonalizedToolsId(type: type).value
 
         let resourceIds: [ResourceId] = resourceIdsByPersonalizedToolsId[personalizedToolsId] ?? Array()
 

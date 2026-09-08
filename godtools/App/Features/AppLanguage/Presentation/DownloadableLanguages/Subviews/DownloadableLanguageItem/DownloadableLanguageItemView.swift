@@ -29,11 +29,11 @@ struct DownloadableLanguageItemView: View {
                     
                     HStack(spacing: 10) {
                         
-                        Text(viewModel.downloadableLanguage.languageNameInOwnLanguage)
+                        Text(viewModel.downloadableLanguage.languageNamePair.nameInOwnLanguage)
                             .font(FontLibrary.sfProTextRegular.font(size: 15))
                             .foregroundColor(ColorPalette.gtGrey.color)
                         
-                        Text(viewModel.downloadableLanguage.languageNameInAppLanguage)
+                        Text(viewModel.downloadableLanguage.languageNamePair.nameInAppLanguage)
                             .font(FontLibrary.sfProTextRegular.font(size: 15))
                             .foregroundColor(Self.lightGrey)
                     }
@@ -87,8 +87,7 @@ struct DownloadableLanguageItemView_Preview: PreviewProvider {
             stepEmitter: PreviewFlowStepEmitter.emitter,
             downloadableLanguage: DownloadableLanguageListItemDomainModel(
                 languageId: "0",
-                languageNameInOwnLanguage: "English",
-                languageNameInAppLanguage: "English",
+                languageNamePair: TranslatedLanguageNamePairDomainModel(nameInOwnLanguage: "English", nameInAppLanguage: "English"),
                 toolsAvailableText: "",
                 downloadStatus: .notDownloaded
             ),

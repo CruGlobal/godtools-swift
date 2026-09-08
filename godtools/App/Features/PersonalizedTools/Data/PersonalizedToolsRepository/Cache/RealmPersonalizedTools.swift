@@ -40,8 +40,8 @@ extension RealmPersonalizedTools {
     func toModel() -> PersonalizedToolsDataModel {
         return PersonalizedToolsDataModel(
             id: id,
-            updatedAt: updatedAt,
-            resourceIds: getResourceIds()
+            resourceIds: getResourceIds(),
+            updatedAt: updatedAt
         )
     }
     

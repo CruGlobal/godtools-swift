@@ -90,7 +90,7 @@ struct GetAppLanguagesListUseCaseTests {
 
         for listItem in appLanguagesList {
 
-            #expect(listItem.languageNameTranslatedInOwnLanguage == expectedLanguageNames[listItem.language])
+            #expect(listItem.languageNamePair.nameInOwnLanguage == expectedLanguageNames[listItem.language])
         }
     }
 
@@ -134,7 +134,7 @@ struct GetAppLanguagesListUseCaseTests {
 
         for listItem in appLanguagesList {
 
-            #expect(listItem.languageNameTranslatedInCurrentAppLanguage == argument.expectedLanguageNames[listItem.language])
+            #expect(listItem.languageNamePair.nameInAppLanguage == argument.expectedLanguageNames[listItem.language])
         }
     }
 

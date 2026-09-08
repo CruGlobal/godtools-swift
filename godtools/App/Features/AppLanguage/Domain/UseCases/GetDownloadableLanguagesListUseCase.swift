@@ -67,13 +67,9 @@ final class GetDownloadableLanguagesListUseCase: Sendable {
                 continue
             }
 
-            let languageNameInOwnLanguage = getTranslatedLanguageName.getLanguageName(
+            let languageNamePair: TranslatedLanguageNamePairDomainModel = getTranslatedLanguageName.getLanguageNamePair(
                 language: language,
-                translatedInLanguage: language.code
-            )
-            let languageNameInAppLanguage = getTranslatedLanguageName.getLanguageName(
-                language: language,
-                translatedInLanguage: appLanguage
+                appLanguage: appLanguage
             )
 
             let toolsAvailableText = getToolsAvailableText(numberOfTools: numberToolsAvailable, translatedIn: appLanguage)
@@ -83,8 +79,7 @@ final class GetDownloadableLanguagesListUseCase: Sendable {
             downloadableLanguages.append(
                 DownloadableLanguageListItemDomainModel(
                     languageId: language.id,
-                    languageNameInOwnLanguage: languageNameInOwnLanguage,
-                    languageNameInAppLanguage: languageNameInAppLanguage,
+                    languageNamePair: languageNamePair,
                     toolsAvailableText: toolsAvailableText,
                     downloadStatus: downloadStatus
                 )
@@ -157,7 +152,7 @@ extension GetDownloadableLanguagesListUseCase {
             
         } else {
             
-            return language1.languageNameInAppLanguage.lowercased() < language2.languageNameInAppLanguage.lowercased()
+            return language1.languageNamePair.nameInAppLanguage.lowercased() < language2.languageNamePair.nameInAppLanguage.lowercased()
         }
     }
 }

@@ -11,7 +11,7 @@ import Combine
 import Flow
 
 @MainActor
-class ToolFilterLanguageSelectionViewModel: ObservableObject {
+final class ToolFilterLanguageSelectionViewModel: ObservableObject {
         
     private let stepEmitter: FlowStepEmitter
     private let getToolFilterLanguagesStringsUseCase: GetToolFilterLanguagesStringsUseCase
@@ -31,7 +31,7 @@ class ToolFilterLanguageSelectionViewModel: ObservableObject {
     @Published private(set) var searchBarStrings = SearchBarStringsDomainModel.emptyValue
     @Published private(set) var strings = ToolFilterLanguagesStringsDomainModel.emptyValue
     @Published private(set) var selectedCategory = ToolFilterCategoryDomainModel.emptyValue
-    @Published private(set) var selectedLanguage = ToolFilterLanguageDomainModel.emptyValue
+    @Published private(set) var selectedLanguage: ToolFilterLanguageDomainModel?
     @Published private(set) var languageSearchResults: [ToolFilterLanguageDomainModel] = Array()
     
     @Published var searchText: String = ""

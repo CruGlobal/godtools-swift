@@ -87,6 +87,31 @@ struct TutorialView: View {
             }
             .frame(maxWidth: .infinity)
         }
+        .navBar(
+            title: nil,
+            backItem: backItem,
+            toolbarContent: {
+                
+                CloseToolbarItem(
+                    tapped: {
+                        viewModel.closeTapped()
+                    }
+                )
+            }
+        )
+    }
+    
+    private var backItem: BackToolbarItem? {
+        
+        guard !viewModel.hidesBackButton else {
+            return nil
+        }
+        
+        return BackToolbarItem(
+            tapped: {
+                viewModel.backTapped()
+            }
+        )
     }
     
     static func getContinueButtonWidth(geometry: GeometryProxy) -> CGFloat {

@@ -30,20 +30,37 @@ final class GetToolFilterCategory: Sendable {
         return createAnyCategoryDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: nil)
     }
     
-    func getCategoryFilter(categoryId: String, translatedInAppLanguage: AppLanguageDomainModel) -> ToolFilterCategoryDomainModel {
+    func getCategoryFilter(
+        categoryId: String,
+        translatedInAppLanguage: AppLanguageDomainModel
+    ) -> ToolFilterCategoryDomainModel {
         
-        return createCategoryDomainModel(categoryId: categoryId, translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: nil)
+        return createCategoryDomainModel(
+            categoryId: categoryId,
+            translatedInAppLanguage: translatedInAppLanguage,
+            filteredByLanguageId: nil
+        )
     }
     
-    func createCategoryFilters(from ids: [String], translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) -> [ToolFilterCategoryDomainModel] {
+    func createCategoryFilters(
+        from ids: [String],
+        translatedInAppLanguage: AppLanguageDomainModel,
+        filteredByLanguageId: String?
+    ) -> [ToolFilterCategoryDomainModel] {
         
-        let anyCategory = createAnyCategoryDomainModel(translatedInAppLanguage: translatedInAppLanguage, filteredByLanguageId: filteredByLanguageId)
+        let anyCategory = createAnyCategoryDomainModel(
+            translatedInAppLanguage: translatedInAppLanguage,
+            filteredByLanguageId: filteredByLanguageId
+        )
         
         var categories: [ToolFilterCategoryDomainModel] = Array()
 
         for categoryId in ids {
 
-            let toolsAvailableCount: Int = getToolsAvailableCount(categoryId: categoryId, filteredByLanguageId: filteredByLanguageId)
+            let toolsAvailableCount: Int = getToolsAvailableCount(
+                categoryId: categoryId,
+                filteredByLanguageId: filteredByLanguageId
+            )
 
             guard toolsAvailableCount > 0 else {
                 continue
@@ -64,7 +81,10 @@ final class GetToolFilterCategory: Sendable {
 
 extension GetToolFilterCategory {
     
-    private func createAnyCategoryDomainModel(translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) -> ToolFilterCategoryDomainModel {
+    private func createAnyCategoryDomainModel(
+        translatedInAppLanguage: AppLanguageDomainModel,
+        filteredByLanguageId: String?
+    ) -> ToolFilterCategoryDomainModel {
         
         let titleKey: String = LocalizableStringKeys.toolsFilterAnyCategory.key
 
@@ -84,9 +104,16 @@ extension GetToolFilterCategory {
         return ToolFilterCategoryDomainModel.createAnyCategory(title: title, toolsAvailable: toolsAvailable)
     }
     
-    private func createCategoryDomainModel(categoryId: String, translatedInAppLanguage: AppLanguageDomainModel, filteredByLanguageId: String?) -> ToolFilterCategoryDomainModel {
+    private func createCategoryDomainModel(
+        categoryId: String,
+        translatedInAppLanguage: AppLanguageDomainModel,
+        filteredByLanguageId: String?
+    ) -> ToolFilterCategoryDomainModel {
         
-        let toolsAvailableCount: Int = getToolsAvailableCount(categoryId: categoryId, filteredByLanguageId: filteredByLanguageId)
+        let toolsAvailableCount: Int = getToolsAvailableCount(
+            categoryId: categoryId,
+            filteredByLanguageId: filteredByLanguageId
+        )
         
         let translatedNameKey: String = "tool_category_\(categoryId)"
 
@@ -100,7 +127,10 @@ extension GetToolFilterCategory {
 
         let translatedName: String = strings[translatedNameKey] ?? ""
         
-        let toolsAvailable: String = getToolsAvailableText(toolsAvailableCount: toolsAvailableCount, translatedInAppLanguage: translatedInAppLanguage)
+        let toolsAvailable: String = getToolsAvailableText(
+            toolsAvailableCount: toolsAvailableCount,
+            translatedInAppLanguage: translatedInAppLanguage
+        )
         
         return ToolFilterCategoryDomainModel.createCategory(
             id: categoryId,
@@ -111,10 +141,16 @@ extension GetToolFilterCategory {
     
     private func getToolsAvailableCount(categoryId: String?, filteredByLanguageId: String?) -> Int {
         
-        return resourcesRepository.getAllToolsListCount(filterByCategory: categoryId, filterByLanguageId: filteredByLanguageId)
+        return resourcesRepository.getAllToolsListCount(
+            filterByCategory: categoryId,
+            filterByLanguageId: filteredByLanguageId
+        )
     }
     
-    private func getToolsAvailableText(toolsAvailableCount: Int, translatedInAppLanguage: AppLanguageDomainModel) -> String {
+    private func getToolsAvailableText(
+        toolsAvailableCount: Int,
+        translatedInAppLanguage: AppLanguageDomainModel
+    ) -> String {
         
         let formatStringKey: String = LocalizableStringKeys.toolsFilterToolsAvailable.key
 

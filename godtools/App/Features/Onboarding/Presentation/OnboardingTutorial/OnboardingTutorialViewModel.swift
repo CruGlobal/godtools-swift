@@ -24,10 +24,12 @@ final class OnboardingTutorialViewModel: ObservableObject {
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
     private let readyForEveryConversationYoutubeVideoId: String = "RvhZ_wuxAgE"
     private let showsChooseAppLanguageButtonOnPages: [Int] = [0]
+    private let onboardingSettings: OnboardingUserSettings
     
     private var cancellables: Set<AnyCancellable> = Set()
         
     @Published private var appLanguage = AppLanguageDomainModel.english
+    @Published private var country: LocalizationSettingsCountryDomainModel?
     
     @Published private(set) var strings = OnboardingTutorialStringsDomainModel.emptyValue
     @Published private(set) var continueButtonAccessibility: AccessibilityStrings.Button = OnboardingTutorialViewModel.continueButtonContinueAccessibility
@@ -35,6 +37,7 @@ final class OnboardingTutorialViewModel: ObservableObject {
     @Published private(set) var showsChooseLanguageButton: Bool = true
     @Published private(set) var pages: [OnboardingTutorialPage] = [.readyForEveryConversation, .talkAboutGodWithAnyone, .prepareForTheMomentsThatMatter, .helpSomeoneDiscoverJesus]
     @Published private(set) var continueButtonTitle: String = ""
+    @Published private(set) var tutorialUserInteractionEnabled: Bool = false
     
     @Published var currentPage: Int = 0
     
@@ -45,7 +48,8 @@ final class OnboardingTutorialViewModel: ObservableObject {
         getOnboardingTutorialStringsUseCase: GetOnboardingTutorialStringsUseCase,
         trackTutorialVideoAnalytics: TutorialVideoAnalytics,
         trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
-        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
+        trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase,
+        onboardingSettings: OnboardingUserSettings
     ) {
         
         self.stepEmitter = stepEmitter
@@ -55,6 +59,7 @@ final class OnboardingTutorialViewModel: ObservableObject {
         self.trackTutorialVideoAnalytics = trackTutorialVideoAnalytics
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
+        self.onboardingSettings = onboardingSettings
         
         Task.detached {
             
@@ -93,6 +98,17 @@ final class OnboardingTutorialViewModel: ObservableObject {
             }
             weakSelf.updateShowsChooseLanguageButtonState(page: weakSelf.currentPage)
         }
+        
+        Publishers.CombineLatest(
+            onboardingSettings.$appLanguage,
+            onboardingSettings.$country
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] (appLanguage: AppLanguageListItemDomainModel?, country: LocalizationSettingsCountryListItem?) in
+            
+            self?.tutorialUserInteractionEnabled = appLanguage != nil && country != nil
+        }
+        .store(in: &cancellables)
     }
     
     deinit {
@@ -242,7 +258,7 @@ extension OnboardingTutorialViewModel {
     
     func continueTapped() {
         
-        stepEmitter.emit(step: AppFlowStep.continueTappedFromTutorial)
+        stepEmitter.emit(step: AppFlowStep.continueTappedFromOnboardingTutorial)
     }
     
     func watchReadyForEveryConversationVideoTapped() {

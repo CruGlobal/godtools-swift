@@ -19,9 +19,9 @@ private enum TestPersonalizedLessonsLanguageId {
 }
 
 private enum TestPersonalizedLessonsId {
-    static let defaultOrderEnglish: String = "en"
-    static let defaultOrderFrench: String = "fr"
-    static let unitedStatesEnglish: String = "us_en"
+    static let defaultOrderEnglish: String = "default_order_en"
+    static let defaultOrderFrench: String = "default_order_fr"
+    static let rankedUnitedStatesEnglish: String = "ranked_us_en"
 }
 
 struct GetPersonalizedLessonsUseCaseTests {
@@ -66,7 +66,7 @@ struct GetPersonalizedLessonsUseCaseTests {
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: LocalizationSettingsCountryDomainModel(isoRegionCode: "us"),
-            filterLessonsByLanguage: nil
+            filterLessonsByLanguageId: nil
         )
 
         #expect(personalizedLessons.lessons.map({ $0.dataModelId }).sorted() == ["lesson-1", "lesson-3"])
@@ -86,7 +86,7 @@ struct GetPersonalizedLessonsUseCaseTests {
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: nil,
-            filterLessonsByLanguage: nil
+            filterLessonsByLanguageId: nil
         )
 
         #expect(personalizedLessons.lessons.map({ $0.dataModelId }).sorted() == ["lesson-1", "lesson-2"])
@@ -106,7 +106,7 @@ struct GetPersonalizedLessonsUseCaseTests {
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: nil,
-            filterLessonsByLanguage: nil
+            filterLessonsByLanguageId: nil
         )
 
         #expect(!personalizedLessons.lessons.map({ $0.dataModelId }).contains("tool-1"))
@@ -125,13 +125,7 @@ struct GetPersonalizedLessonsUseCaseTests {
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: nil,
-            filterLessonsByLanguage: LessonFilterLanguageDomainModel(
-                languageId: TestPersonalizedLessonsLanguageId.french,
-                languageNameTranslatedInLanguage: "",
-                languageNameTranslatedInAppLanguage: "",
-                lessonsAvailableText: "",
-                lessonsAvailableCount: 0
-            )
+            filterLessonsByLanguageId: TestPersonalizedLessonsLanguageId.french
         )
 
         #expect(personalizedLessons.lessons.map({ $0.dataModelId }) == ["lesson-4"])
@@ -141,7 +135,7 @@ struct GetPersonalizedLessonsUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: User has not selected a country and there are no personalized lessons.
+        Given: There are no personalized lessons.
         When: Personalized lessons are requested.
         Then: I expect to see the personalization unavailable strings translated in my app language.
         """,
@@ -158,12 +152,12 @@ struct GetPersonalizedLessonsUseCaseTests {
             )
         ]
     )
-    @MainActor func personalizationUnavailableIsShownWhenNoCountryIsSelectedAndThereAreNoLessons(argument: UnavailableArgument) async throws {
+    @MainActor func personalizationUnavailableIsShownWhenThereAreNoLessons(argument: UnavailableArgument) async throws {
 
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: argument.appLanguage,
             country: nil,
-            filterLessonsByLanguage: nil
+            filterLessonsByLanguageId: nil
         )
 
         let unavailableStrings: PersonalizedLessonsUnavailableDomainModel = try #require(personalizedLessons.unavailableStrings)
@@ -178,19 +172,19 @@ struct GetPersonalizedLessonsUseCaseTests {
         """
         Given: User has selected a country and there are no personalized lessons.
         When: Personalized lessons are requested.
-        Then: I expect to see no lessons and no personalization unavailable strings.
+        Then: I expect to see no lessons and the personalization unavailable strings.
         """
     )
-    @MainActor func personalizationUnavailableIsNotShownWhenACountryIsSelectedAndThereAreNoLessons() async throws {
+    @MainActor func personalizationUnavailableIsShownWhenACountryIsSelectedAndThereAreNoLessons() async throws {
 
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: LocalizationSettingsCountryDomainModel(isoRegionCode: "ca"),
-            filterLessonsByLanguage: nil
+            filterLessonsByLanguageId: nil
         )
 
         #expect(personalizedLessons.lessons.isEmpty)
-        #expect(personalizedLessons.unavailableStrings == nil)
+        #expect(personalizedLessons.unavailableStrings != nil)
     }
 
     @available(iOS 17.4, *)
@@ -206,7 +200,7 @@ struct GetPersonalizedLessonsUseCaseTests {
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: LocalizationSettingsCountryDomainModel(isoRegionCode: ""),
-            filterLessonsByLanguage: nil
+            filterLessonsByLanguageId: nil
         )
 
         #expect(personalizedLessons.lessons.map({ $0.dataModelId }).sorted() == ["lesson-1", "lesson-2"])
@@ -219,7 +213,7 @@ struct GetPersonalizedLessonsUseCaseTests {
 extension GetPersonalizedLessonsUseCaseTests {
 
     @available(iOS 17.4, *)
-    @MainActor private func getPersonalizedLessons(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguage: LessonFilterLanguageDomainModel?) async throws -> PersonalizedLessonsDomainModel {
+    @MainActor private func getPersonalizedLessons(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguageId: String?) async throws -> PersonalizedLessonsDomainModel {
 
         let dependencies: TestDependencies = try getTestDependencies()
 
@@ -247,7 +241,7 @@ extension GetPersonalizedLessonsUseCaseTests {
                 .execute(
                     appLanguage: appLanguage,
                     country: country,
-                    filterLessonsByLanguage: filterLessonsByLanguage
+                    filterLessonsByLanguageId: filterLessonsByLanguageId
                 )
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
@@ -298,9 +292,9 @@ extension GetPersonalizedLessonsUseCaseTests {
         )
 
         let personalizedToolsRepository = PersonalizedToolsRepository(
-            api: api,
             cache: cache,
-            resourcesRepository: resourcesRepository
+            resourcesRepository: resourcesRepository,
+            sync: PersonalizedToolsSync(api: api, cache: cache, syncInvalidatorPersistence: FakeSyncInvalidatorPersistence())
         )
 
         return TestDependencies(
@@ -384,7 +378,7 @@ extension GetPersonalizedLessonsUseCaseTests {
         return [
             TestPersonalizedLessonsId.defaultOrderEnglish: ["lesson-1", "lesson-2", "tool-1"],
             TestPersonalizedLessonsId.defaultOrderFrench: ["lesson-4"],
-            TestPersonalizedLessonsId.unitedStatesEnglish: ["lesson-3", "lesson-1"]
+            TestPersonalizedLessonsId.rankedUnitedStatesEnglish: ["lesson-3", "lesson-1"]
         ]
     }
 
