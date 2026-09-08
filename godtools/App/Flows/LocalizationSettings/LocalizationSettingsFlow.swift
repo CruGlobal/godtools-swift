@@ -18,18 +18,10 @@ final class LocalizationSettingsFlow: GTFlow {
         case userConfirmedLocalizationSetting(country: LocalizationSettingsCountryListItem)
     }
                 
-    private let shouldStoreCountryWhenSelected: Bool
-    private let userShouldConfirmSelectedCountry: Bool
-        
     init(
         appDiContainer: AppDiContainer,
-        shouldStoreCountryWhenSelected: Bool,
-        userShouldConfirmSelectedCountry: Bool = true,
         showsPreferNotToSay: Bool = true
     ) {
-        
-        self.shouldStoreCountryWhenSelected = shouldStoreCountryWhenSelected
-        self.userShouldConfirmSelectedCountry = userShouldConfirmSelectedCountry
         
         let stepEmitter = FlowStepEmitter()
         
@@ -57,17 +49,10 @@ final class LocalizationSettingsFlow: GTFlow {
             
         case .countryTappedFromLocalizationSettings(let countryListItem):
             
-            if userShouldConfirmSelectedCountry {
-               
-                presentView(
-                    view: getLocalizationSettingsConfirmationView(selectedCountry: countryListItem),
-                    animated: true
-                )
-            }
-            else if shouldStoreCountryWhenSelected {
-                
-                storeSelectedCountryListItem(countryListItem: countryListItem)
-            }
+            presentView(
+                view: getLocalizationSettingsConfirmationView(selectedCountry: countryListItem),
+                animated: true
+            )
             
         case .closeTappedFromLocalizationConfirmation:
             dismissView(animated: true)

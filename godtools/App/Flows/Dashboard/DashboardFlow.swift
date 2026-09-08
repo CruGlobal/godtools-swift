@@ -87,8 +87,7 @@ final class DashboardFlow: GTFlow {
         case .changeLocalizationSettingsTappedFromLessons:
             pushFlow(
                 flow: LocalizationSettingsFlow(
-                    appDiContainer: appDiContainer,
-                    shouldStoreCountryWhenSelected: true
+                    appDiContainer: appDiContainer
                 )
             )
             
@@ -255,8 +254,7 @@ final class DashboardFlow: GTFlow {
         case .changeLocalizationSettingsTappedFromTools:
             pushFlow(
                 flow: LocalizationSettingsFlow(
-                    appDiContainer: appDiContainer,
-                    shouldStoreCountryWhenSelected: true
+                    appDiContainer: appDiContainer
                 )
             )
             

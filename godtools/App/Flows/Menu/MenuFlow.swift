@@ -76,8 +76,7 @@ final class MenuFlow: GTFlow {
         case .localizationSettingsTappedFromMenu:
             pushFlow(
                 flow: LocalizationSettingsFlow(
-                    appDiContainer: appDiContainer,
-                    shouldStoreCountryWhenSelected: true
+                    appDiContainer: appDiContainer
                 )
             )
 
