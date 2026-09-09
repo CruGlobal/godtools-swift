@@ -29,7 +29,7 @@ extension ToolNavigationFlow {
     func getShouldNavigateToResumeLesson(toolTranslations: ToolTranslationsDomainModel, toolOpenedFrom: ToolOpenedFrom) -> Bool {
         
         switch toolOpenedFrom {
-        case .dashboardLessons, .dashboardFavoritesFeaturedLesson:
+        case .dashboardLessons, .dashboardLessonsFeaturedLesson:
             break
             
         default:

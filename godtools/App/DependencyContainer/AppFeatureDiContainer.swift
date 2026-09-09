@@ -17,7 +17,6 @@ final class AppFeatureDiContainer: Sendable {
     let deferredDeepLink: DeferredDeepLinkDiContainer
     let downloadToolProgress: DownloadToolProgressDiContainer
     let favorites: FavoritesDiContainer
-    let featuredLessons: FeaturedLessonsDiContainer
     let globalActivity: GlobalActivityDiContainer
     let learnToShareTool: LearnToShareToolDiContainer
     let lessonEvaluation: LessonEvaluationDiContainer
@@ -52,7 +51,6 @@ final class AppFeatureDiContainer: Sendable {
         deferredDeepLink: DeferredDeepLinkDiContainer,
         downloadToolProgress: DownloadToolProgressDiContainer,
         favorites: FavoritesDiContainer,
-        featuredLessons: FeaturedLessonsDiContainer,
         globalActivity: GlobalActivityDiContainer,
         learnToShareTool: LearnToShareToolDiContainer,
         lessonEvaluation: LessonEvaluationDiContainer,
@@ -87,7 +85,6 @@ final class AppFeatureDiContainer: Sendable {
         self.deferredDeepLink = deferredDeepLink
         self.downloadToolProgress = downloadToolProgress
         self.favorites = favorites
-        self.featuredLessons = featuredLessons
         self.globalActivity = globalActivity
         self.learnToShareTool = learnToShareTool
         self.lessonEvaluation = lessonEvaluation

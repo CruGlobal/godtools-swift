@@ -117,6 +117,8 @@
 "tool_menu_item.tools" = "Tools";
 "lessons.pageTitle" = "Lessons made for you";
 "lessons.pageSubtitle" = "Practical ideas to build relationships and start meaningful conversations.";
+"lessons.featured.title" = "Featured";
+"lessons.featured.description" = "Here are some lessons we thought you might like";
 "lessons.personalizationUnavailable.title" = "Personalization unavailable";
 "lessons.personalizationUnavailable.message" = "The lessons shown on this page are based on your Language and Localization settings. Your current selection does not yet offer personalization.";
 "lessons.personalizationUnavailable.viewAllLessons" = "Go to All Lessons";
@@ -130,7 +132,6 @@
 "favorites.noTools.button" = "Go to Tools";
 "toolSettings.shareImagePreview.shareImageButton.title" = "Share image";
 "favorites.pageTitle" = "Welcome to GodTools";
-"favorites.favoriteLessons.title" = "Featured lesson";
 "favorites.favoriteTools.title" = "Your favorite tools";
 "favorites.favoriteTools.viewAll" = "View all";
 

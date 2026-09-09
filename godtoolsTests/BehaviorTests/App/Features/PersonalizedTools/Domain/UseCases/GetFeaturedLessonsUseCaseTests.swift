@@ -68,6 +68,46 @@ struct GetFeaturedLessonsUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
+        Given: Featured lessons are curated for the user's localization.
+        When: The user has not selected a country in their localization settings.
+        Then: I expect to see no featured lessons.
+        """,
+        arguments: [
+            nil,
+            LocalizationSettingsCountryDomainModel(isoRegionCode: "")
+        ] as [LocalizationSettingsCountryDomainModel?]
+    )
+    @MainActor func noFeaturedLessonsWithoutASelectedCountry(country: LocalizationSettingsCountryDomainModel?) async throws {
+
+        let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: country
+        )
+
+        #expect(featuredLessons.isEmpty)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: Featured lessons are curated for the user's localization.
+        When: The user has selected a country in their localization settings.
+        Then: I expect to see featured lessons.
+        """
+    )
+    @MainActor func featuredLessonsAreReturnedWithASelectedCountry() async throws {
+
+        let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: "US")
+        )
+
+        #expect(featuredLessons.isEmpty == false)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
         Given: User is viewing featured lessons.
         When: Lessons exist that are not spotlighted, are hidden, or are not lessons.
         Then: I expect to see only the spotlighted, visible lessons.
@@ -351,7 +391,7 @@ struct GetFeaturedLessonsUseCaseTests {
 extension GetFeaturedLessonsUseCaseTests {
 
     @available(iOS 17.4, *)
-    @MainActor private func getFeaturedLessons(appLanguage: AppLanguageDomainModel, lessonProgress: [LessonProgress] = []) async throws -> [FeaturedLessonDomainModel] {
+    @MainActor private func getFeaturedLessons(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel? = LocalizationSettingsCountryDomainModel(isoRegionCode: "US"), lessonProgress: [LessonProgress] = []) async throws -> [FeaturedLessonDomainModel] {
 
         let useCase: GetFeaturedLessonsUseCase = try await getUseCase(lessonProgress: lessonProgress)
 
@@ -367,7 +407,7 @@ extension GetFeaturedLessonsUseCaseTests {
             }
 
             useCase
-                .execute(appLanguage: appLanguage)
+                .execute(appLanguage: appLanguage, country: country)
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
 

@@ -111,11 +111,11 @@ final class DashboardFlow: GTFlow {
         case .languageTappedFromPersonalizedLanguageFilter:
             navigationController.popViewController(animated: true)
             
-        case .featuredLessonTappedFromFavorites(let featuredLesson):
+        case .featuredLessonTappedFromLessons(let featuredLesson):
             navigateToToolInAppLanguage(
                 toolDataModelId: featuredLesson.dataModelId,
                 trainingTipsEnabled: false,
-                toolOpenedFrom: .dashboardFavoritesFeaturedLesson,
+                toolOpenedFrom: .dashboardLessonsFeaturedLesson,
                 persistToolLanguageSettings: nil
             )
                         

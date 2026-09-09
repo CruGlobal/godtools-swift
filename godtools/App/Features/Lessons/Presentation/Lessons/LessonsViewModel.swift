@@ -18,6 +18,7 @@ final class LessonsViewModel: ObservableObject {
     private let pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase
+    private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase
     private let getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase
     private let getLessonsStringsUseCase: GetLessonsStringsUseCase
     private let getAllLessonsUseCase: GetAllLessonsUseCase
@@ -41,6 +42,7 @@ final class LessonsViewModel: ObservableObject {
     @Published private(set) var strings: LessonsStringsDomainModel = .emptyValue
     @Published private(set) var languageFilterActionTitle: String = ""
     @Published private(set) var personalizedLessons = PersonalizedLessonsDomainModel.emptyValue
+    @Published private(set) var featuredLessons: [FeaturedLessonDomainModel] = Array()
     @Published private(set) var lessonsList: [LessonListItemDomainModel] = []
 
     @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
@@ -50,6 +52,7 @@ final class LessonsViewModel: ObservableObject {
         pullToRefreshLessonsUseCase: PullToRefreshLessonsUseCase,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
         getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase,
+        getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase,
         getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase,
         getLessonsStringsUseCase: GetLessonsStringsUseCase,
         getAllLessonsUseCase: GetAllLessonsUseCase,
@@ -65,6 +68,7 @@ final class LessonsViewModel: ObservableObject {
         self.pullToRefreshLessonsUseCase = pullToRefreshLessonsUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getLocalizationSettingsUseCase = getLocalizationSettingsUseCase
+        self.getFeaturedLessonsUseCase = getFeaturedLessonsUseCase
         self.getPersonalizedLessonsUseCase = getPersonalizedLessonsUseCase
         self.getLessonsStringsUseCase = getLessonsStringsUseCase
         self.getAllLessonsUseCase = getAllLessonsUseCase
@@ -93,6 +97,29 @@ final class LessonsViewModel: ObservableObject {
             .execute()
             .receive(on: DispatchQueue.main)
             .assign(to: &$localizationSettings)
+
+        // NOTE: Featured lessons are curated for the user's localization, so they intentionally ignore the lessons language filter. ~Rachael
+        Publishers.CombineLatest(
+            $appLanguage.dropFirst(),
+            $localizationSettings
+        )
+        .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?) in
+
+            getFeaturedLessonsUseCase
+                .execute(
+                    appLanguage: appLanguage,
+                    country: localizationSettings?.selectedCountry
+                )
+        }
+        .switchToLatest()
+        .receive(on: DispatchQueue.main)
+        .sink { _ in
+
+        } receiveValue: { [weak self] (featuredLessons: [FeaturedLessonDomainModel]) in
+
+            self?.featuredLessons = featuredLessons
+        }
+        .store(in: &cancellables)
 
         Publishers.CombineLatest3(
             $appLanguage.dropFirst(),
@@ -329,7 +356,32 @@ final class LessonsViewModel: ObservableObject {
             )
         }
     }
-    
+
+    private func trackFeaturedLessonTappedAnalytics(featuredLesson: FeaturedLessonDomainModel) {
+
+        let analyticsProperties = AnalyticsProperties(
+            screenName: analyticsScreenName,
+            siteSection: "",
+            siteSubSection: "",
+            appLanguage: nil,
+            contentLanguage: nil,
+            secondaryContentLanguage: nil
+        )
+        let analyticsToolName: String = featuredLesson.analyticsToolName
+        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
+
+        Task.detached {
+            await trackActionAnalyticsUseCase.execute(
+                properties: analyticsProperties,
+                actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
+                data: [
+                    AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.featured,
+                    AnalyticsConstants.Keys.tool: analyticsToolName
+                ]
+            )
+        }
+    }
+
     private static func getPersonalizedToggleOptions(strings: LessonsStringsDomainModel) -> [PersonalizationToggleOption] {
         
         if !GodToolsApp.showsPersonalization {
@@ -375,6 +427,15 @@ extension LessonsViewModel {
         )
     }
     
+    func getFeaturedLessonViewModel(featuredLesson: FeaturedLessonDomainModel) -> LessonCardViewModel {
+
+        return LessonCardViewModel(
+            lessonListItem: featuredLesson,
+            getToolBannerUseCase: getToolBannerUseCase,
+            imageCache: imageCache
+        )
+    }
+
     func pullToRefresh() {
         pullToRefreshLessons()
     }
@@ -404,6 +465,13 @@ extension LessonsViewModel {
         )
 
         trackLessonTappedAnalytics(lessonListItem: lessonListItem)
+    }
+
+    func featuredLessonTapped(featuredLesson: FeaturedLessonDomainModel) {
+
+        stepEmitter.emit(step: AppFlowStep.featuredLessonTappedFromLessons(featuredLesson: featuredLesson))
+
+        trackFeaturedLessonTappedAnalytics(featuredLesson: featuredLesson)
     }
 
     func changeLocalizationSettingsTapped() {
