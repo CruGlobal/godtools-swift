@@ -14,21 +14,18 @@ struct FeaturedLessonsView: View {
 
     private let geometry: GeometryProxy
     private let contentHorizontalInsets: CGFloat
-    private let lessonCardSpacing: CGFloat
 
     @ObservedObject private var viewModel: LessonsViewModel
 
     init(
         viewModel: LessonsViewModel,
         geometry: GeometryProxy,
-        contentHorizontalInsets: CGFloat,
-        lessonCardSpacing: CGFloat = DashboardView.toolCardVerticalSpacing
+        contentHorizontalInsets: CGFloat
     ) {
 
         self.viewModel = viewModel
         self.geometry = geometry
         self.contentHorizontalInsets = contentHorizontalInsets
-        self.lessonCardSpacing = lessonCardSpacing
     }
 
     var body: some View {
@@ -49,7 +46,7 @@ struct FeaturedLessonsView: View {
             ScrollView(.horizontal, showsIndicators: false) {
 
                 // NOTE: We need HStack here instead of LazyHStack because our card heights have dynamic heights to them and this allows the HStack to wrap the tallest card.
-                HStack(alignment: .top, spacing: lessonCardSpacing) {
+                HStack(alignment: .top, spacing: FeaturedLessonsView.cardSpacing) {
 
                     ForEach(viewModel.featuredLessons) { (featuredLesson: FeaturedLessonDomainModel) in
 
@@ -65,10 +62,11 @@ struct FeaturedLessonsView: View {
                     }
                 }
                 .padding([.leading, .trailing], contentHorizontalInsets)
-                // NOTE: The cards cast a shadow beyond their frame, which the ScrollView would otherwise clip. ~Rachael
-                .padding([.top, .bottom], LessonCardView.shadowClippingInset)
+                .padding([.top], LessonCardView.shadowClippingInsetTop)
+                .padding([.bottom], LessonCardView.shadowClippingInsetBottom)
             }
-            .padding([.top], FeaturedLessonsView.cardsTopSpacing - LessonCardView.shadowClippingInset)
+            .padding([.top], FeaturedLessonsView.cardsTopSpacing - LessonCardView.shadowClippingInsetTop)
+            .padding([.bottom], FeaturedLessonsView.cardsBottomSpacing - LessonCardView.shadowClippingInsetBottom)
         }
     }
 }

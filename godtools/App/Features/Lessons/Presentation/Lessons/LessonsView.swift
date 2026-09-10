@@ -63,8 +63,7 @@ struct LessonsView: View {
                             FeaturedLessonsView(
                                 viewModel: viewModel,
                                 geometry: geometry,
-                                contentHorizontalInsets: contentHorizontalInsets,
-                                lessonCardSpacing: lessonCardSpacing
+                                contentHorizontalInsets: contentHorizontalInsets
                             )
 
                             SeparatorView()

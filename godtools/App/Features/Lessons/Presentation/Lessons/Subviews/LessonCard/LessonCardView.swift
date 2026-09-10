@@ -10,9 +10,11 @@ import SwiftUI
 
 struct LessonCardView: View {
         
-    // NOTE: The card's shadow extends this far beyond its frame.  Containers that clip their content need to inset by it. ~Rachael
-    static let shadowClippingInset: CGFloat = 6
+    static var shadowClippingInsetTop: CGFloat { (shadowRadius * 2) - shadowYOffset }
+    static var shadowClippingInsetBottom: CGFloat { (shadowRadius * 2) + shadowYOffset }
 
+    private static let shadowRadius: CGFloat = 4
+    private static let shadowYOffset: CGFloat = 2
     private static let featuredCardWidthMultiplier: CGFloat = 0.58
 
     private let geometry: GeometryProxy
@@ -118,7 +120,7 @@ struct LessonCardView: View {
         }
         .frame(width: cardWidth)
         .cornerRadius(cornerRadius)
-        .shadow(color: Color.black.opacity(0.25), radius: 4, y: 2)
+        .shadow(color: Color.black.opacity(0.25), radius: LessonCardView.shadowRadius, y: LessonCardView.shadowYOffset)
         .contentShape(Rectangle()) // This fixes tap area not taking entire card into account.  Noticeable in iOS 14.
         .onTapGesture {
             cardTappedClosure?()
