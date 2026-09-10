@@ -10,6 +10,8 @@ import SwiftUI
 
 struct FeaturedLessonsView: View {
 
+    private static let cardsTopSpacing: CGFloat = 22
+
     private let geometry: GeometryProxy
     private let contentHorizontalInsets: CGFloat
     private let lessonCardSpacing: CGFloat
@@ -66,7 +68,7 @@ struct FeaturedLessonsView: View {
                 // NOTE: The cards cast a shadow beyond their frame, which the ScrollView would otherwise clip. ~Rachael
                 .padding([.top, .bottom], LessonCardView.shadowClippingInset)
             }
-            .padding([.top], lessonCardSpacing - LessonCardView.shadowClippingInset)
+            .padding([.top], FeaturedLessonsView.cardsTopSpacing - LessonCardView.shadowClippingInset)
         }
     }
 }

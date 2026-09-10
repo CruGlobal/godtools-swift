@@ -24,6 +24,8 @@ struct LessonCardView: View {
     private let bannerImageAspectRatio: CGSize
     private let titleFontSize: CGFloat
     private let titleTrailingPadding: CGFloat
+    private let titleBottomSpacing: CGFloat
+    private let footerSpacerMinLength: CGFloat?
     private let cardTappedClosure: (() -> Void)?
 
     @ObservedObject private var viewModel: LessonCardViewModel
@@ -43,6 +45,8 @@ struct LessonCardView: View {
             self.bannerImageAspectRatio = CGSize(width: 335, height: 87)
             self.titleFontSize = 17
             self.titleTrailingPadding = 41
+            self.titleBottomSpacing = 9
+            self.footerSpacerMinLength = nil
 
         case .featured:
             self.cardWidth = contentWidth * LessonCardView.featuredCardWidthMultiplier
@@ -50,6 +54,8 @@ struct LessonCardView: View {
             self.titleFontSize = 15
             // NOTE: The landscape card reserves trailing space for its wider layout.  A featured card is too narrow to spare it. ~Rachael
             self.titleTrailingPadding = 0
+            self.titleBottomSpacing = 6
+            self.footerSpacerMinLength = 0
         }
 
         self.cardTappedClosure = cardTappedClosure
@@ -81,14 +87,14 @@ struct LessonCardView: View {
                         .frame(width: cardWidth - (padding * 2), alignment: .leading)
                         .environment(\.layoutDirection, viewModel.titleLayoutDirection)
                     
-                    FixedVerticalSpacer(height: 9)
-                    
+                    FixedVerticalSpacer(height: titleBottomSpacing)
+
                     if viewModel.shouldShowLessonProgress {
                         LessonCompletionProgressBar(lessonProgress: viewModel.lessonProgress)
                             .padding(.bottom, 15)
-                        
+
                     } else {
-                        Spacer()
+                        Spacer(minLength: footerSpacerMinLength)
                     }
                     
                     HStack(alignment: .center, spacing: 10) {
@@ -129,7 +135,8 @@ struct LessonCardView: View {
     @ViewBuilder private var languageAvailability: some View {
 
         ToolCardLanguageAvailabilityView(
-            languageAvailability: viewModel.appLanguageAvailability
+            languageAvailability: viewModel.appLanguageAvailability,
+            textColor: ColorPalette.gtLightGrey.color
         )
     }
 }

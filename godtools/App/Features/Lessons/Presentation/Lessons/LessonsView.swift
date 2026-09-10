@@ -55,7 +55,7 @@ struct LessonsView: View {
                         .padding(.horizontal, contentHorizontalInsets)
 
                         SeparatorView()
-                            .padding(.vertical, 15)
+                            .padding(.vertical, 22)
                             .padding(.horizontal, contentHorizontalInsets)
 
                         if !viewModel.featuredLessons.isEmpty {
@@ -74,7 +74,7 @@ struct LessonsView: View {
 
                         HStack(spacing: 0) {
                             Text(viewModel.strings.languageFilterTitle)
-                                .font(FontLibrary.sfProTextBold.font(size: 18))
+                                .font(FontLibrary.sfProTextRegular.font(size: 18))
                                 .foregroundColor(ColorPalette.gtGrey.color)
 
                             FixedHorizontalSpacer(width: 30)
