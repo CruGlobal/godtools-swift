@@ -73,8 +73,8 @@ final class GetFeaturedLessonsUseCase: Sendable {
 
         let appLanguageModel: LanguageDataModel? = languagesRepository.getLanguageByCode(code: appLanguage)
 
-        // TODO: Featured lessons are curated by local leaders in the dashboard for a country and language pair.  Until that data
-        // source exists, spotlight lessons stand in for them and countryIsoRegionCode only decides whether the section renders. ~Rachael
+        // TODO: GT-3075 stubs this with spotlight lessons.  Replace with the leader-curated featured lessons for the
+        // country and language pair, at which point countryIsoRegionCode should filter rather than only gate.
         let featuredLessonsDataModels: [ResourceDataModel] = try await resourcesRepository
             .getFeaturedLessons(sorted: true)
 

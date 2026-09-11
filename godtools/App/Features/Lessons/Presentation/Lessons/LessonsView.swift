@@ -55,7 +55,7 @@ struct LessonsView: View {
                         .padding(.horizontal, contentHorizontalInsets)
 
                         SeparatorView()
-                            .padding(.vertical, 22)
+                            .padding(.vertical, 16)
                             .padding(.horizontal, contentHorizontalInsets)
 
                         if !viewModel.featuredLessons.isEmpty {

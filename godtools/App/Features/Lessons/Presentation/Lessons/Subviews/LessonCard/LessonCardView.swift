@@ -54,7 +54,6 @@ struct LessonCardView: View {
             self.cardWidth = contentWidth * LessonCardView.featuredCardWidthMultiplier
             self.bannerImageAspectRatio = CGSize(width: 217, height: 88)
             self.titleFontSize = 15
-            // NOTE: The landscape card reserves trailing space for its wider layout.  A featured card is too narrow to spare it. ~Rachael
             self.titleTrailingPadding = 0
             self.titleBottomSpacing = 6
             self.footerSpacerMinLength = 0

@@ -98,7 +98,6 @@ final class LessonsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$localizationSettings)
 
-        // NOTE: Featured lessons are curated for the user's localization, so they intentionally ignore the lessons language filter. ~Rachael
         Publishers.CombineLatest(
             $appLanguage.dropFirst(),
             $localizationSettings

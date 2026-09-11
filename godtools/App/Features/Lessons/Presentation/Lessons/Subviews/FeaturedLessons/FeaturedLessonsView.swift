@@ -11,6 +11,8 @@ import SwiftUI
 struct FeaturedLessonsView: View {
 
     private static let cardsTopSpacing: CGFloat = 22
+    private static let cardsBottomSpacing: CGFloat = 5
+    private static let cardSpacing: CGFloat = 24
 
     private let geometry: GeometryProxy
     private let contentHorizontalInsets: CGFloat
@@ -45,7 +47,6 @@ struct FeaturedLessonsView: View {
 
             ScrollView(.horizontal, showsIndicators: false) {
 
-                // NOTE: We need HStack here instead of LazyHStack because our card heights have dynamic heights to them and this allows the HStack to wrap the tallest card.
                 HStack(alignment: .top, spacing: FeaturedLessonsView.cardSpacing) {
 
                     ForEach(viewModel.featuredLessons) { (featuredLesson: FeaturedLessonDomainModel) in
