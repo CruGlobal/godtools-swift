@@ -75,6 +75,14 @@ final class DashboardFlow: GTFlow {
         case .doneTappedFromMenu:
             closeMenu(animated: true)
             
+        case .featuredLessonTappedFromLessons(let featuredLesson):
+            navigateToToolInAppLanguage(
+                toolDataModelId: featuredLesson.dataModelId,
+                trainingTipsEnabled: false,
+                toolOpenedFrom: .dashboardLessonsFeaturedLesson,
+                persistToolLanguageSettings: nil
+            )
+            
         case .lessonTappedFromLessonsList(let lessonListItem, let languageFilterLanguageId):
             navigateToLesson(
                 lessonListItem: lessonListItem,
@@ -110,14 +118,6 @@ final class DashboardFlow: GTFlow {
             
         case .languageTappedFromPersonalizedLanguageFilter:
             navigationController.popViewController(animated: true)
-            
-        case .featuredLessonTappedFromFavorites(let featuredLesson):
-            navigateToToolInAppLanguage(
-                toolDataModelId: featuredLesson.dataModelId,
-                trainingTipsEnabled: false,
-                toolOpenedFrom: .dashboardFavoritesFeaturedLesson,
-                persistToolLanguageSettings: nil
-            )
                         
         case .toolDetailsTappedFromFavorites(let tool):
             navigateToToolDetails(toolId: tool.dataModelId)

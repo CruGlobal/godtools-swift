@@ -125,7 +125,6 @@ struct FavoritesView_Preview: PreviewProvider {
             getToolBannerUseCase: appDiContainer.core.domainLayer.getToolBannerUseCase(),
             imageCache: appDiContainer.core.dataLayer.getSharedImageCache(),
             disableOptInOnboardingBannerUseCase: appDiContainer.feature.tools.domainLayer.getDisableOptInOnboardingBannerUseCase(),
-            getFeaturedLessonsUseCase: appDiContainer.feature.featuredLessons.domainLayer.getFeaturedLessonsUseCase(),
             getOptInOnboardingBannerEnabledUseCase: appDiContainer.feature.tools.domainLayer.getOptInOnboardingBannerEnabledUseCase(),
             trackScreenViewAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackScreenViewAnalyticsUseCase(),
             trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase()

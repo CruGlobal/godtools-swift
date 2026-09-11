@@ -34,6 +34,8 @@ struct GetLessonsStringsUseCaseTests {
 
         #expect(strings.title == "\(argument.translateInLanguage):\(LocalizableStringKeys.lessonsPageTitle.key)")
         #expect(strings.subtitle == "\(argument.translateInLanguage):\(LocalizableStringKeys.lessonsPageSubtitle.key)")
+        #expect(strings.featuredTitle == "\(argument.translateInLanguage):\(LocalizableStringKeys.lessonsFeaturedTitle.key)")
+        #expect(strings.featuredSubtitle == "\(argument.translateInLanguage):\(LocalizableStringKeys.lessonsFeaturedSubtitle.key)")
         #expect(strings.languageFilterTitle == "\(argument.translateInLanguage):\(LocalizableStringKeys.lessonsLanguageFilterTitle.key)")
         #expect(strings.personalizedToolToggleTitle == "\(argument.translateInLanguage):\(LocalizableStringKeys.dashboardPersonalizedToolTogglePersonalizedTitle.key)")
         #expect(strings.allLessonsToggleTitle == "\(argument.translateInLanguage):\(LocalizableStringKeys.dashboardPersonalizedToolToggleAllLessonsTitle.key)")
@@ -49,7 +51,8 @@ extension GetLessonsStringsUseCaseTests {
     private func getUseCase() -> GetLessonsStringsUseCase {
 
         let stringKeys: [LocalizableStringKeys] = [
-            .lessonsPageTitle, .lessonsPageSubtitle, .lessonsLanguageFilterTitle,
+            .lessonsPageTitle, .lessonsPageSubtitle, .lessonsFeaturedTitle, .lessonsFeaturedSubtitle,
+            .lessonsLanguageFilterTitle,
             .dashboardPersonalizedToolTogglePersonalizedTitle, .dashboardPersonalizedToolToggleAllLessonsTitle,
             .dashboardPersonalizedLessonFooterTitle, .dashboardPersonalizedLessonFooterSubtitle,
             .dashboardPersonalizedToolFooterButtonTitle, .lessonsPersonalizationUnavailableViewAllLessons

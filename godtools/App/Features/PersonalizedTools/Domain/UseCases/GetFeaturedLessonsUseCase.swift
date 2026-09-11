@@ -10,14 +10,14 @@ import Foundation
 import Combine
 
 final class GetFeaturedLessonsUseCase: Sendable {
-    
+
     private let resourcesRepository: ResourcesRepository
     private let languagesRepository: LanguagesRepository
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
     private let lessonProgressRepository: UserLessonProgressRepository
     private let getLessonListItemProgress: GetLessonListItemProgress
-    
+
     init(
         resourcesRepository: ResourcesRepository,
         languagesRepository: LanguagesRepository,
@@ -26,7 +26,7 @@ final class GetFeaturedLessonsUseCase: Sendable {
         lessonProgressRepository: UserLessonProgressRepository,
         getLessonListItemProgress: GetLessonListItemProgress
     ) {
-        
+
         self.resourcesRepository = resourcesRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedToolName = getTranslatedToolName
@@ -34,9 +34,16 @@ final class GetFeaturedLessonsUseCase: Sendable {
         self.lessonProgressRepository = lessonProgressRepository
         self.getLessonListItemProgress = getLessonListItemProgress
     }
-    
-    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Error> {
-                    
+
+    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?) -> AnyPublisher<[FeaturedLessonDomainModel], Error> {
+
+        guard let countryIsoRegionCode = getCountryIsoRegionCode(country: country) else {
+
+            return Just([])
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+
         return Publishers.CombineLatest(
             resourcesRepository
                 .observeCollectionChangesPublisher(),
@@ -45,21 +52,32 @@ final class GetFeaturedLessonsUseCase: Sendable {
         )
         .receive(on: DispatchQueue.global())
         .flatMap({ (resourcesChanged: Void, lessonProgressDidChange: Void) -> AnyPublisher<[FeaturedLessonDomainModel], Error> in
-            
+
             return AnyPublisher() {
-                try await self.asyncExecute(appLanguage: appLanguage)
+                try await self.asyncExecute(appLanguage: appLanguage, countryIsoRegionCode: countryIsoRegionCode)
             }
         })
         .eraseToAnyPublisher()
     }
-    
-    private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> [FeaturedLessonDomainModel] {
-        
+
+    private func getCountryIsoRegionCode(country: LocalizationSettingsCountryDomainModel?) -> String? {
+
+        guard let isoRegionCode = country?.isoRegionCode, !isoRegionCode.isEmpty else {
+            return nil
+        }
+
+        return isoRegionCode
+    }
+
+    private func asyncExecute(appLanguage: AppLanguageDomainModel, countryIsoRegionCode: String) async throws -> [FeaturedLessonDomainModel] {
+
         let appLanguageModel: LanguageDataModel? = languagesRepository.getLanguageByCode(code: appLanguage)
-        
+
+        // TODO: GT-3075 stubs this with spotlight lessons.  Replace with the leader-curated featured lessons for the
+        // country and language pair, at which point countryIsoRegionCode should filter rather than only gate.
         let featuredLessonsDataModels: [ResourceDataModel] = try await resourcesRepository
             .getFeaturedLessons(sorted: true)
-        
+
         var featuredLessons: [FeaturedLessonDomainModel] = Array()
 
         for resource in featuredLessonsDataModels {

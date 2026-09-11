@@ -19,6 +19,18 @@ final class PersonalizedToolsDomainLayerDependencies: Sendable {
         self.dataLayer = dataLayer
     }
 
+    func getFeaturedLessonsUseCase() -> GetFeaturedLessonsUseCase {
+
+        return GetFeaturedLessonsUseCase(
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            languagesRepository: core.dataLayer.getLanguagesRepository(),
+            getTranslatedToolName: core.domainLayer.supporting.getTranslatedToolName(),
+            getTranslatedToolLanguageAvailability: core.domainLayer.supporting.getTranslatedToolLanguageAvailability(),
+            lessonProgressRepository: core.dataLayer.getUserLessonProgressRepository(),
+            getLessonListItemProgress: core.domainLayer.supporting.getLessonListItemProgress()
+        )
+    }
+
     func getLocalizationSettingsConfirmationStringsUseCase() -> GetLocalizationSettingsConfirmationStringsUseCase {
 
         return GetLocalizationSettingsConfirmationStringsUseCase(

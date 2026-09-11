@@ -62,9 +62,6 @@ final class AppDiContainer: Sendable {
         let favoritesDataLayer = FavoritesDataLayerDependencies(coreDataLayer: dataLayer)
         let favoritesDomainLayer = FavoritesDomainLayerDependencies(core: core, dataLayer: favoritesDataLayer)
 
-        let featuredLessonsDataLayer = FeaturedLessonsDataLayerDependencies(coreDataLayer: dataLayer)
-        let featuredLessonsDomainLayer = FeaturedLessonsDomainLayerDependencies(core: core, dataLayer: featuredLessonsDataLayer)
-
         let globalActivityDataLayer = GlobalActivityDataLayerDependencies(coreDataLayer: dataLayer)
         let globalActivityDomainLayer = GlobalActivityDomainLayerDependencies(core: core, dataLayer: globalActivityDataLayer)
 
@@ -141,7 +138,6 @@ final class AppDiContainer: Sendable {
             deferredDeepLink: DeferredDeepLinkDiContainer(dataLayer: deferredDeepLinkDataLayer, domainLayer: deferredDeepLinkDomainLayer),
             downloadToolProgress: DownloadToolProgressDiContainer(dataLayer: downloadToolProgressDataLayer, domainLayer: downloadToolProgressDomainLayer),
             favorites: FavoritesDiContainer(dataLayer: favoritesDataLayer, domainLayer: favoritesDomainLayer),
-            featuredLessons: FeaturedLessonsDiContainer(dataLayer: featuredLessonsDataLayer, domainLayer: featuredLessonsDomainLayer),
             globalActivity: GlobalActivityDiContainer(dataLayer: globalActivityDataLayer, domainLayer: globalActivityDomainLayer),
             learnToShareTool: LearnToShareToolDiContainer(dataLayer: learnToShareToolDataLayer, domainLayer: learnToShareToolDomainLayer),
             lessonEvaluation: LessonEvaluationDiContainer(dataLayer: lessonEvaluationDataLayer, domainLayer: lessonEvaluationDomainLayer),

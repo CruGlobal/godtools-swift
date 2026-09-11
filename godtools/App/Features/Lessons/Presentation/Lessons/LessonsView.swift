@@ -55,12 +55,25 @@ struct LessonsView: View {
                         .padding(.horizontal, contentHorizontalInsets)
 
                         SeparatorView()
-                            .padding(.vertical, 15)
+                            .padding(.vertical, 16)
                             .padding(.horizontal, contentHorizontalInsets)
+
+                        if !viewModel.featuredLessons.isEmpty {
+
+                            FeaturedLessonsView(
+                                viewModel: viewModel,
+                                geometry: geometry,
+                                contentHorizontalInsets: contentHorizontalInsets
+                            )
+
+                            SeparatorView()
+                                .padding(.vertical, 15)
+                                .padding(.horizontal, contentHorizontalInsets)
+                        }
 
                         HStack(spacing: 0) {
                             Text(viewModel.strings.languageFilterTitle)
-                                .font(FontLibrary.sfProTextBold.font(size: 18))
+                                .font(FontLibrary.sfProTextRegular.font(size: 18))
                                 .foregroundColor(ColorPalette.gtGrey.color)
 
                             FixedHorizontalSpacer(width: 30)
@@ -159,6 +172,7 @@ struct LessonsView_Preview: PreviewProvider {
             pullToRefreshLessonsUseCase: appDiContainer.feature.lessons.domainLayer.getPullToRefreshLessonsUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsUseCase(),
+            getFeaturedLessonsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getFeaturedLessonsUseCase(),
             getPersonalizedLessonsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedLessonsUseCase(),
             getLessonsStringsUseCase: appDiContainer.feature.lessons.domainLayer.getLessonsStringsUseCase(),
             getAllLessonsUseCase: appDiContainer.feature.lessons.domainLayer.getAllLessonsUseCase(),

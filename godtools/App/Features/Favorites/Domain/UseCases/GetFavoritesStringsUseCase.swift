@@ -21,7 +21,6 @@ final class GetFavoritesStringsUseCase: Sendable {
 
         let tutorialMessageKey: String = LocalizableStringKeys.openTutorialShowTutorialLabelText.key
         let openTutorialActionTitleKey: String = LocalizableStringKeys.openTutorialOpenTutorialButtonTitle.key
-        let featuredLessonsTitleKey: String = LocalizableStringKeys.favoritesFavoriteLessonsTitle.key
         let favoriteToolsTitleKey: String = LocalizableStringKeys.favoritesFavoriteToolsTitle.key
         let viewAllFavoritesActionTitleKey: String = LocalizableStringKeys.favoritesFavoriteToolsViewAll.key
         let noFavoritedToolsTitleKey: String = LocalizableStringKeys.favoritesNoToolsTitle.key
@@ -32,7 +31,6 @@ final class GetFavoritesStringsUseCase: Sendable {
             keys: [
                 tutorialMessageKey,
                 openTutorialActionTitleKey,
-                featuredLessonsTitleKey,
                 favoriteToolsTitleKey,
                 viewAllFavoritesActionTitleKey,
                 noFavoritedToolsTitleKey,
@@ -46,7 +44,6 @@ final class GetFavoritesStringsUseCase: Sendable {
         return FavoritesStringsDomainModel(
             tutorialMessage: strings[tutorialMessageKey] ?? "",
             openTutorialActionTitle: strings[openTutorialActionTitleKey] ?? "",
-            featuredLessonsTitle: strings[featuredLessonsTitleKey] ?? "",
             favoriteToolsTitle: strings[favoriteToolsTitleKey] ?? "",
             viewAllFavoritesActionTitle: strings[viewAllFavoritesActionTitleKey] ?? "",
             noFavoritedToolsTitle: strings[noFavoritedToolsTitleKey] ?? "",
