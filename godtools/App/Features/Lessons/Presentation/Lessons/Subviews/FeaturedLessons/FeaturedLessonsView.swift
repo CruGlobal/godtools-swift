@@ -14,6 +14,9 @@ struct FeaturedLessonsView: View {
     private static let cardsBottomSpacing: CGFloat = 5
     private static let cardSpacing: CGFloat = 24
 
+    private static var scrollViewTopPadding: CGFloat { cardsTopSpacing - LessonCardView.shadowClippingInsetTop }
+    private static var scrollViewBottomPadding: CGFloat { cardsBottomSpacing - LessonCardView.shadowClippingInsetBottom }
+
     private let geometry: GeometryProxy
     private let contentHorizontalInsets: CGFloat
 
@@ -66,8 +69,8 @@ struct FeaturedLessonsView: View {
                 .padding([.top], LessonCardView.shadowClippingInsetTop)
                 .padding([.bottom], LessonCardView.shadowClippingInsetBottom)
             }
-            .padding([.top], FeaturedLessonsView.cardsTopSpacing - LessonCardView.shadowClippingInsetTop)
-            .padding([.bottom], FeaturedLessonsView.cardsBottomSpacing - LessonCardView.shadowClippingInsetBottom)
+            .padding([.top], FeaturedLessonsView.scrollViewTopPadding)
+            .padding([.bottom], FeaturedLessonsView.scrollViewBottomPadding)
         }
     }
 }

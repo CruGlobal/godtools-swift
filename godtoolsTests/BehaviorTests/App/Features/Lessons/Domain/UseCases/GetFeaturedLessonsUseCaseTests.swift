@@ -68,8 +68,8 @@ struct GetFeaturedLessonsUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: Featured lessons are curated for the user's localization.
-        When: The user has not selected a country in their localization settings.
+        Given: User is viewing featured lessons.
+        When: I have not selected a country in my localization settings.
         Then: I expect to see no featured lessons.
         """,
         arguments: [
@@ -90,8 +90,8 @@ struct GetFeaturedLessonsUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: Featured lessons are curated for the user's localization.
-        When: The user has selected a country in their localization settings.
+        Given: User is viewing featured lessons.
+        When: I have selected a country in my localization settings.
         Then: I expect to see featured lessons.
         """
     )
@@ -108,8 +108,8 @@ struct GetFeaturedLessonsUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: The user has selected a country in their localization settings.
-        When: There are no featured lessons available for them.
+        Given: User is viewing featured lessons.
+        When: No featured lessons are available for my selected country.
         Then: I expect to see no featured lessons.
         """
     )
