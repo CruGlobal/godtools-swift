@@ -211,13 +211,11 @@ final class ChooseYourOwnAdventureViewModel: LegacyMobileContentRendererViewMode
     
     override func createToolSettingsObserver(with toolSettingsLanguages: ToolSettingsLanguages) -> CYOAToolSettingsObserver {
         
-        // TODO: Need sub-page number.  This is the card collection page number. ~Levi
-        
         let cyoaToolSettingsObserver = CYOAToolSettingsObserver(
             toolId: renderer.value.resource.id,
             languages: toolSettingsLanguages,
             pageNumber: currentPageNumber,
-            subPageNumber: nil,
+            subPageNumber: currentPageSubPageNumber,
             trainingTipsEnabled: trainingTipsEnabled
         )
         
@@ -229,6 +227,11 @@ final class ChooseYourOwnAdventureViewModel: LegacyMobileContentRendererViewMode
 
 extension ChooseYourOwnAdventureViewModel {
     
+    func didChangeCategoryPageCard(page: Int, card: Int) {
+        
+        super.setPageSubPage(page: page, subPage: card)
+    }
+
     @objc func homeTapped() {
         stepEmitter.emit(step: AppFlowStep.backTappedFromChooseYourOwnAdventure)
     }
@@ -248,6 +251,7 @@ extension ChooseYourOwnAdventureViewModel {
     func languageTapped(index: Int) {
         
         let pageRenderer: MobileContentPageRenderer = renderer.value.pageRenderers[index]
+        
         setPageRenderer(pageRenderer: pageRenderer, navigationEvent: nil, pagePositions: nil)
     }
 }

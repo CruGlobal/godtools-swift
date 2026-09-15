@@ -8,6 +8,12 @@
 
 import UIKit
 
+@MainActor
+protocol LegacyMobileContentCardCollectionPageViewDelegate: AnyObject {
+    
+    func cardCollectionPageDidChangeCard(pageView: LegacyMobileContentCardCollectionPageView, page: Int, card: Int)
+}
+
 class LegacyMobileContentCardCollectionPageView: LegacyMobileContentPageView {
     
     private let viewModel: LegacyMobileContentCardCollectionPageViewModel
@@ -16,6 +22,8 @@ class LegacyMobileContentCardCollectionPageView: LegacyMobileContentPageView {
     private let nextCardButton: UIButton = UIButton(type: .custom)
     private let previousAndNextButtonSize: CGFloat = 44
     private let previousAndNextButtonInsets: CGFloat = 20
+    
+    private weak var cardCollectionPageDelegate: LegacyMobileContentCardCollectionPageViewDelegate?
         
     init(viewModel: LegacyMobileContentCardCollectionPageViewModel) {
         
@@ -103,6 +111,15 @@ class LegacyMobileContentCardCollectionPageView: LegacyMobileContentPageView {
         cardPageNavigationView.reloadData()
     }
     
+    func setCardCollectionPageDelegate(delegate: LegacyMobileContentCardCollectionPageViewDelegate?) {
+        self.cardCollectionPageDelegate = delegate
+    }
+    
+    private func notifyDelegateCardChanged(card: Int) {
+                
+        cardCollectionPageDelegate?.cardCollectionPageDidChangeCard(pageView: self, page: viewModel.page, card: card)
+    }
+    
     @objc private func previousCardButtonTapped() {
         
         cardPageNavigationView.scrollToPreviousPage(animated: true)
@@ -169,6 +186,8 @@ class LegacyMobileContentCardCollectionPageView: LegacyMobileContentPageView {
     override func viewDidAppear(navigationEvent: MobileContentPagesNavigationEvent?) {
         super.viewDidAppear(navigationEvent: navigationEvent)
         
+        notifyDelegateCardChanged(card: navigationEvent?.pageSubIndex ?? cardPageNavigationView.getCurrentPage())
+        
         if let pageSubIndex = navigationEvent?.pageSubIndex {
             
             // NOTE: Method viewDidAppear is triggered from UICollectionView willDisplayCell in PageNavigationCollectionView.swift.
@@ -212,6 +231,8 @@ extension LegacyMobileContentCardCollectionPageView: PageNavigationCollectionVie
     func pageNavigationDidChangeMostVisiblePage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
         
         updatePreviousAndNextButtonVisibility(page: page)
+        
+        notifyDelegateCardChanged(card: page)
     }
     
     func pageNavigationDidScrollToPage(pageNavigation: PageNavigationCollectionView, pageCell: UICollectionViewCell, page: Int) {
@@ -219,5 +240,7 @@ extension LegacyMobileContentCardCollectionPageView: PageNavigationCollectionVie
         updatePreviousAndNextButtonVisibility(page: page)
         
         viewModel.cardDidAppear(card: page)
+        
+        notifyDelegateCardChanged(card: page)
     }
 }

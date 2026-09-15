@@ -11,11 +11,18 @@ import GodToolsShared
 
 @MainActor
 class LegacyMobileContentPagesViewModel: NSObject, ObservableObject {
+    
+    private struct SubPage {
+        let pageNumber: Int
+        let subPageNumber: Int
+    }
         
     private(set) var safeArea: UIEdgeInsets?
     private(set) var pageModels: [Page] = Array()
     private(set) var currentPageNumber: Int = 0
     private(set) var highestPageNumberViewed: Int = 0
+    
+    private var subPage: SubPage?
     
     private(set) weak var window: UIViewController?
         
@@ -28,6 +35,19 @@ class LegacyMobileContentPagesViewModel: NSObject, ObservableObject {
     
     var layoutDirection: UISemanticContentAttribute {
         return .forceLeftToRight
+    }
+    
+    var currentPageSubPageNumber: Int? {
+        
+        guard let subPage = self.subPage else {
+            return nil
+        }
+        
+        guard subPage.pageNumber == currentPageNumber else {
+            return nil
+        }
+        
+        return subPage.subPageNumber
     }
     
     func viewDidFinishLayout(window: UIViewController, safeArea: UIEdgeInsets) {
@@ -48,6 +68,11 @@ class LegacyMobileContentPagesViewModel: NSObject, ObservableObject {
 
     func getCurrentPage() -> Page? {
         return getPage(index: currentPageNumber)
+    }
+    
+    func setPageSubPage(page: Int, subPage: Int) {
+        
+        self.subPage = SubPage(pageNumber: page, subPageNumber: subPage)
     }
     
     func getPage(index: Int) -> Page? {

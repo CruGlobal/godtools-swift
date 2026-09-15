@@ -30,6 +30,10 @@ class LegacyMobileContentCardCollectionPageViewModel: LegacyMobileContentPageVie
         super.init(pageModel: cardCollectionPage, renderedPageContext: renderedPageContext, mobileContentAnalytics: mobileContentAnalytics, trackScreenViewAnalyticsUseCase: trackScreenViewAnalyticsUseCase, hidesBackgroundImage: false)
     }
     
+    var page: Int {
+        return renderedPageContext.page
+    }
+    
     var layoutDirection: ApplicationLayoutDirection {
         return renderedPageContext.primaryLanguageLayoutDirection
     }

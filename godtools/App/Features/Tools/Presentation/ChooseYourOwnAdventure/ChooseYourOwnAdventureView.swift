@@ -38,7 +38,25 @@ class ChooseYourOwnAdventureView: LegacyMobileContentRendererView {
         pageNavigationView.gestureScrollingEnabled = false
     }
     
+    override func didConfigurePageView(pageView: LegacyMobileContentPageView) {
+        super.didConfigurePageView(pageView: pageView)
+        
+        if let cardCollectionPageView = pageView as? LegacyMobileContentCardCollectionPageView {
+            cardCollectionPageView.setCardCollectionPageDelegate(delegate: self)
+        }
+    }
+    
     func languageTapped(index: Int) {
         viewModel.languageTapped(index: index)
+    }
+}
+
+// MARK: - LegacyMobileContentCardCollectionPageViewDelegate
+
+extension ChooseYourOwnAdventureView: LegacyMobileContentCardCollectionPageViewDelegate {
+    
+    func cardCollectionPageDidChangeCard(pageView: LegacyMobileContentCardCollectionPageView, page: Int, card: Int) {
+                
+        viewModel.didChangeCategoryPageCard(page: page, card: card)
     }
 }
