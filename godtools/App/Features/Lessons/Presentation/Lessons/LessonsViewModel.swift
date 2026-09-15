@@ -120,18 +120,20 @@ final class LessonsViewModel: ObservableObject {
         }
         .store(in: &cancellables)
 
-        Publishers.CombineLatest3(
+        Publishers.CombineLatest4(
             $appLanguage.dropFirst(),
             $localizationSettings,
-            $selectedPersonalizedLessonsFilterLanguage
+            $selectedPersonalizedLessonsFilterLanguage,
+            $featuredLessons
         )
-        .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?, languageFilter: PersonalizedLessonFilterLanguageDomainModel?) in
+        .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?, languageFilter: PersonalizedLessonFilterLanguageDomainModel?, featuredLessons: [FeaturedLessonDomainModel]) in
             
             getPersonalizedLessonsUseCase
                 .execute(
                     appLanguage: appLanguage,
                     country: localizationSettings?.selectedCountry,
-                    filterLessonsByLanguageId: languageFilter?.languageId
+                    filterLessonsByLanguageId: languageFilter?.languageId,
+                    featuredLessons: featuredLessons
                 )
         }
         .switchToLatest()

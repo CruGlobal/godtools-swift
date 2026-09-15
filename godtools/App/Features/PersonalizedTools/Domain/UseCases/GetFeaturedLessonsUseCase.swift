@@ -12,6 +12,7 @@ import Combine
 final class GetFeaturedLessonsUseCase: Sendable {
 
     private let resourcesRepository: ResourcesRepository
+    private let personalizedToolsRepository: PersonalizedToolsRepository
     private let languagesRepository: LanguagesRepository
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
@@ -20,6 +21,7 @@ final class GetFeaturedLessonsUseCase: Sendable {
 
     init(
         resourcesRepository: ResourcesRepository,
+        personalizedToolsRepository: PersonalizedToolsRepository,
         languagesRepository: LanguagesRepository,
         getTranslatedToolName: GetTranslatedToolName,
         getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability,
@@ -28,6 +30,7 @@ final class GetFeaturedLessonsUseCase: Sendable {
     ) {
 
         self.resourcesRepository = resourcesRepository
+        self.personalizedToolsRepository = personalizedToolsRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedToolName = getTranslatedToolName
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
@@ -44,14 +47,20 @@ final class GetFeaturedLessonsUseCase: Sendable {
                 .eraseToAnyPublisher()
         }
 
-        return Publishers.CombineLatest(
+        return Publishers.CombineLatest3(
+            personalizedToolsRepository
+                .getPersonalizedToolsChanged(
+                    requestPriority: .high,
+                    country: countryIsoRegionCode,
+                    language: appLanguage
+                ),
             resourcesRepository
                 .observeCollectionChangesPublisher(),
             lessonProgressRepository
                 .getLessonProgressChangedPublisher()
         )
         .receive(on: DispatchQueue.global())
-        .flatMap({ (resourcesChanged: Void, lessonProgressDidChange: Void) -> AnyPublisher<[FeaturedLessonDomainModel], Error> in
+        .flatMap({ (personalizedToolsChanged: Void, resourcesChanged: Void, lessonProgressDidChange: Void) -> AnyPublisher<[FeaturedLessonDomainModel], Error> in
 
             return AnyPublisher() {
                 try await self.asyncExecute(appLanguage: appLanguage, countryIsoRegionCode: countryIsoRegionCode)
@@ -73,10 +82,13 @@ final class GetFeaturedLessonsUseCase: Sendable {
 
         let appLanguageModel: LanguageDataModel? = languagesRepository.getLanguageByCode(code: appLanguage)
 
-        // TODO: GT-3075 stubs this with spotlight lessons.  Replace with the leader-curated featured lessons for the
-        // country and language pair, at which point countryIsoRegionCode should filter rather than only gate.
-        let featuredLessonsDataModels: [ResourceDataModel] = try await resourcesRepository
-            .getFeaturedLessons(sorted: true)
+        let featuredLessonsDataModels: [ResourceDataModel] = try await personalizedToolsRepository
+            .getTools(
+                requestPriority: .high,
+                type: .featured(country: countryIsoRegionCode, language: appLanguage),
+                resourceTypes: [.lesson],
+                sortByResponse: true
+            )
 
         var featuredLessons: [FeaturedLessonDomainModel] = Array()
 
