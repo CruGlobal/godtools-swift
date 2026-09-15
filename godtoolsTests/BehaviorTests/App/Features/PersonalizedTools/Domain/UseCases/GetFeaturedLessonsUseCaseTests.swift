@@ -60,6 +60,12 @@ struct GetFeaturedLessonsUseCaseTests {
         let expectedIsAvailable: Bool
     }
 
+    struct FeaturedSectionArgument {
+        let appLanguage: AppLanguageDomainModel
+        let country: LocalizationSettingsCountryDomainModel?
+        let expectsFeaturedLessons: Bool
+    }
+
     struct LanguageDirectionArgument {
         let appLanguage: AppLanguageDomainModel
         let expectedLanguageDirection: LanguageDirectionDomainModel
@@ -72,59 +78,46 @@ struct GetFeaturedLessonsUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: User is viewing featured lessons.
-        When: I have not selected a country in my localization settings.
-        Then: I expect to see no featured lessons.
+        Given: User is viewing lessons.
+        When: My selected country and app language do or do not have curated featured lessons.
+        Then: I expect to see featured lessons only when they are curated for that country and language pair.
         """,
         arguments: [
-            nil,
-            LocalizationSettingsCountryDomainModel(isoRegionCode: "")
-        ] as [LocalizationSettingsCountryDomainModel?]
+            FeaturedSectionArgument(
+                appLanguage: LanguageCodeDomainModel.english.value,
+                country: nil,
+                expectsFeaturedLessons: false
+            ),
+            FeaturedSectionArgument(
+                appLanguage: LanguageCodeDomainModel.english.value,
+                country: LocalizationSettingsCountryDomainModel(isoRegionCode: ""),
+                expectsFeaturedLessons: false
+            ),
+            FeaturedSectionArgument(
+                appLanguage: LanguageCodeDomainModel.english.value,
+                country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestCountryCode.withFeaturedLessons),
+                expectsFeaturedLessons: true
+            ),
+            FeaturedSectionArgument(
+                appLanguage: LanguageCodeDomainModel.english.value,
+                country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestCountryCode.withoutFeaturedLessons),
+                expectsFeaturedLessons: false
+            ),
+            FeaturedSectionArgument(
+                appLanguage: LanguageCodeDomainModel.french.value,
+                country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestCountryCode.withFeaturedLessons),
+                expectsFeaturedLessons: false
+            )
+        ]
     )
-    @MainActor func noFeaturedLessonsWithoutASelectedCountry(country: LocalizationSettingsCountryDomainModel?) async throws {
+    @MainActor func featuredLessonsAreOnlyReturnedForACuratedCountryAndLanguagePair(argument: FeaturedSectionArgument) async throws {
 
         let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
-            appLanguage: LanguageCodeDomainModel.english.value,
-            country: country
+            appLanguage: argument.appLanguage,
+            country: argument.country
         )
 
-        #expect(featuredLessons.isEmpty)
-    }
-
-    @available(iOS 17.4, *)
-    @Test(
-        """
-        Given: User is viewing featured lessons.
-        When: I have selected a country in my localization settings.
-        Then: I expect to see featured lessons.
-        """
-    )
-    @MainActor func featuredLessonsAreReturnedWithASelectedCountry() async throws {
-
-        let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
-            appLanguage: LanguageCodeDomainModel.english.value,
-            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestCountryCode.withFeaturedLessons)
-        )
-
-        #expect(featuredLessons.isEmpty == false)
-    }
-
-    @available(iOS 17.4, *)
-    @Test(
-        """
-        Given: User is viewing featured lessons.
-        When: No featured lessons are curated for my selected country and language.
-        Then: I expect to see no featured lessons.
-        """
-    )
-    @MainActor func noFeaturedLessonsWhenNoneAreCuratedForMyLocalization() async throws {
-
-        let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
-            appLanguage: LanguageCodeDomainModel.english.value,
-            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestCountryCode.withoutFeaturedLessons)
-        )
-
-        #expect(featuredLessons.isEmpty)
+        #expect(featuredLessons.isEmpty == !argument.expectsFeaturedLessons)
     }
 
     @available(iOS 17.4, *)

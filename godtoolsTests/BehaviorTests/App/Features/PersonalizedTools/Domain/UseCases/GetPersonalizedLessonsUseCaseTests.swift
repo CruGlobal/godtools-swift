@@ -235,18 +235,19 @@ struct GetPersonalizedLessonsUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: There are both personalized lessons and featured lessons.
-        When: Personalized lessons are requested.
-        Then: I expect to see only the personalized lessons and no personalization unavailable strings.
-        """
+        Given: There are default order lessons for my app language.
+        When: Featured lessons are or are not available for my localization.
+        Then: I expect to see the default order lessons either way and no personalization unavailable strings.
+        """,
+        arguments: [true, false]
     )
-    @MainActor func featuredLessonsAreNotIncludedInThePersonalizedLessonsList() async throws {
+    @MainActor func defaultOrderLessonsAreShownWhetherOrNotThereAreFeaturedLessons(hasFeaturedLessons: Bool) async throws {
 
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: LanguageCodeDomainModel.english.value,
             country: nil,
             filterLessonsByLanguageId: nil,
-            hasFeaturedLessons: true
+            hasFeaturedLessons: hasFeaturedLessons
         )
 
         #expect(personalizedLessons.lessons.map({ $0.dataModelId }).sorted() == ["lesson-1", "lesson-2"])
