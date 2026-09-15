@@ -124,7 +124,7 @@ final class LessonsViewModel: ObservableObject {
             $appLanguage.dropFirst(),
             $localizationSettings,
             $selectedPersonalizedLessonsFilterLanguage,
-            $featuredLessons
+            $featuredLessons.removeDuplicates { $0.isEmpty == $1.isEmpty }
         )
         .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?, languageFilter: PersonalizedLessonFilterLanguageDomainModel?, featuredLessons: [FeaturedLessonDomainModel]) in
             
