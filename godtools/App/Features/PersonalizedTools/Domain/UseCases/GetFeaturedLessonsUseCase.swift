@@ -89,6 +89,7 @@ final class GetFeaturedLessonsUseCase: Sendable {
                 resourceTypes: [.lesson],
                 sortByResponse: true
             )
+            .filter { !$0.isHidden }
 
         var featuredLessons: [FeaturedLessonDomainModel] = Array()
 

@@ -18,6 +18,7 @@ private enum TestLessonId {
     static let featuredSecond: String = "featured-lesson-second"
     static let featuredThird: String = "featured-lesson-third"
     static let featuredUntranslated: String = "featured-lesson-untranslated"
+    static let featuredHidden: String = "featured-lesson-hidden"
     static let notFeatured: String = "lesson-not-featured"
     static let featuredTract: String = "tract-featured"
 }
@@ -36,6 +37,7 @@ struct GetFeaturedLessonsUseCaseTests {
         let defaultOrder: Int
         let defaultLocale: LanguageCodeDomainModel
         let name: String
+        let isHidden: Bool
         let resourceType: ResourceType
         let languageCodes: [LanguageCodeDomainModel]
         let translatedNamesByLanguageCode: [LanguageCodeDomainModel: String]
@@ -144,6 +146,23 @@ struct GetFeaturedLessonsUseCaseTests {
         #expect(lessonIds.contains(TestLessonId.featuredTract) == false)
         #expect(lessonIds.contains(TestLessonId.notFeatured) == false)
         #expect(lessonIds.count == 4)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User is viewing featured lessons.
+        When: A curated featured lesson is hidden.
+        Then: I expect to see it excluded from my featured lessons.
+        """
+    )
+    @MainActor func hiddenLessonsAreNotFeatured() async throws {
+
+        let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
+            appLanguage: LanguageCodeDomainModel.english.value
+        )
+
+        #expect(featuredLessons.map({ $0.dataModelId }).contains(TestLessonId.featuredHidden) == false)
     }
 
     @available(iOS 17.4, *)
@@ -569,6 +588,7 @@ extension GetFeaturedLessonsUseCaseTests {
             lesson.attrDefaultOrder = fixture.defaultOrder
             lesson.attrDefaultLocale = fixture.defaultLocale.rawValue
             lesson.name = fixture.name
+            lesson.isHidden = fixture.isHidden
             lesson.resourceType = fixture.resourceType.rawValue
 
             for languageCode in fixture.languageCodes {
@@ -650,6 +670,7 @@ extension GetFeaturedLessonsUseCaseTests {
         return [
             TestLessonId.featuredFirst,
             TestLessonId.featuredSecond,
+            TestLessonId.featuredHidden,
             TestLessonId.featuredTract,
             TestLessonId.featuredThird,
             TestLessonId.featuredUntranslated
@@ -666,6 +687,7 @@ extension GetFeaturedLessonsUseCaseTests {
                 defaultOrder: 3,
                 defaultLocale: .english,
                 name: "Lesson First Resource Name",
+                isHidden: false,
                 resourceType: .lesson,
                 languageCodes: [.arabic, .english, .spanish],
                 translatedNamesByLanguageCode: [
@@ -680,6 +702,7 @@ extension GetFeaturedLessonsUseCaseTests {
                 defaultOrder: 2,
                 defaultLocale: .english,
                 name: "Lesson Second Resource Name",
+                isHidden: false,
                 resourceType: .lesson,
                 languageCodes: [.english],
                 translatedNamesByLanguageCode: [
@@ -693,6 +716,7 @@ extension GetFeaturedLessonsUseCaseTests {
                 defaultOrder: 1,
                 defaultLocale: .english,
                 name: "Lesson Third Resource Name",
+                isHidden: false,
                 resourceType: .lesson,
                 languageCodes: [.arabic, .english, .spanish],
                 translatedNamesByLanguageCode: [
@@ -707,9 +731,25 @@ extension GetFeaturedLessonsUseCaseTests {
                 defaultOrder: 0,
                 defaultLocale: .english,
                 name: "Lesson Untranslated Resource Name",
+                isHidden: false,
                 resourceType: .lesson,
                 languageCodes: [.english],
                 translatedNamesByLanguageCode: [:]
+            ),
+            LessonFixture(
+                id: TestLessonId.featuredHidden,
+                abbreviation: "lessonhidden",
+                bannerImageId: "banner-hidden",
+                defaultOrder: 6,
+                defaultLocale: .english,
+                name: "Lesson Hidden Resource Name",
+                isHidden: true,
+                resourceType: .lesson,
+                languageCodes: [.arabic, .english, .spanish],
+                translatedNamesByLanguageCode: [
+                    .english: "Lesson Hidden",
+                    .spanish: "Lección oculta"
+                ]
             ),
             LessonFixture(
                 id: TestLessonId.notFeatured,
@@ -718,6 +758,7 @@ extension GetFeaturedLessonsUseCaseTests {
                 defaultOrder: 4,
                 defaultLocale: .english,
                 name: "Lesson Not Featured Resource Name",
+                isHidden: false,
                 resourceType: .lesson,
                 languageCodes: [.english],
                 translatedNamesByLanguageCode: [
@@ -731,6 +772,7 @@ extension GetFeaturedLessonsUseCaseTests {
                 defaultOrder: 5,
                 defaultLocale: .english,
                 name: "Tract Featured Resource Name",
+                isHidden: false,
                 resourceType: .tract,
                 languageCodes: [.english],
                 translatedNamesByLanguageCode: [
