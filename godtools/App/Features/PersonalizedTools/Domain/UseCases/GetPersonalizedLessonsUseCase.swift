@@ -39,7 +39,7 @@ final class GetPersonalizedLessonsUseCase: Sendable {
         appLanguage: AppLanguageDomainModel,
         country: LocalizationSettingsCountryDomainModel?,
         filterLessonsByLanguageId: String?,
-        featuredLessons: [FeaturedLessonDomainModel]
+        hasFeaturedLessons: Bool
     ) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> {
 
         let languageCode: String = getLanguageElseAppLanguage.getLanguageCode(
@@ -59,7 +59,7 @@ final class GetPersonalizedLessonsUseCase: Sendable {
             languageCode: languageCode,
             appLanguage: appLanguage,
             filterLessonsByLanguageId: filterLessonsByLanguageId,
-            featuredLessons: featuredLessons
+            hasFeaturedLessons: hasFeaturedLessons
         )
     }
 
@@ -68,7 +68,7 @@ final class GetPersonalizedLessonsUseCase: Sendable {
         languageCode: String,
         appLanguage: AppLanguageDomainModel,
         filterLessonsByLanguageId: String?,
-        featuredLessons: [FeaturedLessonDomainModel]
+        hasFeaturedLessons: Bool
     ) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> {
 
         return Publishers.CombineLatest3(
@@ -104,7 +104,7 @@ final class GetPersonalizedLessonsUseCase: Sendable {
                 filterLessonsByLanguageId: filterLessonsByLanguageId
             )
 
-            let showsPersonalizationUnavailable: Bool = lessons.isEmpty && featuredLessons.isEmpty
+            let showsPersonalizationUnavailable: Bool = lessons.isEmpty && !hasFeaturedLessons
             let unavailableStrings: PersonalizedLessonsUnavailableDomainModel? = showsPersonalizationUnavailable ? self.getLessonsUnavailable(appLanguage: appLanguage) : nil
 
             return PersonalizedLessonsDomainModel(

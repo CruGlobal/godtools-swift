@@ -225,7 +225,7 @@ struct GetPersonalizedLessonsUseCaseTests {
             appLanguage: LanguageCodeDomainModel.spanish.value,
             country: country,
             filterLessonsByLanguageId: nil,
-            featuredLessons: [Self.createFeaturedLesson(id: "featured-lesson-1")]
+            hasFeaturedLessons: true
         )
 
         #expect(personalizedLessons.lessons.isEmpty)
@@ -246,7 +246,7 @@ struct GetPersonalizedLessonsUseCaseTests {
             appLanguage: LanguageCodeDomainModel.english.value,
             country: nil,
             filterLessonsByLanguageId: nil,
-            featuredLessons: [Self.createFeaturedLesson(id: "featured-lesson-1")]
+            hasFeaturedLessons: true
         )
 
         #expect(personalizedLessons.lessons.map({ $0.dataModelId }).sorted() == ["lesson-1", "lesson-2"])
@@ -259,7 +259,7 @@ struct GetPersonalizedLessonsUseCaseTests {
 extension GetPersonalizedLessonsUseCaseTests {
 
     @available(iOS 17.4, *)
-    @MainActor private func getPersonalizedLessons(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguageId: String?, featuredLessons: [FeaturedLessonDomainModel] = []) async throws -> PersonalizedLessonsDomainModel {
+    @MainActor private func getPersonalizedLessons(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguageId: String?, hasFeaturedLessons: Bool = false) async throws -> PersonalizedLessonsDomainModel {
 
         let dependencies: TestDependencies = try getTestDependencies()
 
@@ -288,7 +288,7 @@ extension GetPersonalizedLessonsUseCaseTests {
                     appLanguage: appLanguage,
                     country: country,
                     filterLessonsByLanguageId: filterLessonsByLanguageId,
-                    featuredLessons: featuredLessons
+                    hasFeaturedLessons: hasFeaturedLessons
                 )
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
@@ -407,19 +407,6 @@ extension GetPersonalizedLessonsUseCaseTests {
         }
 
         return Array(languagesByCode.values) + resources + personalizedTools
-    }
-
-    private static func createFeaturedLesson(id: String) -> FeaturedLessonDomainModel {
-
-        return FeaturedLessonDomainModel(
-            analyticsToolName: id,
-            availabilityInAppLanguage: ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: true),
-            bannerImageId: id + "-banner",
-            dataModelId: id,
-            name: id,
-            nameLanguageDirection: .leftToRight,
-            lessonProgress: .hidden
-        )
     }
 
     @available(iOS 17.4, *)
