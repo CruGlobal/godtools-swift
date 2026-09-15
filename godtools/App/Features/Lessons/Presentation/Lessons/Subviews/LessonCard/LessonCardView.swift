@@ -10,12 +10,12 @@ import SwiftUI
 
 struct LessonCardView: View {
         
-    static var shadowClippingInsetTop: CGFloat { (shadowRadius * 2) - shadowYOffset }
-    static var shadowClippingInsetBottom: CGFloat { (shadowRadius * 2) + shadowYOffset }
-
     private static let shadowRadius: CGFloat = 4
     private static let shadowYOffset: CGFloat = 2
     private static let featuredCardWidthMultiplier: CGFloat = 0.58
+
+    static var shadowClippingInsetTop: CGFloat { (shadowRadius * 2) - shadowYOffset }
+    static var shadowClippingInsetBottom: CGFloat { (shadowRadius * 2) + shadowYOffset }
 
     private let geometry: GeometryProxy
     private let backgroundColor: Color = Color.white

@@ -520,8 +520,7 @@ extension AppFlow {
         case .localizationSettings:
             pushFlow(
                 flow: LocalizationSettingsFlow(
-                    appDiContainer: appDiContainer,
-                    shouldStoreCountryWhenSelected: true
+                    appDiContainer: appDiContainer
                 )
             )
             
