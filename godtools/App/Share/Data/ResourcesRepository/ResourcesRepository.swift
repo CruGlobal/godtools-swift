@@ -75,10 +75,6 @@ final class ResourcesRepository: Sendable {
         return try await cache.persistence.getDataModels(getOption: .objectsByIds(ids: Set(ids)))
     }
     
-    func getFeaturedLessons(sorted: Bool = false) async throws -> [ResourceDataModel] {
-        return try await self.cache.getFeaturedLessons(sorted: sorted)
-    }
-    
     func getResourceVariants(resourceId: String) async throws -> [ResourceDataModel] {
         
         return try await cache.getResourceVariants(resourceId: resourceId)
