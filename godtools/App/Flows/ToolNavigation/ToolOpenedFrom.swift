@@ -10,7 +10,7 @@ import Foundation
 
 enum ToolOpenedFrom: Sendable {
     case dashboardLessons
-    case dashboardFavoritesFeaturedLesson
+    case dashboardLessonsFeaturedLesson
     case dashboardFavoritesFavoritedTool
     case dashboardTools
     case deepLink

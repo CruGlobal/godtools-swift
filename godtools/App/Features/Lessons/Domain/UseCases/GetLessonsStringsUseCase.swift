@@ -21,6 +21,8 @@ final class GetLessonsStringsUseCase: Sendable {
 
         let titleKey: String = LocalizableStringKeys.lessonsPageTitle.key
         let subtitleKey: String = LocalizableStringKeys.lessonsPageSubtitle.key
+        let featuredTitleKey: String = LocalizableStringKeys.lessonsFeaturedTitle.key
+        let featuredSubtitleKey: String = LocalizableStringKeys.lessonsFeaturedSubtitle.key
         let languageFilterTitleKey: String = LocalizableStringKeys.lessonsLanguageFilterTitle.key
         let personalizedToolToggleTitleKey: String = LocalizableStringKeys.dashboardPersonalizedToolTogglePersonalizedTitle.key
         let allLessonsToggleTitleKey: String = LocalizableStringKeys.dashboardPersonalizedToolToggleAllLessonsTitle.key
@@ -33,6 +35,8 @@ final class GetLessonsStringsUseCase: Sendable {
             keys: [
                 titleKey,
                 subtitleKey,
+                featuredTitleKey,
+                featuredSubtitleKey,
                 languageFilterTitleKey,
                 personalizedToolToggleTitleKey,
                 allLessonsToggleTitleKey,
@@ -48,6 +52,8 @@ final class GetLessonsStringsUseCase: Sendable {
         return LessonsStringsDomainModel(
             title: strings[titleKey] ?? "",
             subtitle: strings[subtitleKey] ?? "",
+            featuredTitle: strings[featuredTitleKey] ?? "",
+            featuredSubtitle: strings[featuredSubtitleKey] ?? "",
             languageFilterTitle: strings[languageFilterTitleKey] ?? "",
             personalizedToolToggleTitle: strings[personalizedToolToggleTitleKey] ?? "",
             allLessonsToggleTitle: strings[allLessonsToggleTitleKey] ?? "",

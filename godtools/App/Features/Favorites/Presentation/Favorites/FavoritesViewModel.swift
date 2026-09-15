@@ -24,7 +24,6 @@ final class FavoritesViewModel: ObservableObject {
     private let getToolBannerUseCase: GetToolBannerUseCase
     private let imageCache: ImageCacheInterface
     private let disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase
-    private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase // TODO: Can remove in GT-2880. ~Levi
     private let getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase
     private let trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase
     private let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
@@ -36,7 +35,6 @@ final class FavoritesViewModel: ObservableObject {
     
     @Published private(set) var strings = FavoritesStringsDomainModel.emptyValue
     @Published private(set) var showsOpenTutorialBanner: Bool = false
-    @Published private(set) var featuredLessons: [FeaturedLessonDomainModel] = Array() // TODO: Can remove in GT-2880. ~Levi
     @Published private(set) var favoritedTools: [YourFavoritedToolDomainModel] = Array()
     
     init(
@@ -50,7 +48,6 @@ final class FavoritesViewModel: ObservableObject {
         getToolBannerUseCase: GetToolBannerUseCase,
         imageCache: ImageCacheInterface,
         disableOptInOnboardingBannerUseCase: DisableOptInOnboardingBannerUseCase,
-        getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase,
         getOptInOnboardingBannerEnabledUseCase: GetOptInOnboardingBannerEnabledUseCase,
         trackScreenViewAnalyticsUseCase: TrackScreenViewAnalyticsUseCase,
         trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase
@@ -66,7 +63,6 @@ final class FavoritesViewModel: ObservableObject {
         self.getToolBannerUseCase = getToolBannerUseCase
         self.imageCache = imageCache
         self.disableOptInOnboardingBannerUseCase = disableOptInOnboardingBannerUseCase
-        self.getFeaturedLessonsUseCase = getFeaturedLessonsUseCase
         self.getOptInOnboardingBannerEnabledUseCase = getOptInOnboardingBannerEnabledUseCase
         self.trackScreenViewAnalyticsUseCase = trackScreenViewAnalyticsUseCase
         self.trackActionAnalyticsUseCase = trackActionAnalyticsUseCase
@@ -81,25 +77,6 @@ final class FavoritesViewModel: ObservableObject {
             })
             .store(in: &cancellables)
 
-        $appLanguage
-            .dropFirst()
-            .map { (appLanguage: AppLanguageDomainModel) in
-
-                getFeaturedLessonsUseCase
-                    .execute(
-                        appLanguage: appLanguage
-                    )
-            }
-            .switchToLatest()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { _ in
-                
-            }, receiveValue: { [weak self] (featuredLessons: [FeaturedLessonDomainModel]) in
-                
-                self?.featuredLessons = featuredLessons
-            })
-            .store(in: &cancellables)
-        
         $appLanguage
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
@@ -196,33 +173,6 @@ final class FavoritesViewModel: ObservableObject {
                 properties: analyticsProperties,
                 actionName: AnalyticsConstants.ActionNames.viewedMyToolsAction,
                 data: nil
-            )
-        }
-    }
-    
-    private func trackFeaturedLessonTappedAnalytics(featuredLesson: FeaturedLessonDomainModel) {
-       
-        // TODO: This method we may want in GT-2880. ~Levi
-        
-        let analyticsProperties = AnalyticsProperties(
-            screenName: analyticsScreenName,
-            siteSection: "",
-            siteSubSection: "",
-            appLanguage: nil,
-            contentLanguage: nil,
-            secondaryContentLanguage: nil
-        )
-        let analyticsToolName: String = featuredLesson.analyticsToolName
-        let trackActionAnalyticsUseCase: TrackActionAnalyticsUseCase = self.trackActionAnalyticsUseCase
-        
-        Task.detached {
-            await trackActionAnalyticsUseCase.execute(
-                properties: analyticsProperties,
-                actionName: AnalyticsConstants.ActionNames.lessonOpenTapped,
-                data: [
-                    AnalyticsConstants.Keys.source: AnalyticsConstants.Sources.featured,
-                    AnalyticsConstants.Keys.tool: analyticsToolName
-                ]
             )
         }
     }
@@ -355,25 +305,6 @@ extension FavoritesViewModel {
     func goToToolsTapped() {
         
         stepEmitter.emit(step: AppFlowStep.goToToolsTappedFromFavorites)
-    }
-    
-    func getFeaturedLessonViewModel(featuredLesson: FeaturedLessonDomainModel) -> LessonCardViewModel  {
-                
-        // TODO: This method we may want in GT-2880. ~Levi
-        
-        return LessonCardViewModel(
-            lessonListItem: featuredLesson,
-            getToolBannerUseCase: getToolBannerUseCase,
-            imageCache: imageCache
-        )
-    }
-    
-    func featuredLessonTapped(featuredLesson: FeaturedLessonDomainModel) {
-                
-        // TODO: This method we may want in GT-2880. Step featuredLessonTappedFromLessons. ~Levi
-        
-        stepEmitter.emit(step: AppFlowStep.featuredLessonTappedFromFavorites(featuredLesson: featuredLesson))
-        trackFeaturedLessonTappedAnalytics(featuredLesson: featuredLesson)
     }
     
     func getYourFavoriteToolViewModel(tool: YourFavoritedToolDomainModel) -> ToolCardViewModel {

@@ -69,6 +69,65 @@ struct GetFeaturedLessonsUseCaseTests {
     @Test(
         """
         Given: User is viewing featured lessons.
+        When: I have not selected a country in my localization settings.
+        Then: I expect to see no featured lessons.
+        """,
+        arguments: [
+            nil,
+            LocalizationSettingsCountryDomainModel(isoRegionCode: "")
+        ] as [LocalizationSettingsCountryDomainModel?]
+    )
+    @MainActor func noFeaturedLessonsWithoutASelectedCountry(country: LocalizationSettingsCountryDomainModel?) async throws {
+
+        let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: country
+        )
+
+        #expect(featuredLessons.isEmpty)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User is viewing featured lessons.
+        When: I have selected a country in my localization settings.
+        Then: I expect to see featured lessons.
+        """
+    )
+    @MainActor func featuredLessonsAreReturnedWithASelectedCountry() async throws {
+
+        let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: "US")
+        )
+
+        #expect(featuredLessons.isEmpty == false)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User is viewing featured lessons.
+        When: No featured lessons are available for my selected country.
+        Then: I expect to see no featured lessons.
+        """
+    )
+    @MainActor func noFeaturedLessonsWhenNoneAreAvailable() async throws {
+
+        let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: "US"),
+            lessons: []
+        )
+
+        #expect(featuredLessons.isEmpty)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User is viewing featured lessons.
         When: Lessons exist that are not spotlighted, are hidden, or are not lessons.
         Then: I expect to see only the spotlighted, visible lessons.
         """
@@ -351,9 +410,9 @@ struct GetFeaturedLessonsUseCaseTests {
 extension GetFeaturedLessonsUseCaseTests {
 
     @available(iOS 17.4, *)
-    @MainActor private func getFeaturedLessons(appLanguage: AppLanguageDomainModel, lessonProgress: [LessonProgress] = []) async throws -> [FeaturedLessonDomainModel] {
+    @MainActor private func getFeaturedLessons(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel? = LocalizationSettingsCountryDomainModel(isoRegionCode: "US"), lessonProgress: [LessonProgress] = [], lessons: [LessonFixture]? = nil) async throws -> [FeaturedLessonDomainModel] {
 
-        let useCase: GetFeaturedLessonsUseCase = try await getUseCase(lessonProgress: lessonProgress)
+        let useCase: GetFeaturedLessonsUseCase = try await getUseCase(lessonProgress: lessonProgress, lessons: lessons)
 
         var cancellables: Set<AnyCancellable> = Set()
 
@@ -367,7 +426,7 @@ extension GetFeaturedLessonsUseCaseTests {
             }
 
             useCase
-                .execute(appLanguage: appLanguage)
+                .execute(appLanguage: appLanguage, country: country)
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
 
@@ -389,13 +448,13 @@ extension GetFeaturedLessonsUseCaseTests {
     }
 
     @available(iOS 17.4, *)
-    private func getUseCase(lessonProgress: [LessonProgress]) async throws -> GetFeaturedLessonsUseCase {
+    private func getUseCase(lessonProgress: [LessonProgress], lessons: [LessonFixture]? = nil) async throws -> GetFeaturedLessonsUseCase {
 
         let swiftDatabase = SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
 
         let context: ModelContext = swiftDatabase.openContext()
 
-        context.insertObjects(objects: getSwiftDatabaseObjects())
+        context.insertObjects(objects: getSwiftDatabaseObjects(lessonFixtures: lessons ?? allLessons))
 
         try context.saveIfHasChanges()
 
@@ -473,7 +532,7 @@ extension GetFeaturedLessonsUseCaseTests {
     }
 
     @available(iOS 17.4, *)
-    private func getSwiftDatabaseObjects() -> [any PersistentModel] {
+    private func getSwiftDatabaseObjects(lessonFixtures: [LessonFixture]) -> [any PersistentModel] {
 
         let languagesByCode: [LanguageCodeDomainModel: SwiftLanguage] = [
             .arabic: Self.createLanguage(code: .arabic, directionString: "rtl"),
@@ -483,7 +542,7 @@ extension GetFeaturedLessonsUseCaseTests {
 
         var translations: [SwiftTranslation] = Array()
 
-        let lessons: [SwiftResource] = allLessons.map { (fixture: LessonFixture) in
+        let lessons: [SwiftResource] = lessonFixtures.map { (fixture: LessonFixture) in
 
             let lesson = SwiftResource()
             lesson.id = fixture.id

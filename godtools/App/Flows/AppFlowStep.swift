@@ -38,6 +38,7 @@ enum AppFlowStep: FlowStep {
     case endTutorialFromOnboardingTutorial
     
     // lessons list
+    case featuredLessonTappedFromLessons(featuredLesson: FeaturedLessonDomainModel)
     case lessonLanguageFilterTappedFromLessons
     case personalizedLessonLanguageFilterTappedFromLessons
     case lessonTappedFromLessonsList(lessonListItem: LessonListItemDomainModel, languageFilterLanguageId: String?)
@@ -65,7 +66,6 @@ enum AppFlowStep: FlowStep {
     case backgroundTappedFromLessonEvaluation
     
     // favorites
-    case featuredLessonTappedFromFavorites(featuredLesson: FeaturedLessonDomainModel)
     case toolDetailsTappedFromFavorites(tool: YourFavoritedToolDomainModel)
     case openToolTappedFromFavorites(tool: YourFavoritedToolDomainModel)
     case toolTappedFromFavorites(tool: YourFavoritedToolDomainModel)
