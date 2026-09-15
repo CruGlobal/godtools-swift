@@ -81,7 +81,8 @@ struct ShareToolQRCodeUseCaseTests {
         let qrCode: ShareToolQRCodeDomainModel = try useCase.execute(
             toolId: toolId,
             toolLanguageId: TestLanguageId.english,
-            pageNumber: 0
+            pageNumber: 0,
+            subPageNumber: nil
         )
 
         let urlComponents: URLComponents = try #require(URLComponents(string: qrCode.url))
@@ -131,7 +132,8 @@ struct ShareToolQRCodeUseCaseTests {
         let qrCode: ShareToolQRCodeDomainModel = try useCase.execute(
             toolId: argument.toolId,
             toolLanguageId: TestLanguageId.english,
-            pageNumber: 0
+            pageNumber: 0,
+            subPageNumber: nil
         )
 
         #expect(qrCode.url == argument.expectedUrl)
@@ -170,7 +172,8 @@ struct ShareToolQRCodeUseCaseTests {
         let qrCode: ShareToolQRCodeDomainModel = try useCase.execute(
             toolId: TestToolId.tract,
             toolLanguageId: TestLanguageId.english,
-            pageNumber: argument.pageNumber
+            pageNumber: argument.pageNumber,
+            subPageNumber: nil
         )
 
         #expect(qrCode.url == argument.expectedUrl)
@@ -201,7 +204,8 @@ struct ShareToolQRCodeUseCaseTests {
         let qrCode: ShareToolQRCodeDomainModel = try useCase.execute(
             toolId: TestToolId.tract,
             toolLanguageId: argument.toolLanguageId,
-            pageNumber: 0
+            pageNumber: 0,
+            subPageNumber: nil
         )
 
         #expect(qrCode.url == argument.expectedUrl)
@@ -237,7 +241,8 @@ struct ShareToolQRCodeUseCaseTests {
             try useCase.execute(
                 toolId: argument.toolId,
                 toolLanguageId: argument.toolLanguageId,
-                pageNumber: 0
+                pageNumber: 0,
+                subPageNumber: nil
             )
         }
     }

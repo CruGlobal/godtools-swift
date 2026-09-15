@@ -39,6 +39,7 @@ struct GetShareToolStringsUseCaseTests {
             toolId: unknownToolId,
             toolLanguageId: unknownToolLanguageId,
             pageNumber: 0,
+            subPageNumber: nil,
             appLanguage: argument.appLanguage
         )
 
