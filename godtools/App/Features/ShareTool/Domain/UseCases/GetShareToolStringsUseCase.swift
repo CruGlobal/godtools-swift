@@ -19,7 +19,13 @@ final class GetShareToolStringsUseCase: Sendable {
         self.localizationServices = localizationServices
     }
     
-    func execute(toolId: String, toolLanguageId: String, pageNumber: Int, appLanguage: AppLanguageDomainModel) -> ShareToolStringsDomainModel {
+    func execute(
+        toolId: String,
+        toolLanguageId: String,
+        pageNumber: Int,
+        subPageNumber: Int?,
+        appLanguage: AppLanguageDomainModel
+    ) -> ShareToolStringsDomainModel {
 
         let qrCodeActionTitleKey: String = LocalizableStringKeys.toolScreenShareQrCodeTitle.key
         let shareMessageKey: String = LocalizableStringKeys.tractShareMessage.key
@@ -37,6 +43,7 @@ final class GetShareToolStringsUseCase: Sendable {
             toolId: toolId,
             toolLanguageId: toolLanguageId,
             pageNumber: pageNumber,
+            subPageNumber: subPageNumber,
             localizedShareToolMessage: strings[shareMessageKey] ?? ""
         )
 
@@ -46,9 +53,20 @@ final class GetShareToolStringsUseCase: Sendable {
         )
     }
 
-    private func getShareMessage(toolId: String, toolLanguageId: String, pageNumber: Int, localizedShareToolMessage: String) -> String {
+    private func getShareMessage(
+        toolId: String,
+        toolLanguageId: String,
+        pageNumber: Int,
+        subPageNumber: Int?,
+        localizedShareToolMessage: String
+    ) -> String {
 
-        let toolUrl: String? = getShareToolUrl.getUrl(toolId: toolId, toolLanguageId: toolLanguageId, pageNumber: pageNumber)
+        let toolUrl: String? = getShareToolUrl.getUrl(
+            toolId: toolId,
+            toolLanguageId: toolLanguageId,
+            pageNumber: pageNumber,
+            subPageNumber: subPageNumber
+        )
 
         guard let toolUrl = toolUrl else {
             

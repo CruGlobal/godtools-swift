@@ -78,6 +78,7 @@ class ToolSettingsFlow: GTFlow {
                 toolId: toolSettingsObserver.toolId,
                 toolLanguageId: toolSettingsObserver.languages.selectedLanguageId,
                 pageNumber: toolSettingsObserver.pageNumber,
+                subPageNumber: toolSettingsObserver.subPageNumber,
                 appLanguage: appLanguage,
                 toolAnalyticsAbbreviation: toolAbbreviation
             )

@@ -206,10 +206,12 @@ class LegacyMobileContentRendererViewModel: LegacyMobileContentPagesViewModel {
     }
     
     func createToolSettingsObserver(with toolSettingsLanguages: ToolSettingsLanguages) -> ToolSettingsObserver {
+        
         let toolSettingsObserver = ToolSettingsObserver(
             toolId: renderer.value.resource.id,
             languages: toolSettingsLanguages,
             pageNumber: currentPageNumber,
+            subPageNumber: nil,
             trainingTipsEnabled: trainingTipsEnabled
         )
         

@@ -210,10 +210,14 @@ final class ChooseYourOwnAdventureViewModel: LegacyMobileContentRendererViewMode
     }
     
     override func createToolSettingsObserver(with toolSettingsLanguages: ToolSettingsLanguages) -> CYOAToolSettingsObserver {
+        
+        // TODO: Need sub-page number.  This is the card collection page number. ~Levi
+        
         let cyoaToolSettingsObserver = CYOAToolSettingsObserver(
             toolId: renderer.value.resource.id,
             languages: toolSettingsLanguages,
             pageNumber: currentPageNumber,
+            subPageNumber: nil,
             trainingTipsEnabled: trainingTipsEnabled
         )
         

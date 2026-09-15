@@ -16,12 +16,20 @@ class ToolSettingsObserver: ObservableObject {
     
     let toolId: String
     let pageNumber: Int
+    let subPageNumber: Int?
     
-    init(toolId: String, languages: ToolSettingsLanguages, pageNumber: Int, trainingTipsEnabled: Bool) {
+    init(
+        toolId: String,
+        languages: ToolSettingsLanguages,
+        pageNumber: Int,
+        subPageNumber: Int?,
+        trainingTipsEnabled: Bool
+    ) {
         
         self.toolId = toolId
         self.languages = languages
         self.pageNumber = pageNumber
+        self.subPageNumber = subPageNumber
         self.trainingTipsEnabled = trainingTipsEnabled
     }
 }
