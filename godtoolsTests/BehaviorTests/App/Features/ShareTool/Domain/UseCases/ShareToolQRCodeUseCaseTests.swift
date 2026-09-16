@@ -46,6 +46,12 @@ struct ShareToolQRCodeUseCaseTests {
         let expectedUrl: String
     }
 
+    struct ChooseYourOwnAdventurePageArgument {
+        let pageNumber: Int
+        let subPageNumber: Int?
+        let expectedUrl: String
+    }
+
     struct ToolLanguageArgument {
         let toolLanguageId: String
         let expectedUrl: String
@@ -81,7 +87,8 @@ struct ShareToolQRCodeUseCaseTests {
         let qrCode: ShareToolQRCodeDomainModel = try useCase.execute(
             toolId: toolId,
             toolLanguageId: TestLanguageId.english,
-            pageNumber: 0
+            pageNumber: 0,
+            subPageNumber: nil
         )
 
         let urlComponents: URLComponents = try #require(URLComponents(string: qrCode.url))
@@ -104,7 +111,7 @@ struct ShareToolQRCodeUseCaseTests {
             ),
             ResourceTypeArgument(
                 toolId: TestToolId.chooseYourOwnAdventure,
-                expectedUrl: "https://knowgod.com/en/tool/v2/cyoa?icid=gtshare"
+                expectedUrl: "https://knowgod.com/en/tool/v2/cyoa/intro"
             ),
             ResourceTypeArgument(
                 toolId: TestToolId.lesson,
@@ -131,7 +138,8 @@ struct ShareToolQRCodeUseCaseTests {
         let qrCode: ShareToolQRCodeDomainModel = try useCase.execute(
             toolId: argument.toolId,
             toolLanguageId: TestLanguageId.english,
-            pageNumber: 0
+            pageNumber: 0,
+            subPageNumber: nil
         )
 
         #expect(qrCode.url == argument.expectedUrl)
@@ -140,37 +148,62 @@ struct ShareToolQRCodeUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: User is viewing the share tool QR code.
-        When: The QR code url is requested for a page number.
-        Then: I expect the page number to be included in the url only when it is greater than zero.
+        Given: User is viewing the share tool QR code for a choose your own adventure tool.
+        When: The QR code url is requested for a page number and sub page number.
+        Then: I expect the url to link to the intro page, the categories page, or the sub page number.
         """,
         arguments: [
-            PageNumberArgument(
-                pageNumber: -1,
-                expectedUrl: "https://knowgod.com/en/tool/v1/tract?icid=gtshare"
-            ),
-            PageNumberArgument(
+            ChooseYourOwnAdventurePageArgument(
                 pageNumber: 0,
-                expectedUrl: "https://knowgod.com/en/tool/v1/tract?icid=gtshare"
+                subPageNumber: nil,
+                expectedUrl: "https://knowgod.com/en/tool/v2/cyoa/intro"
             ),
-            PageNumberArgument(
+            ChooseYourOwnAdventurePageArgument(
+                pageNumber: 0,
+                subPageNumber: 3,
+                expectedUrl: "https://knowgod.com/en/tool/v2/cyoa/intro"
+            ),
+            ChooseYourOwnAdventurePageArgument(
                 pageNumber: 1,
-                expectedUrl: "https://knowgod.com/en/tool/v1/tract/1?icid=gtshare"
+                subPageNumber: nil,
+                expectedUrl: "https://knowgod.com/en/tool/v2/cyoa/categories"
             ),
-            PageNumberArgument(
-                pageNumber: 12,
-                expectedUrl: "https://knowgod.com/en/tool/v1/tract/12?icid=gtshare"
+            ChooseYourOwnAdventurePageArgument(
+                pageNumber: 1,
+                subPageNumber: 3,
+                expectedUrl: "https://knowgod.com/en/tool/v2/cyoa/categories"
+            ),
+            ChooseYourOwnAdventurePageArgument(
+                pageNumber: 2,
+                subPageNumber: 0,
+                expectedUrl: "https://knowgod.com/en/tool/v2/cyoa/0"
+            ),
+            ChooseYourOwnAdventurePageArgument(
+                pageNumber: 5,
+                subPageNumber: 4,
+                expectedUrl: "https://knowgod.com/en/tool/v2/cyoa/4"
+            ),
+            ChooseYourOwnAdventurePageArgument(
+                pageNumber: 2,
+                subPageNumber: nil,
+                expectedUrl: "https://knowgod.com/en/tool/v2/cyoa"
+            ),
+            ChooseYourOwnAdventurePageArgument(
+                pageNumber: -1,
+                subPageNumber: nil,
+                expectedUrl: "https://knowgod.com/en/tool/v2/cyoa"
             )
         ]
     )
-    func pageNumberIsIncludedInTheUrlOnlyWhenGreaterThanZero(argument: PageNumberArgument) throws {
+    func chooseYourOwnAdventureUrlLinksToIntroCategoriesOrSubPage(argument: ChooseYourOwnAdventurePageArgument) throws {
 
         let useCase: ShareToolQRCodeUseCase = try getUseCase()
 
         let qrCode: ShareToolQRCodeDomainModel = try useCase.execute(
-            toolId: TestToolId.tract,
+            toolId: TestToolId.chooseYourOwnAdventure,
             toolLanguageId: TestLanguageId.english,
-            pageNumber: argument.pageNumber
+            pageNumber: argument.pageNumber,
+            subPageNumber: argument.subPageNumber
         )
 
         #expect(qrCode.url == argument.expectedUrl)
@@ -201,7 +234,8 @@ struct ShareToolQRCodeUseCaseTests {
         let qrCode: ShareToolQRCodeDomainModel = try useCase.execute(
             toolId: TestToolId.tract,
             toolLanguageId: argument.toolLanguageId,
-            pageNumber: 0
+            pageNumber: 0,
+            subPageNumber: nil
         )
 
         #expect(qrCode.url == argument.expectedUrl)
@@ -237,7 +271,8 @@ struct ShareToolQRCodeUseCaseTests {
             try useCase.execute(
                 toolId: argument.toolId,
                 toolLanguageId: argument.toolLanguageId,
-                pageNumber: 0
+                pageNumber: 0,
+                subPageNumber: nil
             )
         }
     }

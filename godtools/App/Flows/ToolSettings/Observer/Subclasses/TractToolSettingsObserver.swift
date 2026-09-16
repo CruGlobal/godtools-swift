@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TractToolSettingsObserver: ToolSettingsObserver, RemoteShareable, LinkShareable {
+final class TractToolSettingsObserver: ToolSettingsObserver, RemoteShareable, LinkShareable {
     
     let tractRemoteSharePublisher: TractRemoteSharePublisher
     
@@ -26,6 +26,7 @@ class TractToolSettingsObserver: ToolSettingsObserver, RemoteShareable, LinkShar
             toolId: toolId,
             languages: languages,
             pageNumber: pageNumber,
+            subPageNumber: nil,
             trainingTipsEnabled: trainingTipsEnabled
         )
     }

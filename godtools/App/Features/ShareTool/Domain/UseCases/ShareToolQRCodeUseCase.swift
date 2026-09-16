@@ -17,12 +17,13 @@ final class ShareToolQRCodeUseCase: Sendable {
         self.getShareToolUrl = getShareToolUrl
     }
     
-    func execute(toolId: String, toolLanguageId: String, pageNumber: Int) throws -> ShareToolQRCodeDomainModel {
+    func execute(toolId: String, toolLanguageId: String, pageNumber: Int, subPageNumber: Int?) throws -> ShareToolQRCodeDomainModel {
         
         let urlString: String? = getShareToolUrl.getUrl(
             toolId: toolId,
             toolLanguageId: toolLanguageId,
-            pageNumber: pageNumber
+            pageNumber: pageNumber,
+            subPageNumber: subPageNumber
         )
         
         guard let urlString = urlString, !urlString.isEmpty else {

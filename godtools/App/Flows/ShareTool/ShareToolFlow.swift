@@ -19,6 +19,7 @@ final class ShareToolFlow: GTFlow {
     private let toolId: String
     private let toolLanguageId: String
     private let pageNumber: Int
+    private let subPageNumber: Int?
     private let appLanguage: AppLanguageDomainModel
                 
     init(
@@ -26,6 +27,7 @@ final class ShareToolFlow: GTFlow {
         toolId: String,
         toolLanguageId: String,
         pageNumber: Int,
+        subPageNumber: Int?,
         appLanguage: AppLanguageDomainModel,
         toolAnalyticsAbbreviation: String
     ) {
@@ -33,6 +35,7 @@ final class ShareToolFlow: GTFlow {
         self.toolId = toolId
         self.toolLanguageId = toolLanguageId
         self.pageNumber = pageNumber
+        self.subPageNumber = subPageNumber
         self.appLanguage = appLanguage
         
         let getShareToolStringsUseCase = appDiContainer.feature.shareTool.domainLayer.getShareToolStringsUseCase()
@@ -42,6 +45,7 @@ final class ShareToolFlow: GTFlow {
                 toolId: toolId,
                 toolLanguageId: toolLanguageId,
                 pageNumber: pageNumber,
+                subPageNumber: subPageNumber,
                 appLanguage: appLanguage
             )
         
@@ -83,7 +87,8 @@ final class ShareToolFlow: GTFlow {
                     .execute(
                         toolId: toolId,
                         toolLanguageId: toolLanguageId,
-                        pageNumber: pageNumber
+                        pageNumber: pageNumber,
+                        subPageNumber: subPageNumber
                     )
                 
                 result = .success(shareToolQrCode)

@@ -36,7 +36,7 @@ final class GetShareToolUrl: Sendable {
         self.languagesRepository = languagesRepository
     }
 
-    func getUrl(toolId: String, toolLanguageId: String, pageNumber: Int) -> String? {
+    func getUrl(toolId: String, toolLanguageId: String, pageNumber: Int, subPageNumber: Int?) -> String? {
 
         let baseUrl: URL? = URL(string: "https://knowgod.com")
         
@@ -53,15 +53,44 @@ final class GetShareToolUrl: Sendable {
             .appending(path: toolLanguage.code)
             .appending(path: path.rawValue)
             .appending(path: resource.abbreviation)
-
-        if pageNumber > 0 {
-            toolUrl = toolUrl.appending(path: String(pageNumber))
+        
+        switch resource.resourceTypeEnum {
+        
+        case .chooseYourOwnAdventure:
+            
+            if pageNumber == 0 {
+                toolUrl = toolUrl.appending(path: "intro")
+            }
+            else if pageNumber == 1 {
+                toolUrl = toolUrl.appending(path: "categories")
+            }
+            else if let subPageNumber = subPageNumber {
+                appendPageNumber(url: &toolUrl, pageNumber: subPageNumber, excludeIfPageIsZero: false)
+            }
+        
+        default:
+            appendPageNumber(url: &toolUrl, pageNumber: pageNumber, excludeIfPageIsZero: true)
+            addGtShareQueryItem(url: &toolUrl)
         }
+        
+        let toolUrlString = toolUrl.absoluteString
+
+        return toolUrlString
+    }
+    
+    private func appendPageNumber(url: inout URL, pageNumber: Int, excludeIfPageIsZero: Bool) {
+        
+        if excludeIfPageIsZero && pageNumber == 0 {
+            return
+        }
+        
+        url = url.appending(path: String(pageNumber))
+    }
+    
+    private func addGtShareQueryItem(url: inout URL) {
         
         let shareCampaignQueryItem: URLQueryItem = URLQueryItem(name: "icid", value: "gtshare")
 
-        toolUrl = toolUrl.appending(queryItems: [shareCampaignQueryItem])
-
-        return toolUrl.absoluteString
+        url = url.appending(queryItems: [shareCampaignQueryItem])
     }
 }
