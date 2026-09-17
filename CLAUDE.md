@@ -79,7 +79,7 @@ All feature code lives in `godtools/App/Features/`. Each feature is its own self
 
 ```
 Features/<FeatureName>/
-├── Data/                      # Repositories, API clients, caches, protocol interfaces
+├── Data/                      # Repositories, API clients, caches
 ├── Data-DomainInterface/      # (Legacy - being phased out) Repository implementations bridging data/domain
 ├── DependencyContainer/       # DI containers (Feature, DataLayer, DomainLayer)
 ├── Domain/
@@ -90,7 +90,7 @@ Features/<FeatureName>/
 ```
 
 **Notes:**
-- `Data-DomainInterface/` is legacy and being removed. Repository protocols now live in `Data/` layer.
+- `Data-DomainInterface/` is legacy and being removed. Repositories now live in the `Data/` layer.
 - `Presentation/` organizes by feature submodules, not separate Views/ViewModels folders.
 - Some older features may use `Domain/DomainModels/` instead of `Domain/Entities/` (prefer Entities).
 
@@ -124,8 +124,8 @@ Shared code used across features lives in `godtools/App/Share/`.
 **Repositories:**
 - Produce a single `DataModel` type
 - Encapsulate storage details (remote API, Realm, UserDefaults, file system, etc.)
-- Define protocols (e.g., `FooRepositoryInterface`) in the `Data/` layer for dependency injection and test mocking
-- Concrete implementations also live in `Data/` layer
+- Live in the `Data/` layer as concrete `final class` types
+- Do **not** define a `FooRepositoryInterface` protocol. Repository interfaces are being phased out — the few that remain (e.g. `LaunchCountRepositoryInterface`) are legacy. Inject and reference the concrete repository directly; tests use an in-memory database rather than a mocked protocol
 - **Tiered Repository Pattern**: Repositories are organized in tiers:
   - **Tier 1 (Core/Shared)**: General-purpose repositories used across the app (e.g., `ResourcesRepository`, `TranslationsRepository`)
   - **Tier 2 (Feature-specific)**: Feature-specific repositories (e.g., `PersonalizedToolsRepository`, `PersonalizedLessonsRepository`)
