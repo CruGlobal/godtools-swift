@@ -257,17 +257,6 @@ struct ResourcesCacheTests {
 
     @available(iOS 17.4, *)
     @Test
-    func getFeaturedLessons() async throws {
-
-        let cache = try getCache()
-
-        let featuredLessons: [ResourceDataModel] = try await cache.getFeaturedLessons(sorted: true)
-
-        #expect(featuredLessons.map { $0.id } == ["lesson_3", "lesson_4"])
-    }
-
-    @available(iOS 17.4, *)
-    @Test
     func getLessonsSupportedLanguageIds() throws {
 
         let cache = try getCache()

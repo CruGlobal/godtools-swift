@@ -18,9 +18,14 @@ private enum TestLessonId {
     static let featuredSecond: String = "featured-lesson-second"
     static let featuredThird: String = "featured-lesson-third"
     static let featuredUntranslated: String = "featured-lesson-untranslated"
-    static let notSpotlighted: String = "lesson-not-spotlighted"
-    static let hiddenSpotlighted: String = "lesson-hidden-spotlighted"
-    static let spotlightedTract: String = "tract-spotlighted"
+    static let featuredHidden: String = "featured-lesson-hidden"
+    static let notFeatured: String = "lesson-not-featured"
+    static let featuredTract: String = "tract-featured"
+}
+
+private enum TestCountryCode {
+    static let withFeaturedLessons: String = "US"
+    static let withoutFeaturedLessons: String = "CA"
 }
 
 struct GetFeaturedLessonsUseCaseTests {
@@ -32,7 +37,6 @@ struct GetFeaturedLessonsUseCaseTests {
         let defaultOrder: Int
         let defaultLocale: LanguageCodeDomainModel
         let name: String
-        let isSpotlight: Bool
         let isHidden: Bool
         let resourceType: ResourceType
         let languageCodes: [LanguageCodeDomainModel]
@@ -56,6 +60,12 @@ struct GetFeaturedLessonsUseCaseTests {
         let expectedIsAvailable: Bool
     }
 
+    struct FeaturedSectionArgument {
+        let appLanguage: AppLanguageDomainModel
+        let country: LocalizationSettingsCountryDomainModel?
+        let expectsFeaturedLessons: Bool
+    }
+
     struct LanguageDirectionArgument {
         let appLanguage: AppLanguageDomainModel
         let expectedLanguageDirection: LanguageDirectionDomainModel
@@ -68,71 +78,57 @@ struct GetFeaturedLessonsUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: User is viewing featured lessons.
-        When: I have not selected a country in my localization settings.
-        Then: I expect to see no featured lessons.
+        Given: User is viewing lessons.
+        When: My selected country and app language do or do not have curated featured lessons.
+        Then: I expect to see featured lessons only when they are curated for that country and language pair.
         """,
         arguments: [
-            nil,
-            LocalizationSettingsCountryDomainModel(isoRegionCode: "")
-        ] as [LocalizationSettingsCountryDomainModel?]
+            FeaturedSectionArgument(
+                appLanguage: LanguageCodeDomainModel.english.value,
+                country: nil,
+                expectsFeaturedLessons: false
+            ),
+            FeaturedSectionArgument(
+                appLanguage: LanguageCodeDomainModel.english.value,
+                country: LocalizationSettingsCountryDomainModel(isoRegionCode: ""),
+                expectsFeaturedLessons: false
+            ),
+            FeaturedSectionArgument(
+                appLanguage: LanguageCodeDomainModel.english.value,
+                country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestCountryCode.withFeaturedLessons),
+                expectsFeaturedLessons: true
+            ),
+            FeaturedSectionArgument(
+                appLanguage: LanguageCodeDomainModel.english.value,
+                country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestCountryCode.withoutFeaturedLessons),
+                expectsFeaturedLessons: false
+            ),
+            FeaturedSectionArgument(
+                appLanguage: LanguageCodeDomainModel.french.value,
+                country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestCountryCode.withFeaturedLessons),
+                expectsFeaturedLessons: false
+            )
+        ]
     )
-    @MainActor func noFeaturedLessonsWithoutASelectedCountry(country: LocalizationSettingsCountryDomainModel?) async throws {
+    @MainActor func featuredLessonsAreOnlyReturnedForACuratedCountryAndLanguagePair(argument: FeaturedSectionArgument) async throws {
 
         let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
-            appLanguage: LanguageCodeDomainModel.english.value,
-            country: country
+            appLanguage: argument.appLanguage,
+            country: argument.country
         )
 
-        #expect(featuredLessons.isEmpty)
+        #expect(featuredLessons.isEmpty == !argument.expectsFeaturedLessons)
     }
 
     @available(iOS 17.4, *)
     @Test(
         """
         Given: User is viewing featured lessons.
-        When: I have selected a country in my localization settings.
-        Then: I expect to see featured lessons.
+        When: The curated featured resources include a tool and lessons exist that were not curated.
+        Then: I expect to see only the curated lessons.
         """
     )
-    @MainActor func featuredLessonsAreReturnedWithASelectedCountry() async throws {
-
-        let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
-            appLanguage: LanguageCodeDomainModel.english.value,
-            country: LocalizationSettingsCountryDomainModel(isoRegionCode: "US")
-        )
-
-        #expect(featuredLessons.isEmpty == false)
-    }
-
-    @available(iOS 17.4, *)
-    @Test(
-        """
-        Given: User is viewing featured lessons.
-        When: No featured lessons are available for my selected country.
-        Then: I expect to see no featured lessons.
-        """
-    )
-    @MainActor func noFeaturedLessonsWhenNoneAreAvailable() async throws {
-
-        let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
-            appLanguage: LanguageCodeDomainModel.english.value,
-            country: LocalizationSettingsCountryDomainModel(isoRegionCode: "US"),
-            lessons: []
-        )
-
-        #expect(featuredLessons.isEmpty)
-    }
-
-    @available(iOS 17.4, *)
-    @Test(
-        """
-        Given: User is viewing featured lessons.
-        When: Lessons exist that are not spotlighted, are hidden, or are not lessons.
-        Then: I expect to see only the spotlighted, visible lessons.
-        """
-    )
-    @MainActor func onlySpotlightedVisibleLessonsAreFeatured() async throws {
+    @MainActor func onlyCuratedLessonsAreFeatured() async throws {
 
         let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
             appLanguage: LanguageCodeDomainModel.english.value
@@ -140,9 +136,8 @@ struct GetFeaturedLessonsUseCaseTests {
 
         let lessonIds: [String] = featuredLessons.map({ $0.dataModelId })
 
-        #expect(lessonIds.contains(TestLessonId.notSpotlighted) == false)
-        #expect(lessonIds.contains(TestLessonId.hiddenSpotlighted) == false)
-        #expect(lessonIds.contains(TestLessonId.spotlightedTract) == false)
+        #expect(lessonIds.contains(TestLessonId.featuredTract) == false)
+        #expect(lessonIds.contains(TestLessonId.notFeatured) == false)
         #expect(lessonIds.count == 4)
     }
 
@@ -150,11 +145,28 @@ struct GetFeaturedLessonsUseCaseTests {
     @Test(
         """
         Given: User is viewing featured lessons.
-        When: The featured lessons are requested.
-        Then: I expect to see them sorted by their default order.
+        When: A curated featured lesson is hidden.
+        Then: I expect to see it excluded from my featured lessons.
         """
     )
-    @MainActor func featuredLessonsAreSortedByTheirDefaultOrder() async throws {
+    @MainActor func hiddenLessonsAreNotFeatured() async throws {
+
+        let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
+            appLanguage: LanguageCodeDomainModel.english.value
+        )
+
+        #expect(featuredLessons.map({ $0.dataModelId }).contains(TestLessonId.featuredHidden) == false)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User is viewing featured lessons.
+        When: The featured lessons are requested.
+        Then: I expect to see them sorted by the curated order rather than their default order.
+        """
+    )
+    @MainActor func featuredLessonsAreSortedByTheCuratedOrder() async throws {
 
         let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
             appLanguage: LanguageCodeDomainModel.english.value
@@ -410,9 +422,9 @@ struct GetFeaturedLessonsUseCaseTests {
 extension GetFeaturedLessonsUseCaseTests {
 
     @available(iOS 17.4, *)
-    @MainActor private func getFeaturedLessons(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel? = LocalizationSettingsCountryDomainModel(isoRegionCode: "US"), lessonProgress: [LessonProgress] = [], lessons: [LessonFixture]? = nil) async throws -> [FeaturedLessonDomainModel] {
+    @MainActor private func getFeaturedLessons(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel? = LocalizationSettingsCountryDomainModel(isoRegionCode: TestCountryCode.withFeaturedLessons), lessonProgress: [LessonProgress] = []) async throws -> [FeaturedLessonDomainModel] {
 
-        let useCase: GetFeaturedLessonsUseCase = try await getUseCase(lessonProgress: lessonProgress, lessons: lessons)
+        let useCase: GetFeaturedLessonsUseCase = try await getUseCase(lessonProgress: lessonProgress)
 
         var cancellables: Set<AnyCancellable> = Set()
 
@@ -448,13 +460,13 @@ extension GetFeaturedLessonsUseCaseTests {
     }
 
     @available(iOS 17.4, *)
-    private func getUseCase(lessonProgress: [LessonProgress], lessons: [LessonFixture]? = nil) async throws -> GetFeaturedLessonsUseCase {
+    private func getUseCase(lessonProgress: [LessonProgress]) async throws -> GetFeaturedLessonsUseCase {
 
         let swiftDatabase = SwiftDatabase(container: try SwiftDataProductionContainer.createInMemoryContainer())
 
         let context: ModelContext = swiftDatabase.openContext()
 
-        context.insertObjects(objects: getSwiftDatabaseObjects(lessonFixtures: lessons ?? allLessons))
+        context.insertObjects(objects: try getSwiftDatabaseObjects())
 
         try context.saveIfHasChanges()
 
@@ -478,8 +490,26 @@ extension GetFeaturedLessonsUseCaseTests {
         let resourcesRepository: ResourcesRepository = testsDiContainer.core.dataLayer.getResourcesRepository()
         let languagesRepository: LanguagesRepository = testsDiContainer.core.dataLayer.getLanguagesRepository()
 
+        let cache = PersonalizedToolsCache(
+            persistence: SwiftRepositorySyncPersistence(
+                database: swiftDatabase,
+                mapping: SwiftPersonalizedToolsMapping()
+            )
+        )
+
+        let personalizedToolsRepository = PersonalizedToolsRepository(
+            cache: cache,
+            resourcesRepository: resourcesRepository,
+            sync: PersonalizedToolsSync(
+                api: FakePersonalizedToolsApi(resourceIdsByPersonalizedToolsId: try resourceIdsByPersonalizedToolsId()),
+                cache: cache,
+                syncInvalidatorPersistence: FakeSyncInvalidatorPersistence()
+            )
+        )
+
         return GetFeaturedLessonsUseCase(
             resourcesRepository: resourcesRepository,
+            personalizedToolsRepository: personalizedToolsRepository,
             languagesRepository: languagesRepository,
             getTranslatedToolName: GetTranslatedToolName(
                 resourcesRepository: resourcesRepository,
@@ -532,7 +562,7 @@ extension GetFeaturedLessonsUseCaseTests {
     }
 
     @available(iOS 17.4, *)
-    private func getSwiftDatabaseObjects(lessonFixtures: [LessonFixture]) -> [any PersistentModel] {
+    private func getSwiftDatabaseObjects() throws -> [any PersistentModel] {
 
         let languagesByCode: [LanguageCodeDomainModel: SwiftLanguage] = [
             .arabic: Self.createLanguage(code: .arabic, directionString: "rtl"),
@@ -542,7 +572,7 @@ extension GetFeaturedLessonsUseCaseTests {
 
         var translations: [SwiftTranslation] = Array()
 
-        let lessons: [SwiftResource] = lessonFixtures.map { (fixture: LessonFixture) in
+        let lessons: [SwiftResource] = allLessons.map { (fixture: LessonFixture) in
 
             let lesson = SwiftResource()
             lesson.id = fixture.id
@@ -551,7 +581,6 @@ extension GetFeaturedLessonsUseCaseTests {
             lesson.attrDefaultOrder = fixture.defaultOrder
             lesson.attrDefaultLocale = fixture.defaultLocale.rawValue
             lesson.name = fixture.name
-            lesson.attrSpotlight = fixture.isSpotlight
             lesson.isHidden = fixture.isHidden
             lesson.resourceType = fixture.resourceType.rawValue
 
@@ -586,7 +615,16 @@ extension GetFeaturedLessonsUseCaseTests {
             return lesson
         }
 
-        return Array(languagesByCode.values) + lessons + translations
+        let personalizedTools: [SwiftPersonalizedTools] = try resourceIdsByPersonalizedToolsId().map { (personalizedToolsId: String, resourceIds: [String]) in
+
+            let object = SwiftPersonalizedTools()
+            object.id = personalizedToolsId
+            object.resourceIds = resourceIds
+
+            return object
+        }
+
+        return Array(languagesByCode.values) + lessons + translations + personalizedTools
     }
 
     @available(iOS 17.4, *)
@@ -601,6 +639,37 @@ extension GetFeaturedLessonsUseCaseTests {
         return language
     }
 
+    private func resourceIdsByPersonalizedToolsId() throws -> [String: [String]] {
+
+        let appLanguageCodes: [LanguageCodeDomainModel] = [.arabic, .english, .spanish, .vietnamese]
+
+        var resourceIdsById: [String: [String]] = Dictionary()
+
+        for appLanguageCode in appLanguageCodes {
+
+            let personalizedToolsId: PersonalizedToolsId = try PersonalizedToolsId.createForFeatured(
+                country: TestCountryCode.withFeaturedLessons,
+                language: appLanguageCode.value
+            )
+
+            resourceIdsById[personalizedToolsId.value] = curatedFeaturedResourceIds
+        }
+
+        return resourceIdsById
+    }
+
+    private var curatedFeaturedResourceIds: [String] {
+
+        return [
+            TestLessonId.featuredFirst,
+            TestLessonId.featuredSecond,
+            TestLessonId.featuredHidden,
+            TestLessonId.featuredTract,
+            TestLessonId.featuredThird,
+            TestLessonId.featuredUntranslated
+        ]
+    }
+
     private var allLessons: [LessonFixture] {
 
         return [
@@ -608,10 +677,9 @@ extension GetFeaturedLessonsUseCaseTests {
                 id: TestLessonId.featuredFirst,
                 abbreviation: "lessonfirst",
                 bannerImageId: "banner-first",
-                defaultOrder: 0,
+                defaultOrder: 3,
                 defaultLocale: .english,
                 name: "Lesson First Resource Name",
-                isSpotlight: true,
                 isHidden: false,
                 resourceType: .lesson,
                 languageCodes: [.arabic, .english, .spanish],
@@ -624,10 +692,9 @@ extension GetFeaturedLessonsUseCaseTests {
                 id: TestLessonId.featuredSecond,
                 abbreviation: "lessonsecond",
                 bannerImageId: "banner-second",
-                defaultOrder: 1,
+                defaultOrder: 2,
                 defaultLocale: .english,
                 name: "Lesson Second Resource Name",
-                isSpotlight: true,
                 isHidden: false,
                 resourceType: .lesson,
                 languageCodes: [.english],
@@ -639,10 +706,9 @@ extension GetFeaturedLessonsUseCaseTests {
                 id: TestLessonId.featuredThird,
                 abbreviation: "lessonthird",
                 bannerImageId: "banner-third",
-                defaultOrder: 2,
+                defaultOrder: 1,
                 defaultLocale: .english,
                 name: "Lesson Third Resource Name",
-                isSpotlight: true,
                 isHidden: false,
                 resourceType: .lesson,
                 languageCodes: [.arabic, .english, .spanish],
@@ -655,58 +721,55 @@ extension GetFeaturedLessonsUseCaseTests {
                 id: TestLessonId.featuredUntranslated,
                 abbreviation: "lessonuntranslated",
                 bannerImageId: "banner-untranslated",
-                defaultOrder: 3,
+                defaultOrder: 0,
                 defaultLocale: .english,
                 name: "Lesson Untranslated Resource Name",
-                isSpotlight: true,
                 isHidden: false,
                 resourceType: .lesson,
                 languageCodes: [.english],
                 translatedNamesByLanguageCode: [:]
             ),
             LessonFixture(
-                id: TestLessonId.notSpotlighted,
-                abbreviation: "lessonnotspotlighted",
-                bannerImageId: "banner-not-spotlighted",
+                id: TestLessonId.featuredHidden,
+                abbreviation: "lessonhidden",
+                bannerImageId: "banner-hidden",
+                defaultOrder: 6,
+                defaultLocale: .english,
+                name: "Lesson Hidden Resource Name",
+                isHidden: true,
+                resourceType: .lesson,
+                languageCodes: [.arabic, .english, .spanish],
+                translatedNamesByLanguageCode: [
+                    .english: "Lesson Hidden",
+                    .spanish: "Lección oculta"
+                ]
+            ),
+            LessonFixture(
+                id: TestLessonId.notFeatured,
+                abbreviation: "lessonnotfeatured",
+                bannerImageId: "banner-not-featured",
                 defaultOrder: 4,
                 defaultLocale: .english,
-                name: "Lesson Not Spotlighted Resource Name",
-                isSpotlight: false,
+                name: "Lesson Not Featured Resource Name",
                 isHidden: false,
                 resourceType: .lesson,
                 languageCodes: [.english],
                 translatedNamesByLanguageCode: [
-                    .english: "Lesson Not Spotlighted"
+                    .english: "Lesson Not Featured"
                 ]
             ),
             LessonFixture(
-                id: TestLessonId.hiddenSpotlighted,
-                abbreviation: "lessonhidden",
-                bannerImageId: "banner-hidden",
+                id: TestLessonId.featuredTract,
+                abbreviation: "tractfeatured",
+                bannerImageId: "banner-tract",
                 defaultOrder: 5,
                 defaultLocale: .english,
-                name: "Lesson Hidden Resource Name",
-                isSpotlight: true,
-                isHidden: true,
-                resourceType: .lesson,
-                languageCodes: [.english],
-                translatedNamesByLanguageCode: [
-                    .english: "Lesson Hidden"
-                ]
-            ),
-            LessonFixture(
-                id: TestLessonId.spotlightedTract,
-                abbreviation: "tractspotlighted",
-                bannerImageId: "banner-tract",
-                defaultOrder: 6,
-                defaultLocale: .english,
-                name: "Tract Spotlighted Resource Name",
-                isSpotlight: true,
+                name: "Tract Featured Resource Name",
                 isHidden: false,
                 resourceType: .tract,
                 languageCodes: [.english],
                 translatedNamesByLanguageCode: [
-                    .english: "Tract Spotlighted"
+                    .english: "Tract Featured"
                 ]
             )
         ]

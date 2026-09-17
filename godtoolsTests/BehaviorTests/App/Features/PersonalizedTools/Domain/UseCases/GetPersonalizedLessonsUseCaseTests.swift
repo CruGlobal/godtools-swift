@@ -135,7 +135,7 @@ struct GetPersonalizedLessonsUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: There are no personalized lessons.
+        Given: There are no personalized lessons and no featured lessons.
         When: Personalized lessons are requested.
         Then: I expect to see the personalization unavailable strings translated in my app language.
         """,
@@ -170,7 +170,7 @@ struct GetPersonalizedLessonsUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: User has selected a country and there are no personalized lessons.
+        Given: User has selected a country and there are no personalized lessons and no featured lessons.
         When: Personalized lessons are requested.
         Then: I expect to see no lessons and the personalization unavailable strings.
         """
@@ -206,6 +206,53 @@ struct GetPersonalizedLessonsUseCaseTests {
         #expect(personalizedLessons.lessons.map({ $0.dataModelId }).sorted() == ["lesson-1", "lesson-2"])
         #expect(personalizedLessons.unavailableStrings == nil)
     }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: There are no personalized lessons but there are featured lessons.
+        When: Personalized lessons are requested.
+        Then: I expect to see no lessons and no personalization unavailable strings.
+        """,
+        arguments: [
+            nil,
+            LocalizationSettingsCountryDomainModel(isoRegionCode: "ca")
+        ] as [LocalizationSettingsCountryDomainModel?]
+    )
+    @MainActor func personalizationUnavailableIsNotShownWhenThereAreFeaturedLessons(country: LocalizationSettingsCountryDomainModel?) async throws {
+
+        let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
+            appLanguage: LanguageCodeDomainModel.spanish.value,
+            country: country,
+            filterLessonsByLanguageId: nil,
+            hasFeaturedLessons: true
+        )
+
+        #expect(personalizedLessons.lessons.isEmpty)
+        #expect(personalizedLessons.unavailableStrings == nil)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: There are default order lessons for my app language.
+        When: Featured lessons are or are not available for my localization.
+        Then: I expect to see the default order lessons either way and no personalization unavailable strings.
+        """,
+        arguments: [true, false]
+    )
+    @MainActor func defaultOrderLessonsAreShownWhetherOrNotThereAreFeaturedLessons(hasFeaturedLessons: Bool) async throws {
+
+        let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: nil,
+            filterLessonsByLanguageId: nil,
+            hasFeaturedLessons: hasFeaturedLessons
+        )
+
+        #expect(personalizedLessons.lessons.map({ $0.dataModelId }).sorted() == ["lesson-1", "lesson-2"])
+        #expect(personalizedLessons.unavailableStrings == nil)
+    }
 }
 
 // MARK: - Test Helpers
@@ -213,7 +260,7 @@ struct GetPersonalizedLessonsUseCaseTests {
 extension GetPersonalizedLessonsUseCaseTests {
 
     @available(iOS 17.4, *)
-    @MainActor private func getPersonalizedLessons(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguageId: String?) async throws -> PersonalizedLessonsDomainModel {
+    @MainActor private func getPersonalizedLessons(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguageId: String?, hasFeaturedLessons: Bool = false) async throws -> PersonalizedLessonsDomainModel {
 
         let dependencies: TestDependencies = try getTestDependencies()
 
@@ -241,7 +288,8 @@ extension GetPersonalizedLessonsUseCaseTests {
                 .execute(
                     appLanguage: appLanguage,
                     country: country,
-                    filterLessonsByLanguageId: filterLessonsByLanguageId
+                    filterLessonsByLanguageId: filterLessonsByLanguageId,
+                    hasFeaturedLessons: hasFeaturedLessons
                 )
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in

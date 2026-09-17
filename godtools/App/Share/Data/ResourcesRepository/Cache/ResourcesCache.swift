@@ -102,10 +102,6 @@ extension ResourcesCache {
         }
     }
     
-    private var isSpotlightNSPredicate: NSPredicate {
-        return NSPredicate(format: "\(#keyPath(RealmResource.attrSpotlight)) == %@", NSNumber(value: true))
-    }
-    
     @available(iOS 17.4, *)
     private func getLessonsPredicate(filterByLanguageId: String? = nil) -> Predicate<SwiftResource> {
         
@@ -255,45 +251,6 @@ extension ResourcesCache {
         else if let realmPersistence = getRealmPersistence() {
             
             let query = getLessonsRealmQuery(filterByLanguageId: filterByLanguageId, sorted: sorted)
-            
-            return try await realmPersistence
-                .newActorRead()
-                .getDataModels(query: query)
-        }
-        
-        return Array()
-    }
-    
-    func getFeaturedLessons(sorted: Bool) async throws -> [ResourceDataModel] {
-        
-        if #available(iOS 17.4, *), let swiftPersistence = getSwiftPersistence() {
-            
-            let lessonsPredicate = getLessonsPredicate()
-            
-            let filter = #Predicate<SwiftResource> { object in
-                lessonsPredicate.evaluate(object)
-                && isSpotlightPredicate.evaluate(object)
-            }
-            
-            let query = SwiftDatabaseQuery(
-                filter: filter,
-                sortBy: sorted ? getSortByDefaultOrderDescriptor() : nil
-            )
-            
-            return try await swiftPersistence
-                .newActorRead()
-                .getDataModels(query: query)
-        }
-        else if let realmPersistence = getRealmPersistence() {
-                        
-            let filter = NSCompoundPredicate(
-                andPredicateWithSubpredicates: [getLessonsNSPredicate(filterByLanguageId: nil), isSpotlightNSPredicate]
-            )
-            
-            let query = RealmDatabaseQuery(
-                filter: filter,
-                sortByKeyPath: sorted ? getSortByDefaultOrderKeyPath() : nil
-            )
             
             return try await realmPersistence
                 .newActorRead()

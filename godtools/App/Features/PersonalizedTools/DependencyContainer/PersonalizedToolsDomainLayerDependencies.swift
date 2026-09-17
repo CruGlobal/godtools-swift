@@ -23,6 +23,7 @@ final class PersonalizedToolsDomainLayerDependencies: Sendable {
 
         return GetFeaturedLessonsUseCase(
             resourcesRepository: core.dataLayer.getResourcesRepository(),
+            personalizedToolsRepository: dataLayer.getPersonalizedToolsRepository(),
             languagesRepository: core.dataLayer.getLanguagesRepository(),
             getTranslatedToolName: core.domainLayer.supporting.getTranslatedToolName(),
             getTranslatedToolLanguageAvailability: core.domainLayer.supporting.getTranslatedToolLanguageAvailability(),
