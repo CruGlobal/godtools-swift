@@ -1,5 +1,5 @@
 //
-//  GetSpotlightToolsUseCase.swift
+//  GetFeaturedToolsUseCase.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 8/22/22.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class GetSpotlightToolsUseCase: Sendable {
+final class GetFeaturedToolsUseCase: Sendable {
         
     private let resourcesRepository: ResourcesRepository
     private let favoritedResourcesRepository: FavoritedResourcesRepository
@@ -41,14 +41,14 @@ final class GetSpotlightToolsUseCase: Sendable {
     @MainActor func execute(
         appLanguage: AppLanguageDomainModel,
         languageIdForAvailabilityText: String?
-    ) -> AnyPublisher<[SpotlightToolListItemDomainModel], Error> {
+    ) -> AnyPublisher<[FeaturedToolListItemDomainModel], Error> {
         
         return resourcesRepository
             .observeCollectionChangesPublisher()
             .receive(on: DispatchQueue.global())
             .map({ (resourcesChanged: Void) in
 
-                return self.getSpotlightTools(
+                return self.getFeaturedTools(
                     appLanguage: appLanguage,
                     languageIdForAvailabilityText: languageIdForAvailabilityText
                 )
@@ -56,22 +56,22 @@ final class GetSpotlightToolsUseCase: Sendable {
             .eraseToAnyPublisher()
     }
     
-    private func getSpotlightTools(
+    private func getFeaturedTools(
         appLanguage: AppLanguageDomainModel,
         languageIdForAvailabilityText: String?
-    ) -> [SpotlightToolListItemDomainModel] {
+    ) -> [FeaturedToolListItemDomainModel] {
         
         let languageForAvailabilityTextModel: LanguageDataModel? = getLanguage(id: languageIdForAvailabilityText)
         
         let strings: ToolListItemStringsDomainModel = getToolListItemStrings.getStrings(appLanguage: appLanguage)
 
-        let spotlightToolResources: [ResourceDataModel] = resourcesRepository.getSpotlightTools(
+        let featuredToolResources: [ResourceDataModel] = resourcesRepository.getSpotlightTools(
             sortByDefaultOrder: true
         )
 
-        var spotlightTools: [SpotlightToolListItemDomainModel] = Array()
+        var featuredTools: [FeaturedToolListItemDomainModel] = Array()
 
-        for resource in spotlightToolResources {
+        for resource in featuredToolResources {
 
             let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
 
@@ -91,8 +91,8 @@ final class GetSpotlightToolsUseCase: Sendable {
                 )
             }
 
-            spotlightTools.append(
-                SpotlightToolListItemDomainModel(
+            featuredTools.append(
+                FeaturedToolListItemDomainModel(
                     strings: strings,
                     analyticsToolAbbreviation: resource.abbreviation,
                     dataModelId: resource.id,
@@ -105,7 +105,7 @@ final class GetSpotlightToolsUseCase: Sendable {
             )
         }
 
-        return spotlightTools
+        return featuredTools
     }
     
     private func getLanguage(id: String?) -> LanguageDataModel? {
