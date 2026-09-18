@@ -49,8 +49,8 @@ final class GetToolsStringsUseCase: Sendable {
 
         return ToolsStringsDomainModel(
             favoritingToolBannerMessage: strings[favoritingToolBannerMessageKey] ?? "",
-            toolSpotlightTitle: strings[featuredToolsTitleKey] ?? "",
-            toolSpotlightSubtitle: strings[featuredToolsSubtitleKey] ?? "",
+            featuredToolsTitle: strings[featuredToolsTitleKey] ?? "",
+            featuredToolsSubtitle: strings[featuredToolsSubtitleKey] ?? "",
             filterTitle: strings[filterTitleKey] ?? "",
             personalizedToolToggleTitle: strings[personalizedToolToggleTitleKey] ?? "",
             allToolsToggleTitle: strings[allToolsToggleTitleKey] ?? "",

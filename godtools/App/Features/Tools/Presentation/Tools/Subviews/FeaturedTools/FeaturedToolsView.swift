@@ -26,12 +26,12 @@ struct FeaturedToolsView: View {
         
         VStack(alignment: .leading, spacing: 0) {
             
-            Text(viewModel.strings.toolSpotlightTitle)
+            Text(viewModel.strings.featuredToolsTitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .padding([.leading, .trailing], contentHorizontalInsets)
                         
-            Text(viewModel.strings.toolSpotlightSubtitle)
+            Text(viewModel.strings.featuredToolsSubtitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 14))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .padding([.top], 3)
