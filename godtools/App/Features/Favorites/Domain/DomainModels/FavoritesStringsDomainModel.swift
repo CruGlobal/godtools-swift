@@ -12,7 +12,6 @@ struct FavoritesStringsDomainModel: Sendable {
     
     let tutorialMessage: String
     let openTutorialActionTitle: String
-    let featuredLessonsTitle: String
     let favoriteToolsTitle: String
     let viewAllFavoritesActionTitle: String
     let noFavoritedToolsTitle: String
@@ -20,6 +19,6 @@ struct FavoritesStringsDomainModel: Sendable {
     let noFavoritedToolsActionTitle: String
     
     static var emptyValue: FavoritesStringsDomainModel {
-        return FavoritesStringsDomainModel(tutorialMessage: "", openTutorialActionTitle: "", featuredLessonsTitle: "", favoriteToolsTitle: "", viewAllFavoritesActionTitle: "", noFavoritedToolsTitle: "", noFavoritedToolsDescription: "", noFavoritedToolsActionTitle: "")
+        return FavoritesStringsDomainModel(tutorialMessage: "", openTutorialActionTitle: "", favoriteToolsTitle: "", viewAllFavoritesActionTitle: "", noFavoritedToolsTitle: "", noFavoritedToolsDescription: "", noFavoritedToolsActionTitle: "")
     }
 }

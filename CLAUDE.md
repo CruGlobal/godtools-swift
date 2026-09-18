@@ -13,14 +13,45 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Build & Test Commands
 
-**Run all tests (via Fastlane):**
+Test plans live in `TestPlans/`: `Tests` (unit + behavior), `UITests`, and `AllTests` (both).
+
+**Only the `GodTools-Production` scheme is configured for the test action.** `GodTools-Staging` and the
+other schemes have no test action and will fail with "scheme is not currently configured for the test
+action."
+
+### Locally — use `xcodebuild`
+
 ```bash
-bundle exec fastlane cru_shared_lane_run_tests testplan:AllTests output_directory:fastlane_scan_output_directory result_bundle:true reset_simulator:true should_clear_derived_data:true
+# Unit + behavior tests
+xcodebuild test -project godtools.xcodeproj -scheme GodTools-Production -testPlan Tests \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
+
+# UI tests only
+xcodebuild test -project godtools.xcodeproj -scheme GodTools-Production -testPlan UITests \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
 ```
 
-**Run unit tests only:** Use `Tests.xctestplan` instead of `AllTests` in the above command.
+Swap `-testPlan` for `AllTests` to run everything in one pass. List available simulators with
+`xcrun simctl list devices available`.
 
-**Run UI tests only:** Use `UITests.xctestplan` instead of `AllTests` in the above command.
+**Reading the results:** the tests use Swift Testing (`@Test`), so the legacy line
+`Executed 0 tests, with 0 failures` is **not** the real outcome — it only counts XCTest cases. Look for
+`✔ Test run with N tests in M suites passed` instead. If passing `-resultBundlePath`, delete any existing
+bundle at that path first; `xcodebuild` errors out rather than overwriting it.
+
+### In CI — Fastlane
+
+GitHub Actions (`run-tests.yml`) runs the `Tests` and `UITests` plans as separate Fastlane invocations and
+merges the two `.xcresult` bundles:
+
+```bash
+bundle exec fastlane cru_shared_lane_run_tests testplan:Tests output_directory:fastlane_scan_output_directory/tests result_bundle:true reset_simulator:true should_clear_derived_data:true
+bundle exec fastlane cru_shared_lane_run_tests testplan:UITests output_directory:fastlane_scan_output_directory/uitests result_bundle:true reset_simulator:true should_clear_derived_data:true
+```
+
+These are not expected to work on a stock local machine: `Gemfile.lock` pins a Bundler version that macOS
+system Ruby does not ship, so `bundle exec` fails until that exact Bundler is installed. Prefer
+`xcodebuild` locally and let the pipeline run Fastlane.
 
 **Linting:**
 ```bash
@@ -70,7 +101,7 @@ Shared code used across features lives in `godtools/App/Share/`.
 **UseCases:**
 - Single public method named `execute()`
 - Inputs must not be Publisher types (ViewModels react to changes and call execute)
-- Returns `AnyPublisher<DomainModel, Error>`
+- Return type depends on the shape of the work — see [Concurrency](#concurrency-asyncawait-vs-combine)
 - Should not depend on other UseCases; the ViewModel coordinates between them
 - Prefer returning DomainModels over Swift primitive types to encapsulate business attributes
 - Keep UseCases smaller and focused on a single task
@@ -79,6 +110,8 @@ Shared code used across features lives in `godtools/App/Share/`.
 **ViewModels:**
 - Implement `ObservableObject` with `@Published` properties for output
 - Communicate with domain via injected UseCases
+- Call `async` UseCases from inside a `Task { }`, assigning the result to a `@Published` property
+- Subscribe to publisher-returning UseCases with `.sink`/`.assign(to:)` and retain the `AnyCancellable`
 - Delegate navigation actions to a `FlowDelegate` via `FlowStep` enum
 
 **Flows (Coordinator):**
@@ -98,6 +131,35 @@ Shared code used across features lives in `godtools/App/Share/`.
   - **Tier 2 (Feature-specific)**: Feature-specific repositories (e.g., `PersonalizedToolsRepository`, `PersonalizedLessonsRepository`)
   - Tier 2 repositories **may depend on** Tier 1 repositories for composition/coordination
   - Tier 1 repositories should remain independent
+
+### Concurrency: async/await vs Combine
+
+The codebase is migrating from Combine to Swift Concurrency. The two are **not** interchangeable — choose based on the shape of the work, not on which API is newer.
+
+**One-shot work → `async`/`await`.** A single result (or thrown error), then done: network fetches, cache reads, downloads, authentication, analytics. This is the default for new code.
+
+```swift
+func execute(toolId: String, toolLanguageId: String) async throws -> [ShareableDomainModel]
+```
+
+**Values over time → Combine `AnyPublisher`.** An open-ended stream with no single return value: observing Realm collection changes, auth-state changes, download progress.
+
+```swift
+@MainActor func execute(toolId: String) -> AnyPublisher<ToolIsFavoritedDomainModel, Error>
+@MainActor func execute(languageId: String) -> AnyPublisher<Double, Error>  // download progress
+```
+
+**Pure synchronous computation → plain return.** No suspension required, e.g. localized string lookups.
+
+```swift
+func execute(appLanguage: String) -> ToolDetailsStringsDomainModel
+```
+
+**Rules:**
+- Do not convert observation or progress UseCases to `async`/`await`. There is no single value to return, so `AnyPublisher` remains correct.
+- UseCases that observe Realm collection changes must be `@MainActor` (see Testing → Realm threading requirements).
+- Combine is **not** being removed. `ObservableObject` and `@Published` are Combine types, so Combine remains part of the Presentation layer as long as ViewModels use them.
+- Prefer `AsyncStream`/`AsyncThrowingStream` over creating new `PassthroughSubject`/`CurrentValueSubject` when bridging non-Combine callbacks into a stream.
 
 ### Navigation
 
@@ -176,7 +238,7 @@ func testBehavior(argument: MyTestArgument) async throws {
 
 **Test code clarity:**
 
-Avoid adding comments in test code unless strictly necessary. Well-named tests, variables, and clear assertions should be self-documenting. Use MARK comments for organizational purposes (e.g., `// MARK: - Test Helpers`), but avoid inline comments that simply describe what the code is doing.
+See [Code Conventions → Comments](#code-conventions). Well-named tests, variables, and clear assertions should be self-documenting.
 
 **Code coverage:**
 
@@ -190,6 +252,18 @@ When writing tests, check the code coverage for the class (or classes) under tes
 3. Special attributes (`@Published`, `@State`, `@Binding`, etc.)
 
 Always declare attributes with explicit types.
+
+**Comments:**
+
+Code should be self-documenting. Comments are a last resort, not a default.
+
+- Prefer precise names, small focused methods, and named constants over explanatory prose.
+- If code needs a comment to be understood, restructure or rename it instead.
+- `// TODO:` is acceptable and should reference a ticket (e.g. `// TODO: ... GT-1234`).
+- Avoid `// NOTE:` and inline commentary describing what the code does.
+- `// MARK:` is fine for organization.
+
+This applies to new and modified code. Existing comments (including `// NOTE: ... ~Name`) are not a cleanup mandate — leave them unless you are already changing that code.
 
 ## Localization
 

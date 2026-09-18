@@ -10,21 +10,55 @@ import SwiftUI
 
 struct LessonCardView: View {
         
+    private static let shadowRadius: CGFloat = 4
+    private static let shadowYOffset: CGFloat = 2
+    private static let featuredCardWidthMultiplier: CGFloat = 0.58
+
+    static var shadowClippingInsetTop: CGFloat { (shadowRadius * 2) - shadowYOffset }
+    static var shadowClippingInsetBottom: CGFloat { (shadowRadius * 2) + shadowYOffset }
+
     private let geometry: GeometryProxy
     private let backgroundColor: Color = Color.white
     private let cornerRadius: CGFloat = 6
     private let padding: CGFloat = 15
+    private let layout: LessonCardLayout
     private let cardWidth: CGFloat
-    private let bannerImageAspectRatio: CGSize = CGSize(width: 335, height: 87)
+    private let bannerImageAspectRatio: CGSize
+    private let titleFontSize: CGFloat
+    private let titleTrailingPadding: CGFloat
+    private let titleBottomSpacing: CGFloat
+    private let footerSpacerMinLength: CGFloat?
     private let cardTappedClosure: (() -> Void)?
-        
+
     @ObservedObject private var viewModel: LessonCardViewModel
-    
-    init(viewModel: LessonCardViewModel, geometry: GeometryProxy, cardTappedClosure: (() -> Void)?) {
-        
+
+    init(viewModel: LessonCardViewModel, geometry: GeometryProxy, layout: LessonCardLayout = .landscape, cardTappedClosure: (() -> Void)?) {
+
         self.viewModel = viewModel
         self.geometry = geometry
-        self.cardWidth = geometry.size.width - (DashboardView.contentHorizontalInsets * 2)
+        self.layout = layout
+
+        let contentWidth: CGFloat = geometry.size.width - (DashboardView.contentHorizontalInsets * 2)
+
+        switch layout {
+
+        case .landscape:
+            self.cardWidth = contentWidth
+            self.bannerImageAspectRatio = CGSize(width: 335, height: 87)
+            self.titleFontSize = 17
+            self.titleTrailingPadding = 41
+            self.titleBottomSpacing = 9
+            self.footerSpacerMinLength = nil
+
+        case .featured:
+            self.cardWidth = contentWidth * LessonCardView.featuredCardWidthMultiplier
+            self.bannerImageAspectRatio = CGSize(width: 217, height: 88)
+            self.titleFontSize = 15
+            self.titleTrailingPadding = 0
+            self.titleBottomSpacing = 6
+            self.footerSpacerMinLength = 0
+        }
+
         self.cardTappedClosure = cardTappedClosure
     }
     
@@ -46,35 +80,38 @@ struct LessonCardView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     
                     Text(viewModel.title)
-                        .font(FontLibrary.sfProTextBold.font(size: 17))
+                        .font(FontLibrary.sfProTextBold.font(size: titleFontSize))
                         .foregroundColor(ColorPalette.gtGrey.color)
                         .lineSpacing(2)
                         .lineLimit(3)
-                        .padding(.trailing, 41)
+                        .padding(.trailing, titleTrailingPadding)
                         .frame(width: cardWidth - (padding * 2), alignment: .leading)
                         .environment(\.layoutDirection, viewModel.titleLayoutDirection)
                     
-                    FixedVerticalSpacer(height: 9)
-                    
+                    FixedVerticalSpacer(height: titleBottomSpacing)
+
                     if viewModel.shouldShowLessonProgress {
                         LessonCompletionProgressBar(lessonProgress: viewModel.lessonProgress)
                             .padding(.bottom, 15)
-                        
+
                     } else {
-                        Spacer()
+                        Spacer(minLength: footerSpacerMinLength)
                     }
                     
                     HStack(alignment: .center, spacing: 10) {
-                       
-                        Text(viewModel.completionString)
-                            .font(FontLibrary.sfProDisplayRegular.font(size: 12))
-                            .foregroundColor(ColorPalette.gtBlue.color)
-                        
-                        Spacer()
-                        
-                        ToolCardLanguageAvailabilityView(
-                            languageAvailability: viewModel.appLanguageAvailability
-                        )
+
+                        switch layout {
+
+                        case .landscape:
+                            completionText
+                            Spacer()
+                            languageAvailability
+
+                        case .featured:
+                            languageAvailability
+                            Spacer()
+                            completionText
+                        }
                     }
                 }
                 .padding(EdgeInsets(top: padding, leading: padding, bottom: padding, trailing: padding))
@@ -82,11 +119,26 @@ struct LessonCardView: View {
         }
         .frame(width: cardWidth)
         .cornerRadius(cornerRadius)
-        .shadow(color: Color.black.opacity(0.25), radius: 4, y: 2)
+        .shadow(color: Color.black.opacity(0.25), radius: LessonCardView.shadowRadius, y: LessonCardView.shadowYOffset)
         .contentShape(Rectangle()) // This fixes tap area not taking entire card into account.  Noticeable in iOS 14.
         .onTapGesture {
             cardTappedClosure?()
         }
+    }
+
+    @ViewBuilder private var completionText: some View {
+
+        Text(viewModel.completionString)
+            .font(FontLibrary.sfProDisplayRegular.font(size: 12))
+            .foregroundColor(ColorPalette.gtBlue.color)
+    }
+
+    @ViewBuilder private var languageAvailability: some View {
+
+        ToolCardLanguageAvailabilityView(
+            languageAvailability: viewModel.appLanguageAvailability,
+            textColor: ColorPalette.gtLightGrey.color
+        )
     }
 }
 

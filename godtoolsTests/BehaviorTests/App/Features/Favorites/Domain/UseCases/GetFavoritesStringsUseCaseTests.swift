@@ -34,7 +34,6 @@ struct GetFavoritesStringsUseCaseTests {
 
         #expect(strings.tutorialMessage == "\(argument.appLanguage):\(LocalizableStringKeys.openTutorialShowTutorialLabelText.key)")
         #expect(strings.openTutorialActionTitle == "\(argument.appLanguage):\(LocalizableStringKeys.openTutorialOpenTutorialButtonTitle.key)")
-        #expect(strings.featuredLessonsTitle == "\(argument.appLanguage):\(LocalizableStringKeys.favoritesFavoriteLessonsTitle.key)")
         #expect(strings.favoriteToolsTitle == "\(argument.appLanguage):\(LocalizableStringKeys.favoritesFavoriteToolsTitle.key)")
         #expect(strings.viewAllFavoritesActionTitle == "\(argument.appLanguage):\(LocalizableStringKeys.favoritesFavoriteToolsViewAll.key)")
         #expect(strings.noFavoritedToolsTitle == "\(argument.appLanguage):\(LocalizableStringKeys.favoritesNoToolsTitle.key)")
@@ -49,7 +48,7 @@ extension GetFavoritesStringsUseCaseTests {
 
         let stringKeys: [LocalizableStringKeys] = [
             .openTutorialShowTutorialLabelText, .openTutorialOpenTutorialButtonTitle,
-            .favoritesFavoriteLessonsTitle, .favoritesFavoriteToolsTitle, .favoritesFavoriteToolsViewAll,
+            .favoritesFavoriteToolsTitle, .favoritesFavoriteToolsViewAll,
             .favoritesNoToolsTitle, .favoritesNoToolsDescription, .favoritesNoToolsButton
         ]
 

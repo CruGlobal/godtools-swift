@@ -122,6 +122,7 @@ final class LessonFlow: GTFlow {
                     toolId: lesson.id,
                     toolLanguageId: languageId,
                     pageNumber: pageNumber,
+                    subPageNumber: nil,
                     appLanguage: appLanguage,
                     toolAnalyticsAbbreviation: lesson.abbreviation
                 )

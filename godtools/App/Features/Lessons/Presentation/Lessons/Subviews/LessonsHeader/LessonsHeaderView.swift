@@ -22,7 +22,7 @@ struct LessonsHeaderView: View {
         VStack(alignment: .leading, spacing: 0) {
             
             Text(viewModel.strings.title)
-                .font(FontLibrary.sfProTextRegular.font(size: 24))
+                .font(FontLibrary.sfProTextRegular.font(size: 28))
                 .foregroundColor(ColorPalette.gtGrey.color)
                         
             Text(viewModel.strings.subtitle)

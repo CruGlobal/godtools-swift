@@ -8,6 +8,6 @@
 
 import Foundation
 
-class CYOAToolSettingsObserver: ToolSettingsObserver {
+class CYOAToolSettingsObserver: ToolSettingsObserver, LinkShareable {
     
 }

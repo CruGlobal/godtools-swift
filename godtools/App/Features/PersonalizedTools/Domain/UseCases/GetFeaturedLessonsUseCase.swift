@@ -10,56 +10,87 @@ import Foundation
 import Combine
 
 final class GetFeaturedLessonsUseCase: Sendable {
-    
+
     private let resourcesRepository: ResourcesRepository
+    private let personalizedToolsRepository: PersonalizedToolsRepository
     private let languagesRepository: LanguagesRepository
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability
     private let lessonProgressRepository: UserLessonProgressRepository
     private let getLessonListItemProgress: GetLessonListItemProgress
-    
+
     init(
         resourcesRepository: ResourcesRepository,
+        personalizedToolsRepository: PersonalizedToolsRepository,
         languagesRepository: LanguagesRepository,
         getTranslatedToolName: GetTranslatedToolName,
         getTranslatedToolLanguageAvailability: GetTranslatedToolLanguageAvailability,
         lessonProgressRepository: UserLessonProgressRepository,
         getLessonListItemProgress: GetLessonListItemProgress
     ) {
-        
+
         self.resourcesRepository = resourcesRepository
+        self.personalizedToolsRepository = personalizedToolsRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedToolName = getTranslatedToolName
         self.getTranslatedToolLanguageAvailability = getTranslatedToolLanguageAvailability
         self.lessonProgressRepository = lessonProgressRepository
         self.getLessonListItemProgress = getLessonListItemProgress
     }
-    
-    @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<[FeaturedLessonDomainModel], Error> {
-                    
-        return Publishers.CombineLatest(
+
+    @MainActor func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?) -> AnyPublisher<[FeaturedLessonDomainModel], Error> {
+
+        guard let countryIsoRegionCode = getCountryIsoRegionCode(country: country) else {
+
+            return Just([])
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+
+        return Publishers.CombineLatest3(
+            personalizedToolsRepository
+                .getPersonalizedToolsChanged(
+                    requestPriority: .high,
+                    country: countryIsoRegionCode,
+                    language: appLanguage
+                ),
             resourcesRepository
                 .observeCollectionChangesPublisher(),
             lessonProgressRepository
                 .getLessonProgressChangedPublisher()
         )
         .receive(on: DispatchQueue.global())
-        .flatMap({ (resourcesChanged: Void, lessonProgressDidChange: Void) -> AnyPublisher<[FeaturedLessonDomainModel], Error> in
-            
+        .flatMap({ (personalizedToolsChanged: Void, resourcesChanged: Void, lessonProgressDidChange: Void) -> AnyPublisher<[FeaturedLessonDomainModel], Error> in
+
             return AnyPublisher() {
-                try await self.asyncExecute(appLanguage: appLanguage)
+                try await self.asyncExecute(appLanguage: appLanguage, countryIsoRegionCode: countryIsoRegionCode)
             }
         })
         .eraseToAnyPublisher()
     }
-    
-    private func asyncExecute(appLanguage: AppLanguageDomainModel) async throws -> [FeaturedLessonDomainModel] {
-        
+
+    private func getCountryIsoRegionCode(country: LocalizationSettingsCountryDomainModel?) -> String? {
+
+        guard let isoRegionCode = country?.isoRegionCode, !isoRegionCode.isEmpty else {
+            return nil
+        }
+
+        return isoRegionCode
+    }
+
+    private func asyncExecute(appLanguage: AppLanguageDomainModel, countryIsoRegionCode: String) async throws -> [FeaturedLessonDomainModel] {
+
         let appLanguageModel: LanguageDataModel? = languagesRepository.getLanguageByCode(code: appLanguage)
-        
-        let featuredLessonsDataModels: [ResourceDataModel] = try await resourcesRepository
-            .getFeaturedLessons(sorted: true)
-        
+
+        let featuredLessonsDataModels: [ResourceDataModel] = try await personalizedToolsRepository
+            .getTools(
+                requestPriority: .high,
+                type: .featured(country: countryIsoRegionCode, language: appLanguage),
+                resourceTypes: [.lesson],
+                sortByResponse: true
+            )
+            .filter { !$0.isHidden }
+
         var featuredLessons: [FeaturedLessonDomainModel] = Array()
 
         for resource in featuredLessonsDataModels {
