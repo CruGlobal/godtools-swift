@@ -160,7 +160,7 @@ struct AllToolsView_Preview: PreviewProvider {
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsUseCase(),
             favoritingToolMessageCache: appDiContainer.core.dataLayer.getFavoritingToolMessageCache(),
-            getSpotlightToolsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getSpotlightToolsUseCase(),
+            getFeaturedToolsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getFeaturedToolsUseCase(),
             getUserToolFilterCategoryUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFilterCategoryUseCase(),
             getUserToolFilterLanguageUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFilterLanguageUseCase(),
             getUserPersonalizedToolFilterLanguageUseCase: appDiContainer.feature.personalizedTools.domainLayer.getUserPersonalizedToolFilterLanguageUseCase(),

@@ -24,7 +24,7 @@ final class ToolsViewModel: ObservableObject {
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase
     private let favoritingToolMessageCache: FavoritingToolMessageCache
-    private let getSpotlightToolsUseCase: GetSpotlightToolsUseCase
+    private let getFeaturedToolsUseCase: GetFeaturedToolsUseCase
     private let getToolIsFavoritedUseCase: GetToolIsFavoritedUseCase
     private let getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase
     private let getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase
@@ -49,7 +49,7 @@ final class ToolsViewModel: ObservableObject {
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = ToolsViewModel.getPersonalizedToggleOptions(strings: ToolsStringsDomainModel.emptyValue)
     @Published private(set) var strings: ToolsStringsDomainModel = .emptyValue
     @Published private(set) var showsFavoritingToolBanner: Bool = false
-    @Published private(set) var featuredTools: [SpotlightToolListItemDomainModel] = Array()
+    @Published private(set) var featuredTools: [FeaturedToolListItemDomainModel] = Array()
     @Published private(set) var categoryFilterActionTitle: String = ""
     @Published private(set) var languageFilterActionTitle: String = ""
     @Published private(set) var personalizedTools = PersonalizedToolsDomainModel.emptyValue
@@ -66,7 +66,7 @@ final class ToolsViewModel: ObservableObject {
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
         getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase,
         favoritingToolMessageCache: FavoritingToolMessageCache,
-        getSpotlightToolsUseCase: GetSpotlightToolsUseCase,
+        getFeaturedToolsUseCase: GetFeaturedToolsUseCase,
         getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase,
         getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase,
         getUserPersonalizedToolFilterLanguageUseCase: GetUserPersonalizedToolFilterLanguageUseCase,
@@ -86,7 +86,7 @@ final class ToolsViewModel: ObservableObject {
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getLocalizationSettingsUseCase = getLocalizationSettingsUseCase
         self.favoritingToolMessageCache = favoritingToolMessageCache
-        self.getSpotlightToolsUseCase = getSpotlightToolsUseCase
+        self.getFeaturedToolsUseCase = getFeaturedToolsUseCase
         self.getToolIsFavoritedUseCase = getToolIsFavoritedUseCase
         self.getUserToolFilterCategoryUseCase = getUserToolFilterCategoryUseCase
         self.getUserToolFilterLanguageUseCase = getUserToolFilterLanguageUseCase
@@ -218,7 +218,7 @@ final class ToolsViewModel: ObservableObject {
             toolFilterLanguage: ToolFilterLanguageDomainModel?
         ) in
             
-            getSpotlightToolsUseCase
+            getFeaturedToolsUseCase
                 .execute(
                     appLanguage: appLanguage,
                     languageIdForAvailabilityText: toolFilterLanguage?.languageId
@@ -228,9 +228,9 @@ final class ToolsViewModel: ObservableObject {
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { _ in
             
-        }, receiveValue: { [weak self] (spotlightTools: [SpotlightToolListItemDomainModel]) in
+        }, receiveValue: { [weak self] (featuredTools: [FeaturedToolListItemDomainModel]) in
             
-            self?.featuredTools = spotlightTools
+            self?.featuredTools = featuredTools
         })
         .store(in: &cancellables)
         
@@ -346,7 +346,7 @@ final class ToolsViewModel: ObservableObject {
         
         let source: String
         
-        if tool is SpotlightToolListItemDomainModel {
+        if tool is FeaturedToolListItemDomainModel {
             source = AnalyticsConstants.Sources.spotlight
         }
         else {
@@ -478,7 +478,7 @@ extension ToolsViewModel {
         }
     }
     
-    func getSpotlightToolViewModel(spotlightTool: SpotlightToolListItemDomainModel) -> ToolCardViewModel {
+    func getSpotlightToolViewModel(spotlightTool: FeaturedToolListItemDomainModel) -> ToolCardViewModel {
         return getToolViewModel(tool: spotlightTool, accessibility: .spotlightTool)
     }
     
@@ -512,12 +512,12 @@ extension ToolsViewModel {
         stepEmitter.emit(step: AppFlowStep.personalizedToolLanguageFilterTappedFromTools)
     }
     
-    func spotlightToolFavoriteTapped(spotlightTool: SpotlightToolListItemDomainModel) {
+    func spotlightToolFavoriteTapped(spotlightTool: FeaturedToolListItemDomainModel) {
      
         toggleToolIsFavorited(toolId: spotlightTool.dataModelId)
     }
     
-    func spotlightToolTapped(spotlightTool: SpotlightToolListItemDomainModel) {
+    func spotlightToolTapped(spotlightTool: FeaturedToolListItemDomainModel) {
         
         trackToolTappedAnalytics(tool: spotlightTool)
         

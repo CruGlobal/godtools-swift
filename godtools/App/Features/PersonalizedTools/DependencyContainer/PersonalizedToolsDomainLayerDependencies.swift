@@ -32,6 +32,19 @@ final class PersonalizedToolsDomainLayerDependencies: Sendable {
         )
     }
 
+    func getFeaturedToolsUseCase() -> GetFeaturedToolsUseCase {
+
+        return GetFeaturedToolsUseCase(
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            favoritedResourcesRepository: core.dataLayer.getFavoritedResourcesRepository(),
+            languagesRepository: core.dataLayer.getLanguagesRepository(),
+            getTranslatedToolName: core.domainLayer.supporting.getTranslatedToolName(),
+            getTranslatedToolCategory: core.domainLayer.supporting.getTranslatedToolCategory(),
+            getToolListItemStrings: core.domainLayer.supporting.getToolListItemStrings(),
+            getTranslatedToolLanguageAvailability: core.domainLayer.supporting.getTranslatedToolLanguageAvailability()
+        )
+    }
+
     func getLocalizationSettingsConfirmationStringsUseCase() -> GetLocalizationSettingsConfirmationStringsUseCase {
 
         return GetLocalizationSettingsConfirmationStringsUseCase(
@@ -164,19 +177,6 @@ final class PersonalizedToolsDomainLayerDependencies: Sendable {
     func getSetUserPersonalizedToolFilterLanguageUseCase() -> SetUserPersonalizedToolFilterLanguageUseCase {
 
         return SetUserPersonalizedToolFilterLanguageUseCase()
-    }
-
-    func getSpotlightToolsUseCase() -> GetSpotlightToolsUseCase {
-
-        return GetSpotlightToolsUseCase(
-            resourcesRepository: core.dataLayer.getResourcesRepository(),
-            favoritedResourcesRepository: core.dataLayer.getFavoritedResourcesRepository(),
-            languagesRepository: core.dataLayer.getLanguagesRepository(),
-            getTranslatedToolName: core.domainLayer.supporting.getTranslatedToolName(),
-            getTranslatedToolCategory: core.domainLayer.supporting.getTranslatedToolCategory(),
-            getToolListItemStrings: core.domainLayer.supporting.getToolListItemStrings(),
-            getTranslatedToolLanguageAvailability: core.domainLayer.supporting.getTranslatedToolLanguageAvailability()
-        )
     }
 
     func getUserPersonalizedLessonFilterLanguageUseCase() -> GetUserPersonalizedLessonFilterLanguageUseCase {
