@@ -33,8 +33,4 @@ extension UserToolFilterSettingsDataModel {
             value: value
         )
     }
-    
-    func getSettingType() -> UserToolFilterSettingType? {
-        return UserToolFilterSettingType(rawValue: settingType)
-    }
 }

@@ -181,6 +181,162 @@ struct UserToolFilterSettingsRepositoryTests {
         #expect(authenticatedUserValue == TestValue.french)
         #expect(sharedUserValue == nil)
     }
+    @Test(
+        """
+        Given: User is selecting a value for a tool filter setting.
+        When: The value is stored.
+        Then: I expect the setting to be keyed by the user id and setting type.
+        """
+    )
+    @MainActor func storedSettingIsKeyedByUserIdAndSettingType() async throws {
+        
+        let repository: UserToolFilterSettingsRepository = getRepository()
+        
+        try await repository.storeSettingValue(
+            settingType: .toolsLanguageFilter,
+            value: TestValue.french,
+            userId: TestUserId.authenticated
+        )
+        
+        let setting: UserToolFilterSettingsDataModel = try #require(
+            await repository.getSetting(settingType: .toolsLanguageFilter, userId: TestUserId.authenticated)
+        )
+        
+        #expect(setting.id == "\(TestUserId.authenticated).toolsLanguageFilter")
+        #expect(setting.userId == TestUserId.authenticated)
+        #expect(setting.settingType == UserToolFilterSettingType.toolsLanguageFilter.rawValue)
+        #expect(setting.value == TestValue.french)
+    }
+    
+    @Test(
+        """
+        Given: Tool filter settings are stored for an authenticated user.
+        When: That user's settings are requested.
+        Then: I expect to receive only that user's settings.
+        """
+    )
+    @MainActor func requestingSettingsForAUserReturnsOnlyThatUsersSettings() async throws {
+        
+        let repository: UserToolFilterSettingsRepository = getRepository()
+        
+        try await repository.storeSettingValue(settingType: .toolsLanguageFilter, value: TestValue.english)
+        
+        try await repository.storeSettingValue(
+            settingType: .toolsLanguageFilter,
+            value: TestValue.french,
+            userId: TestUserId.authenticated
+        )
+        
+        try await repository.storeSettingValue(
+            settingType: .lessonsLanguageFilter,
+            value: TestValue.spanish,
+            userId: TestUserId.authenticated
+        )
+        
+        let authenticatedUserSettings: [UserToolFilterSettingsDataModel] = await repository.getSettings(
+            userId: TestUserId.authenticated
+        )
+        
+        let sharedUserSettings: [UserToolFilterSettingsDataModel] = await repository.getSettings()
+        
+        #expect(authenticatedUserSettings.count == 2)
+        #expect(sharedUserSettings.count == 1)
+        #expect(authenticatedUserSettings.allSatisfy { $0.userId == TestUserId.authenticated })
+    }
+    
+    @Test(
+        """
+        Given: A tool filter setting is stored for an authenticated user and for the shared user.
+        When: The authenticated user's setting is deleted.
+        Then: I expect the shared user's setting to be left in place.
+        """
+    )
+    @MainActor func deletingASettingForAUserLeavesOtherUsersSettingsInPlace() async throws {
+        
+        let repository: UserToolFilterSettingsRepository = getRepository()
+        
+        try await repository.storeSettingValue(settingType: .toolsLanguageFilter, value: TestValue.english)
+        
+        try await repository.storeSettingValue(
+            settingType: .toolsLanguageFilter,
+            value: TestValue.french,
+            userId: TestUserId.authenticated
+        )
+        
+        try await repository.deleteSetting(settingType: .toolsLanguageFilter, userId: TestUserId.authenticated)
+        
+        let authenticatedUserValue: String? = await repository.getSettingValue(
+            settingType: .toolsLanguageFilter,
+            userId: TestUserId.authenticated
+        )
+        
+        let sharedUserValue: String? = await repository.getSettingValue(settingType: .toolsLanguageFilter)
+        
+        #expect(authenticatedUserValue == nil)
+        #expect(sharedUserValue == TestValue.english)
+    }
+}
+
+// MARK: - Persistence Failures
+
+extension UserToolFilterSettingsRepositoryTests {
+    
+    @Test(
+        """
+        Given: The database is unavailable.
+        When: A tool filter setting is requested.
+        Then: I expect to not receive a value rather than an error.
+        """
+    )
+    @MainActor func requestingASettingWhenTheDatabaseIsUnavailableReturnsNoValue() async throws {
+        
+        let repository: UserToolFilterSettingsRepository = getRepositoryWithFailingPersistence()
+        
+        let setting: UserToolFilterSettingsDataModel? = await repository.getSetting(settingType: .toolsLanguageFilter)
+        let value: String? = await repository.getSettingValue(settingType: .toolsLanguageFilter)
+        let settings: [UserToolFilterSettingsDataModel] = await repository.getSettings()
+        
+        #expect(setting == nil)
+        #expect(value == nil)
+        #expect(settings.isEmpty)
+    }
+    
+    @Test(
+        """
+        Given: The database is unavailable.
+        When: A tool filter setting value is stored.
+        Then: I expect an error to be thrown.
+        """
+    )
+    @MainActor func storingASettingWhenTheDatabaseIsUnavailableThrows() async throws {
+        
+        let repository: UserToolFilterSettingsRepository = getRepositoryWithFailingPersistence()
+        
+        await #expect(throws: FakeFailingPersistenceError.self) {
+            try await repository.storeSettingValue(settingType: .toolsLanguageFilter, value: TestValue.french)
+        }
+    }
+    
+    @Test(
+        """
+        Given: The database is unavailable.
+        When: A tool filter setting is observed.
+        Then: I expect to receive an empty value rather than the observer hanging.
+        """
+    )
+    @MainActor func observingASettingWhenTheDatabaseIsUnavailableEmitsAnEmptyValue() async throws {
+        
+        let repository: UserToolFilterSettingsRepository = getRepositoryWithFailingPersistence()
+        
+        let values: [String?] = await observeSettingValues(
+            repository: repository,
+            settingType: .toolsLanguageFilter,
+            expectedValueCount: 1,
+            whileObserving: nil
+        )
+        
+        #expect(values == [nil])
+    }
 }
 
 // MARK: - Observing
@@ -318,6 +474,15 @@ extension UserToolFilterSettingsRepositoryTests {
         let testsDiContainer = TestsDiContainer(testsAppConfig: TestsAppConfig())
         
         return testsDiContainer.core.dataLayer.getUserToolFilterSettingsRepository()
+    }
+    
+    private func getRepositoryWithFailingPersistence() -> UserToolFilterSettingsRepository {
+        
+        return UserToolFilterSettingsRepository(
+            cache: UserToolFilterSettingsCache(
+                persistence: FakeFailingPersistence<UserToolFilterSettingsDataModel, UserToolFilterSettingsDataModel>()
+            )
+        )
     }
     
     @MainActor private func observeSettingValues(repository: UserToolFilterSettingsRepository, settingType: UserToolFilterSettingType, expectedValueCount: Int, timeoutNanoseconds: UInt64? = nil, whileObserving: (() async throws -> Void)?) async -> [String?] {
