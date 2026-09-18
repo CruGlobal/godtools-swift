@@ -218,9 +218,12 @@ final class ToolsViewModel: ObservableObject {
             toolFilterLanguage: ToolFilterLanguageDomainModel?
         ) in
             
+            // TODO: Send LocalizationSettingsCountryDomainModel. ~Levi
+            
             getFeaturedToolsUseCase
                 .execute(
                     appLanguage: appLanguage,
+                    country: LocalizationSettingsCountryDomainModel.emptyValue,
                     languageIdForAvailabilityText: toolFilterLanguage?.languageId
                 )
         }

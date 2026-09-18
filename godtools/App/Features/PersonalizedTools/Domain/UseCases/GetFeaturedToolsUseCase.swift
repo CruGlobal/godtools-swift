@@ -12,6 +12,7 @@ import Combine
 final class GetFeaturedToolsUseCase: Sendable {
         
     private let resourcesRepository: ResourcesRepository
+    private let personalizedToolsRepository: PersonalizedToolsRepository
     private let favoritedResourcesRepository: FavoritedResourcesRepository
     private let languagesRepository: LanguagesRepository
     private let getTranslatedToolName: GetTranslatedToolName
@@ -21,6 +22,7 @@ final class GetFeaturedToolsUseCase: Sendable {
     
     init(
         resourcesRepository: ResourcesRepository,
+        personalizedToolsRepository: PersonalizedToolsRepository,
         favoritedResourcesRepository: FavoritedResourcesRepository,
         languagesRepository: LanguagesRepository,
         getTranslatedToolName: GetTranslatedToolName,
@@ -30,6 +32,7 @@ final class GetFeaturedToolsUseCase: Sendable {
     ) {
         
         self.resourcesRepository = resourcesRepository
+        self.personalizedToolsRepository = personalizedToolsRepository
         self.favoritedResourcesRepository = favoritedResourcesRepository
         self.languagesRepository = languagesRepository
         self.getTranslatedToolName = getTranslatedToolName
@@ -40,34 +43,54 @@ final class GetFeaturedToolsUseCase: Sendable {
     
     @MainActor func execute(
         appLanguage: AppLanguageDomainModel,
+        country: LocalizationSettingsCountryDomainModel,
         languageIdForAvailabilityText: String?
     ) -> AnyPublisher<[FeaturedToolListItemDomainModel], Error> {
         
-        return resourcesRepository
-            .observeCollectionChangesPublisher()
-            .receive(on: DispatchQueue.global())
-            .map({ (resourcesChanged: Void) in
+        let countryCode: String = country.isoRegionCode
 
-                return self.getFeaturedTools(
+        return Publishers.CombineLatest(
+            personalizedToolsRepository
+                .getPersonalizedToolsChanged(
+                    requestPriority: .high,
+                    country: countryCode,
+                    language: appLanguage
+                ),
+            resourcesRepository
+                .observeCollectionChangesPublisher()
+        )
+        .receive(on: DispatchQueue.global())
+        .flatMap({ (personalizedToolsChanged: Void, resourcesChanged: Void) -> AnyPublisher<[FeaturedToolListItemDomainModel], Error> in
+
+            return AnyPublisher() {
+                try await self.getFeaturedTools(
                     appLanguage: appLanguage,
+                    countryCode: countryCode,
                     languageIdForAvailabilityText: languageIdForAvailabilityText
                 )
-            })
-            .eraseToAnyPublisher()
+            }
+        })
+        .eraseToAnyPublisher()
     }
     
     private func getFeaturedTools(
         appLanguage: AppLanguageDomainModel,
+        countryCode: String,
         languageIdForAvailabilityText: String?
-    ) -> [FeaturedToolListItemDomainModel] {
+    ) async throws -> [FeaturedToolListItemDomainModel] {
         
         let languageForAvailabilityTextModel: LanguageDataModel? = getLanguage(id: languageIdForAvailabilityText)
         
         let strings: ToolListItemStringsDomainModel = getToolListItemStrings.getStrings(appLanguage: appLanguage)
 
-        let featuredToolResources: [ResourceDataModel] = resourcesRepository.getSpotlightTools(
-            sortByDefaultOrder: true
-        )
+        let featuredToolResources: [ResourceDataModel] = try await personalizedToolsRepository
+            .getTools(
+                requestPriority: .high,
+                type: .featured(country: countryCode, language: appLanguage),
+                resourceTypes: ResourceType.toolTypes,
+                sortByResponse: true
+            )
+            .filter { !$0.isHidden }
 
         var featuredTools: [FeaturedToolListItemDomainModel] = Array()
 
