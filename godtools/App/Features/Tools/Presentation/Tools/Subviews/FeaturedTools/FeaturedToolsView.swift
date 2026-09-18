@@ -1,5 +1,5 @@
 //
-//  ToolSpotlightView.swift
+//  FeaturedToolsView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 5/10/22.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ToolSpotlightView: View {
+struct FeaturedToolsView: View {
         
     private let geometry: GeometryProxy
     private let contentHorizontalInsets: CGFloat
@@ -73,13 +73,13 @@ struct ToolSpotlightView: View {
 
 // MARK: - Preview
 
-struct ToolSpotlightView_Preview: PreviewProvider {
+struct FeaturedToolsView_Preview: PreviewProvider {
     
     static var previews: some View {
         
         GeometryReader { geometry in
             
-            ToolSpotlightView(
+            FeaturedToolsView(
                 viewModel: AllToolsView_Preview.getToolsViewModel(),
                 geometry: geometry,
                 contentHorizontalInsets: 15

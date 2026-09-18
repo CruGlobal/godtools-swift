@@ -53,7 +53,7 @@ struct ToolsView: View {
 
                     VStack(alignment: .leading, spacing: 0) {
 
-                        ToolSpotlightView(
+                        FeaturedToolsView(
                             viewModel: viewModel,
                             geometry: geometry,
                             contentHorizontalInsets: contentHorizontalInsets
