@@ -242,21 +242,6 @@ extension ResourcesRepository {
     }
 }
 
-// MARK: - Spotlight Tools
-
-extension ResourcesRepository {
-    
-    func getSpotlightTools(sortByDefaultOrder: Bool = false) -> [ResourceDataModel] {
-        
-        do {
-            return try cache.getSpotlightTools(sortByDefaultOrder: sortByDefaultOrder)
-        }
-        catch _ {
-            return Array()
-        }
-    }
-}
-
 // MARK: - All Tools List
 
 extension ResourcesRepository {
