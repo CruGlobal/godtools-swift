@@ -30,7 +30,7 @@ struct GetUserToolFilterLanguageUseCaseTests {
     struct TestDependencies {
         let resourcesRepository: ResourcesRepository
         let languagesRepository: LanguagesRepository
-        let userToolFiltersRepository: UserToolFiltersRepository
+        let userToolFilterSettingsRepository: UserToolFilterSettingsRepository
     }
 
     struct StoredLanguageArgument {
@@ -192,11 +192,11 @@ extension GetUserToolFilterLanguageUseCaseTests {
         let dependencies: TestDependencies = try getTestDependencies()
 
         if let storeLanguageId = storeLanguageId {
-            try await dependencies.userToolFiltersRepository.storeUserLanguageFilter(languageId: storeLanguageId)
+            try await dependencies.userToolFilterSettingsRepository.storeSettingValue(settingType: .toolsLanguageFilter, value: storeLanguageId)
         }
 
         let useCase = GetUserToolFilterLanguageUseCase(
-            userToolFiltersRepository: dependencies.userToolFiltersRepository,
+            userToolFilterSettingsRepository: dependencies.userToolFilterSettingsRepository,
             getToolFilterLanguage: getToolFilterLanguage(dependencies: dependencies)
         )
 
@@ -251,7 +251,7 @@ extension GetUserToolFilterLanguageUseCaseTests {
         return TestDependencies(
             resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
             languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
-            userToolFiltersRepository: testsDiContainer.feature.toolsFilter.dataLayer.getUserToolFiltersRepository()
+            userToolFilterSettingsRepository: testsDiContainer.core.dataLayer.getUserToolFilterSettingsRepository()
         )
     }
 

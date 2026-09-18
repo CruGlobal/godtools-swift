@@ -11,12 +11,12 @@ import Combine
 
 final class GetUserToolFilterLanguageUseCase: Sendable {
     
-    private let userToolFiltersRepository: UserToolFiltersRepository
+    private let userToolFilterSettingsRepository: UserToolFilterSettingsRepository
     private let getToolFilterLanguage: GetToolFilterLanguage
     
-    init(userToolFiltersRepository: UserToolFiltersRepository, getToolFilterLanguage: GetToolFilterLanguage) {
+    init(userToolFilterSettingsRepository: UserToolFilterSettingsRepository, getToolFilterLanguage: GetToolFilterLanguage) {
         
-        self.userToolFiltersRepository = userToolFiltersRepository
+        self.userToolFilterSettingsRepository = userToolFilterSettingsRepository
         self.getToolFilterLanguage = getToolFilterLanguage
     }
     
@@ -24,18 +24,16 @@ final class GetUserToolFilterLanguageUseCase: Sendable {
         appLanguage: AppLanguageDomainModel
     ) -> AnyPublisher<ToolFilterLanguageDomainModel, Never> {
         
-        return userToolFiltersRepository
-            .getUserToolLanguageFilterChangedPublisher()
+        return userToolFilterSettingsRepository
+            .observeSettingValueChangedPublisher(settingType: .toolsLanguageFilter)
             .receive(on: DispatchQueue.global())
-            .map {
-                return self.getToolFilterLanguage(appLanguage: appLanguage)
+            .map { (languageId: String?) in
+                return self.getToolFilterLanguage(languageId: languageId, appLanguage: appLanguage)
             }
             .eraseToAnyPublisher()
     }
     
-    private func getToolFilterLanguage(appLanguage: AppLanguageDomainModel) -> ToolFilterLanguageDomainModel {
-        
-        let languageId: String? = userToolFiltersRepository.getUserToolLanguageFilter()?.languageId
+    private func getToolFilterLanguage(languageId: String?, appLanguage: AppLanguageDomainModel) -> ToolFilterLanguageDomainModel {
         
         if let languageId = languageId,
             let languageFilter = getToolFilterLanguage.getLanguageFilter(

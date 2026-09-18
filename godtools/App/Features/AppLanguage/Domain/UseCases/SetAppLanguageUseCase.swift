@@ -11,17 +11,17 @@ import Foundation
 final class SetAppLanguageUseCase: Sendable {
     
     private let userAppLanguageRepository: UserAppLanguageRepository
-    private let userLessonFiltersRepository: UserLessonFiltersRepository
+    private let userToolFilterSettingsRepository: UserToolFilterSettingsRepository
     private let languagesRepository: LanguagesRepository
     
     init(
         userAppLanguageRepository: UserAppLanguageRepository,
-        userLessonFiltersRepository: UserLessonFiltersRepository,
+        userToolFilterSettingsRepository: UserToolFilterSettingsRepository,
         languagesRepository: LanguagesRepository
     ) {
         
         self.userAppLanguageRepository = userAppLanguageRepository
-        self.userLessonFiltersRepository = userLessonFiltersRepository
+        self.userToolFilterSettingsRepository = userToolFilterSettingsRepository
         self.languagesRepository = languagesRepository
     }
     
@@ -29,8 +29,9 @@ final class SetAppLanguageUseCase: Sendable {
         
         if let languageModelId = languagesRepository.getLanguageByCode(code: appLanguage)?.id {
             
-            try await userLessonFiltersRepository.storeUserLessonLanguageFilter(
-                languageId: languageModelId
+            try await userToolFilterSettingsRepository.storeSettingValue(
+                settingType: .lessonsLanguageFilter,
+                value: languageModelId
             )
         }
         

@@ -111,7 +111,7 @@ final class AppLanguageDomainLayerDependencies: Sendable {
     func getSetAppLanguageUseCase() -> SetAppLanguageUseCase {
         return SetAppLanguageUseCase(
             userAppLanguageRepository: dataLayer.getUserAppLanguageRepository(),
-            userLessonFiltersRepository: core.dataLayer.getUserLessonFiltersRepository(),
+            userToolFilterSettingsRepository: core.dataLayer.getUserToolFilterSettingsRepository(),
             languagesRepository: core.dataLayer.getLanguagesRepository()
         )
     }

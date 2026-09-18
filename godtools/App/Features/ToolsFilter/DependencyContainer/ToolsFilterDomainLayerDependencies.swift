@@ -48,14 +48,14 @@ final class ToolsFilterDomainLayerDependencies: Sendable {
     
     func getUserToolFilterCategoryUseCase() -> GetUserToolFilterCategoryUseCase {
         return GetUserToolFilterCategoryUseCase(
-            userToolFiltersRepository: dataLayer.getUserToolFiltersRepository(),
+            userToolFilterSettingsRepository: core.dataLayer.getUserToolFilterSettingsRepository(),
             getToolFilterCategory: getToolFilterCategory()
         )
     }
     
     func getUserToolFilterLanguageUseCase() -> GetUserToolFilterLanguageUseCase {
         return GetUserToolFilterLanguageUseCase(
-            userToolFiltersRepository: dataLayer.getUserToolFiltersRepository(),
+            userToolFilterSettingsRepository: core.dataLayer.getUserToolFilterSettingsRepository(),
             getToolFilterLanguage: getToolFilterLanguage()
         )
     }
@@ -74,13 +74,13 @@ final class ToolsFilterDomainLayerDependencies: Sendable {
     
     func getSelectedToolFilterCategoryUseCase() -> SelectedToolFilterCategoryUseCase {
         return SelectedToolFilterCategoryUseCase(
-            userToolFiltersRepository: dataLayer.getUserToolFiltersRepository()
+            userToolFilterSettingsRepository: core.dataLayer.getUserToolFilterSettingsRepository()
         )
     }
     
     func getSelectedToolFilterLanguageUseCase() -> SelectedToolFilterLanguageUseCase {
         return SelectedToolFilterLanguageUseCase(
-            userToolFiltersRepository: dataLayer.getUserToolFiltersRepository()
+            userToolFilterSettingsRepository: core.dataLayer.getUserToolFilterSettingsRepository()
         )
     }
 }

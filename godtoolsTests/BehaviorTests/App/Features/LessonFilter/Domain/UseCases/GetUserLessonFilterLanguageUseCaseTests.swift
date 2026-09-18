@@ -191,8 +191,9 @@ struct GetUserLessonFilterLanguageUseCaseTests {
                         originalLessonLanguageFilterRef = userLessonFilterLanguage
 
                         Task {
-                            try await testsDiContainer.core.dataLayer.getUserLessonFiltersRepository().storeUserLessonLanguageFilter(
-                                languageId: spanishLanguage.id
+                            try await testsDiContainer.core.dataLayer.getUserToolFilterSettingsRepository().storeSettingValue(
+                                settingType: .lessonsLanguageFilter,
+                                value: spanishLanguage.id
                             )
                         }
                     }
@@ -248,7 +249,7 @@ extension GetUserLessonFilterLanguageUseCaseTests {
 
         return GetUserLessonFilterLanguageUseCase(
             languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
-            userLessonFiltersRepository: testsDiContainer.core.dataLayer.getUserLessonFiltersRepository(),
+            userToolFilterSettingsRepository: testsDiContainer.core.dataLayer.getUserToolFilterSettingsRepository(),
             mapLanguageToLessonFilterLanguage: mapLanguageToLessonFilterLanguage(testsDiContainer: testsDiContainer)
         )
     }
