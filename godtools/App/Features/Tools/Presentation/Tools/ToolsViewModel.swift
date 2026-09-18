@@ -350,7 +350,7 @@ final class ToolsViewModel: ObservableObject {
         let source: String
         
         if tool is FeaturedToolListItemDomainModel {
-            source = AnalyticsConstants.Sources.spotlight
+            source = AnalyticsConstants.Sources.featured
         }
         else {
             source = AnalyticsConstants.Sources.allTools
@@ -481,8 +481,8 @@ extension ToolsViewModel {
         }
     }
     
-    func getSpotlightToolViewModel(spotlightTool: FeaturedToolListItemDomainModel) -> ToolCardViewModel {
-        return getToolViewModel(tool: spotlightTool, accessibility: .spotlightTool)
+    func getFeaturedToolViewModel(featuredTool: FeaturedToolListItemDomainModel) -> ToolCardViewModel {
+        return getToolViewModel(tool: featuredTool, accessibility: .featuredTool)
     }
     
     func getToolItemViewModel(tool: ToolListItemDomainModel) -> ToolCardViewModel {
@@ -515,16 +515,16 @@ extension ToolsViewModel {
         stepEmitter.emit(step: AppFlowStep.personalizedToolLanguageFilterTappedFromTools)
     }
     
-    func spotlightToolFavoriteTapped(spotlightTool: FeaturedToolListItemDomainModel) {
+    func feautedToolFavoriteTapped(featuredTool: FeaturedToolListItemDomainModel) {
      
-        toggleToolIsFavorited(toolId: spotlightTool.dataModelId)
+        toggleToolIsFavorited(toolId: featuredTool.dataModelId)
     }
     
-    func spotlightToolTapped(spotlightTool: FeaturedToolListItemDomainModel) {
+    func featuredToolTapped(featuredTool: FeaturedToolListItemDomainModel) {
         
-        trackToolTappedAnalytics(tool: spotlightTool)
+        trackToolTappedAnalytics(tool: featuredTool)
         
-        stepEmitter.emit(step: AppFlowStep.spotlightToolTappedFromTools(spotlightTool: spotlightTool, toolFilterLanguageId: selectedAllToolsFilterLanguage?.languageId))
+        stepEmitter.emit(step: AppFlowStep.featuredToolTappedFromTools(featuredTool: featuredTool, toolFilterLanguageId: selectedAllToolsFilterLanguage?.languageId))
     }
     
     func toolFavoriteTapped(tool: ToolListItemDomainModel) {

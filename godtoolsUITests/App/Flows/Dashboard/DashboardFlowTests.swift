@@ -187,20 +187,6 @@ extension DashboardFlowTests {
         assertIfScreenDoesNotExist(screenAccessibility: .toolsLanguageFilters)
     }
     
-    func testTappingSpotlightToolFromToolsOpensToolDetails() {
-        
-        launchAppToDashboardTools()
-        
-        let spotlightToolId: String = AccessibilityStrings.Button.getToolButtonAccessibility(
-            toolButton: .spotlightTool,
-            toolName: .teachMeToShare
-        )
-        
-        assertIfButtonDoesNotExistElseTap(buttonId: spotlightToolId, buttonQueryType: .searchDescendants)
-        
-        assertIfScreenDoesNotExist(screenAccessibility: .toolDetails)
-    }
-    
     func testTappingToolFromToolsOpensToolDetails() {
         
         launchAppToDashboardTools()

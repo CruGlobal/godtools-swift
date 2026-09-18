@@ -44,22 +44,22 @@ struct FeaturedToolsView: View {
                 // NOTE: We need HStack here instead of LazyHStack because our card heights have dynamic heights to them and this allows the HStack to wrap the tallest card.
                 HStack(alignment: .top, spacing: 15) {
                     
-                    ForEach(viewModel.featuredTools) { (spotlightTool: FeaturedToolListItemDomainModel) in
+                    ForEach(viewModel.featuredTools) { (featuredTool: FeaturedToolListItemDomainModel) in
                         
                         ToolCardView(
-                            viewModel: viewModel.getSpotlightToolViewModel(spotlightTool: spotlightTool),
+                            viewModel: viewModel.getFeaturedToolViewModel(featuredTool: featuredTool),
                             geometry: geometry,
                             layout: .thumbnail,
                             showsCategory: false,
                             favoriteTappedClosure: {
                                 
-                                viewModel.spotlightToolFavoriteTapped(spotlightTool: spotlightTool)
+                                viewModel.feautedToolFavoriteTapped(featuredTool: featuredTool)
                             },
                             toolDetailsTappedClosure: nil,
                             openToolTappedClosure: nil,
                             toolTappedClosure: {
                                 
-                                viewModel.spotlightToolTapped(spotlightTool: spotlightTool)
+                                viewModel.featuredToolTapped(featuredTool: featuredTool)
                             }
                         )
                     }
