@@ -33,8 +33,8 @@ struct GetToolsStringsUseCaseTests {
         let strings: ToolsStringsDomainModel = useCase.execute(translateInLanguage: argument.translateInLanguage)
 
         #expect(strings.favoritingToolBannerMessage == "\(argument.translateInLanguage):\(LocalizableStringKeys.toolOfflineFavoriteMessage.key)")
-        #expect(strings.toolSpotlightTitle == "\(argument.translateInLanguage):\(LocalizableStringKeys.toolsSpotlightTitle.key)")
-        #expect(strings.toolSpotlightSubtitle == "\(argument.translateInLanguage):\(LocalizableStringKeys.toolsSpotlightSubtitle.key)")
+        #expect(strings.featuredToolsTitle == "\(argument.translateInLanguage):\(LocalizableStringKeys.toolsFeaturedTitle.key)")
+        #expect(strings.featuredToolsSubtitle == "\(argument.translateInLanguage):\(LocalizableStringKeys.toolsFeaturedSubtitle.key)")
         #expect(strings.filterTitle == "\(argument.translateInLanguage):\(LocalizableStringKeys.toolsFilterSectionTitle.key)")
         #expect(strings.personalizedToolToggleTitle == "\(argument.translateInLanguage):\(LocalizableStringKeys.dashboardPersonalizedToolTogglePersonalizedTitle.key)")
         #expect(strings.allToolsToggleTitle == "\(argument.translateInLanguage):\(LocalizableStringKeys.dashboardPersonalizedToolToggleAllToolsTitle.key)")
@@ -50,7 +50,7 @@ extension GetToolsStringsUseCaseTests {
     private func getUseCase() -> GetToolsStringsUseCase {
 
         let stringKeys: [LocalizableStringKeys] = [
-            .toolOfflineFavoriteMessage, .toolsSpotlightTitle, .toolsSpotlightSubtitle, .toolsFilterSectionTitle,
+            .toolOfflineFavoriteMessage, .toolsFeaturedTitle, .toolsFeaturedSubtitle, .toolsFilterSectionTitle,
             .dashboardPersonalizedToolTogglePersonalizedTitle, .dashboardPersonalizedToolToggleAllToolsTitle,
             .dashboardPersonalizedToolFooterTitle, .dashboardPersonalizedToolFooterSubtitle,
             .dashboardPersonalizedToolFooterButtonTitle, .toolsPersonalizationUnavailableViewAllTools

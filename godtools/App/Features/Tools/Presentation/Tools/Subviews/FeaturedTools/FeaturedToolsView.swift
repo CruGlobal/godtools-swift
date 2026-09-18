@@ -1,5 +1,5 @@
 //
-//  ToolSpotlightView.swift
+//  FeaturedToolsView.swift
 //  godtools
 //
 //  Created by Rachael Skeath on 5/10/22.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ToolSpotlightView: View {
+struct FeaturedToolsView: View {
         
     private let geometry: GeometryProxy
     private let contentHorizontalInsets: CGFloat
@@ -26,12 +26,12 @@ struct ToolSpotlightView: View {
         
         VStack(alignment: .leading, spacing: 0) {
             
-            Text(viewModel.strings.toolSpotlightTitle)
+            Text(viewModel.strings.featuredToolsTitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 22))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .padding([.leading, .trailing], contentHorizontalInsets)
                         
-            Text(viewModel.strings.toolSpotlightSubtitle)
+            Text(viewModel.strings.featuredToolsSubtitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 14))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .padding([.top], 3)
@@ -44,22 +44,22 @@ struct ToolSpotlightView: View {
                 // NOTE: We need HStack here instead of LazyHStack because our card heights have dynamic heights to them and this allows the HStack to wrap the tallest card.
                 HStack(alignment: .top, spacing: 15) {
                     
-                    ForEach(viewModel.spotlightTools) { (spotlightTool: SpotlightToolListItemDomainModel) in
+                    ForEach(viewModel.featuredTools) { (featuredTool: FeaturedToolListItemDomainModel) in
                         
                         ToolCardView(
-                            viewModel: viewModel.getSpotlightToolViewModel(spotlightTool: spotlightTool),
+                            viewModel: viewModel.getFeaturedToolViewModel(featuredTool: featuredTool),
                             geometry: geometry,
                             layout: .thumbnail,
                             showsCategory: false,
                             favoriteTappedClosure: {
                                 
-                                viewModel.spotlightToolFavoriteTapped(spotlightTool: spotlightTool)
+                                viewModel.feautedToolFavoriteTapped(featuredTool: featuredTool)
                             },
                             toolDetailsTappedClosure: nil,
                             openToolTappedClosure: nil,
                             toolTappedClosure: {
                                 
-                                viewModel.spotlightToolTapped(spotlightTool: spotlightTool)
+                                viewModel.featuredToolTapped(featuredTool: featuredTool)
                             }
                         )
                     }
@@ -73,13 +73,13 @@ struct ToolSpotlightView: View {
 
 // MARK: - Preview
 
-struct ToolSpotlightView_Preview: PreviewProvider {
+struct FeaturedToolsView_Preview: PreviewProvider {
     
     static var previews: some View {
         
         GeometryReader { geometry in
             
-            ToolSpotlightView(
+            FeaturedToolsView(
                 viewModel: AllToolsView_Preview.getToolsViewModel(),
                 geometry: geometry,
                 contentHorizontalInsets: 15

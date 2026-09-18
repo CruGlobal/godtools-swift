@@ -1,5 +1,5 @@
 //
-//  SpotlightToolListItemDomainModel.swift
+//  FeaturedToolListItemDomainModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 2/19/24.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SpotlightToolListItemDomainModel: ToolListItemDomainModelInterface {
+struct FeaturedToolListItemDomainModel: ToolListItemDomainModelInterface {
     
     let strings: ToolListItemStringsDomainModel
     let analyticsToolAbbreviation: String
@@ -20,7 +20,7 @@ struct SpotlightToolListItemDomainModel: ToolListItemDomainModelInterface {
     let languageAvailability: ToolLanguageAvailabilityDomainModel?
 }
 
-extension SpotlightToolListItemDomainModel: Identifiable {
+extension FeaturedToolListItemDomainModel: Identifiable {
     var id: String {
         return dataModelId
     }

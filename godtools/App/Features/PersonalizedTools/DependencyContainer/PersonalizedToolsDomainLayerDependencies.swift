@@ -32,6 +32,20 @@ final class PersonalizedToolsDomainLayerDependencies: Sendable {
         )
     }
 
+    func getFeaturedToolsUseCase() -> GetFeaturedToolsUseCase {
+
+        return GetFeaturedToolsUseCase(
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            personalizedToolsRepository: dataLayer.getPersonalizedToolsRepository(),
+            favoritedResourcesRepository: core.dataLayer.getFavoritedResourcesRepository(),
+            languagesRepository: core.dataLayer.getLanguagesRepository(),
+            getTranslatedToolName: core.domainLayer.supporting.getTranslatedToolName(),
+            getTranslatedToolCategory: core.domainLayer.supporting.getTranslatedToolCategory(),
+            getToolListItemStrings: core.domainLayer.supporting.getToolListItemStrings(),
+            getTranslatedToolLanguageAvailability: core.domainLayer.supporting.getTranslatedToolLanguageAvailability()
+        )
+    }
+
     func getLocalizationSettingsConfirmationStringsUseCase() -> GetLocalizationSettingsConfirmationStringsUseCase {
 
         return GetLocalizationSettingsConfirmationStringsUseCase(

@@ -20,8 +20,8 @@ final class GetToolsStringsUseCase: Sendable {
     func execute(translateInLanguage: AppLanguageDomainModel) -> ToolsStringsDomainModel {
 
         let favoritingToolBannerMessageKey: String = LocalizableStringKeys.toolOfflineFavoriteMessage.key
-        let toolSpotlightTitleKey: String = LocalizableStringKeys.toolsSpotlightTitle.key
-        let toolSpotlightSubtitleKey: String = LocalizableStringKeys.toolsSpotlightSubtitle.key
+        let featuredToolsTitleKey: String = LocalizableStringKeys.toolsFeaturedTitle.key
+        let featuredToolsSubtitleKey: String = LocalizableStringKeys.toolsFeaturedSubtitle.key
         let filterTitleKey: String = LocalizableStringKeys.toolsFilterSectionTitle.key
         let personalizedToolToggleTitleKey: String = LocalizableStringKeys.dashboardPersonalizedToolTogglePersonalizedTitle.key
         let allToolsToggleTitleKey: String = LocalizableStringKeys.dashboardPersonalizedToolToggleAllToolsTitle.key
@@ -33,8 +33,8 @@ final class GetToolsStringsUseCase: Sendable {
         let strings: [String: String] = localizationServices.stringsForKeys(
             keys: [
                 favoritingToolBannerMessageKey,
-                toolSpotlightTitleKey,
-                toolSpotlightSubtitleKey,
+                featuredToolsTitleKey,
+                featuredToolsSubtitleKey,
                 filterTitleKey,
                 personalizedToolToggleTitleKey,
                 allToolsToggleTitleKey,
@@ -49,8 +49,8 @@ final class GetToolsStringsUseCase: Sendable {
 
         return ToolsStringsDomainModel(
             favoritingToolBannerMessage: strings[favoritingToolBannerMessageKey] ?? "",
-            toolSpotlightTitle: strings[toolSpotlightTitleKey] ?? "",
-            toolSpotlightSubtitle: strings[toolSpotlightSubtitleKey] ?? "",
+            featuredToolsTitle: strings[featuredToolsTitleKey] ?? "",
+            featuredToolsSubtitle: strings[featuredToolsSubtitleKey] ?? "",
             filterTitle: strings[filterTitleKey] ?? "",
             personalizedToolToggleTitle: strings[personalizedToolToggleTitleKey] ?? "",
             allToolsToggleTitle: strings[allToolsToggleTitleKey] ?? "",
