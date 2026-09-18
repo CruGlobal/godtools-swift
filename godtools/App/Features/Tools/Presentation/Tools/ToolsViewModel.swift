@@ -49,7 +49,7 @@ final class ToolsViewModel: ObservableObject {
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = ToolsViewModel.getPersonalizedToggleOptions(strings: ToolsStringsDomainModel.emptyValue)
     @Published private(set) var strings: ToolsStringsDomainModel = .emptyValue
     @Published private(set) var showsFavoritingToolBanner: Bool = false
-    @Published private(set) var spotlightTools: [SpotlightToolListItemDomainModel] = Array()
+    @Published private(set) var featuredTools: [SpotlightToolListItemDomainModel] = Array()
     @Published private(set) var categoryFilterActionTitle: String = ""
     @Published private(set) var languageFilterActionTitle: String = ""
     @Published private(set) var personalizedTools = PersonalizedToolsDomainModel.emptyValue
@@ -230,7 +230,7 @@ final class ToolsViewModel: ObservableObject {
             
         }, receiveValue: { [weak self] (spotlightTools: [SpotlightToolListItemDomainModel]) in
             
-            self?.spotlightTools = spotlightTools
+            self?.featuredTools = spotlightTools
         })
         .store(in: &cancellables)
         

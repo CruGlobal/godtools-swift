@@ -32,7 +32,6 @@ final class AppFeatureDiContainer: Sendable {
     let shareables: ShareablesDiContainer
     let shareGodTools: ShareGodToolsDiContainer
     let shareTool: ShareToolDiContainer
-    let spotlightTools: SpotlightToolsDiContainer
     let toolDetails: ToolDetailsDiContainer
     let tools: ToolsDiContainer
     let toolScreenShare: ToolScreenShareDiContainer
@@ -66,7 +65,6 @@ final class AppFeatureDiContainer: Sendable {
         shareables: ShareablesDiContainer,
         shareGodTools: ShareGodToolsDiContainer,
         shareTool: ShareToolDiContainer,
-        spotlightTools: SpotlightToolsDiContainer,
         toolDetails: ToolDetailsDiContainer,
         tools: ToolsDiContainer,
         toolScreenShare: ToolScreenShareDiContainer,
@@ -100,7 +98,6 @@ final class AppFeatureDiContainer: Sendable {
         self.shareables = shareables
         self.shareGodTools = shareGodTools
         self.shareTool = shareTool
-        self.spotlightTools = spotlightTools
         self.toolDetails = toolDetails
         self.tools = tools
         self.toolScreenShare = toolScreenShare
