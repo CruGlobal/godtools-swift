@@ -18,10 +18,18 @@ private enum TestPersonalizedLessonsLanguageId {
     static let french: String = "1"
 }
 
+private enum TestPersonalizedLessonsCountry {
+    static let unitedStatesWithRankedLessons: String = "us"
+    static let canadaWithoutRankedResources: String = "ca"
+    static let mexicoWithRankedToolsOnly: String = "mx"
+}
+
 private enum TestPersonalizedLessonsId {
     static let defaultOrderEnglish: String = "default_order_en"
     static let defaultOrderFrench: String = "default_order_fr"
     static let rankedUnitedStatesEnglish: String = "ranked_us_en"
+    static let rankedUnitedStatesFrench: String = "ranked_us_fr"
+    static let rankedMexicoEnglish: String = "ranked_mx_en"
 }
 
 struct GetPersonalizedLessonsUseCaseTests {
@@ -56,32 +64,32 @@ struct GetPersonalizedLessonsUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: User has selected a country.
+        Given: User has selected a country that has ranked lessons for their language.
         When: Personalized lessons are requested.
-        Then: I expect to see the lessons personalized for my country and language.
+        Then: I expect to see the ranked lessons in the order the api returned them.
         """
     )
-    @MainActor func personalizedLessonsForMySelectedCountryAreReturned() async throws {
+    @MainActor func rankedLessonsForMySelectedCountryAreReturnedInApiOrder() async throws {
 
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: LanguageCodeDomainModel.english.value,
-            country: LocalizationSettingsCountryDomainModel(isoRegionCode: "us"),
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestPersonalizedLessonsCountry.unitedStatesWithRankedLessons),
             filterLessonsByLanguageId: nil
         )
 
-        #expect(personalizedLessons.lessons.map({ $0.dataModelId }).sorted() == ["lesson-1", "lesson-3"])
+        #expect(personalizedLessons.lessons.map({ $0.dataModelId }) == ["lesson-3", "lesson-1"])
         #expect(personalizedLessons.unavailableStrings == nil)
     }
 
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: User has not selected a country.
+        Given: User has not selected a country and there are default order lessons for their language.
         When: Personalized lessons are requested.
-        Then: I expect to see the default order lessons for my app language.
+        Then: I expect to see the default order lessons in the order the api returned them.
         """
     )
-    @MainActor func defaultOrderLessonsAreReturnedWhenNoCountryIsSelected() async throws {
+    @MainActor func defaultOrderLessonsAreReturnedInApiOrderWhenNoCountryIsSelected() async throws {
 
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: LanguageCodeDomainModel.english.value,
@@ -89,7 +97,31 @@ struct GetPersonalizedLessonsUseCaseTests {
             filterLessonsByLanguageId: nil
         )
 
-        #expect(personalizedLessons.lessons.map({ $0.dataModelId }).sorted() == ["lesson-1", "lesson-2"])
+        #expect(personalizedLessons.lessons.map({ $0.dataModelId }) == ["lesson-1", "lesson-2"])
+        #expect(personalizedLessons.unavailableStrings == nil)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User has selected a country that has no ranked lessons for their language and there are default order lessons for their language.
+        When: Personalized lessons are requested.
+        Then: I expect to see the default order lessons for my language.
+        """,
+        arguments: [
+            TestPersonalizedLessonsCountry.canadaWithoutRankedResources,
+            TestPersonalizedLessonsCountry.mexicoWithRankedToolsOnly
+        ]
+    )
+    @MainActor func defaultOrderLessonsAreReturnedWhenTheSelectedCountryHasNoRankedLessons(isoRegionCode: String) async throws {
+
+        let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: isoRegionCode),
+            filterLessonsByLanguageId: nil
+        )
+
+        #expect(personalizedLessons.lessons.map({ $0.dataModelId }) == ["lesson-1", "lesson-2"])
         #expect(personalizedLessons.unavailableStrings == nil)
     }
 
@@ -135,7 +167,47 @@ struct GetPersonalizedLessonsUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: There are no personalized lessons and no featured lessons.
+        Given: User has selected both a country and a lessons filter language that has ranked lessons for that country.
+        When: Personalized lessons are requested.
+        Then: I expect to see the ranked lessons for the filter language rather than the ranked lessons for my app language.
+        """
+    )
+    @MainActor func rankedLessonsAreLookedUpByTheSelectedFilterLanguageRatherThanTheAppLanguage() async throws {
+
+        let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestPersonalizedLessonsCountry.unitedStatesWithRankedLessons),
+            filterLessonsByLanguageId: TestPersonalizedLessonsLanguageId.french
+        )
+
+        #expect(personalizedLessons.lessons.map({ $0.dataModelId }) == ["lesson-1"])
+        #expect(personalizedLessons.unavailableStrings == nil)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User has selected both a country and a lessons filter language, and there are no ranked lessons for that country and filter language.
+        When: Personalized lessons are requested.
+        Then: I expect to fall back to the default order lessons for the filter language rather than for my app language.
+        """
+    )
+    @MainActor func defaultOrderFallbackIsLookedUpByTheSelectedFilterLanguageRatherThanTheAppLanguage() async throws {
+
+        let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestPersonalizedLessonsCountry.canadaWithoutRankedResources),
+            filterLessonsByLanguageId: TestPersonalizedLessonsLanguageId.french
+        )
+
+        #expect(personalizedLessons.lessons.map({ $0.dataModelId }) == ["lesson-4"])
+        #expect(personalizedLessons.unavailableStrings == nil)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User has not selected a country and there are no default order lessons for their language.
         When: Personalized lessons are requested.
         Then: I expect to see the personalization unavailable strings translated in my app language.
         """,
@@ -152,7 +224,7 @@ struct GetPersonalizedLessonsUseCaseTests {
             )
         ]
     )
-    @MainActor func personalizationUnavailableIsShownWhenThereAreNoLessons(argument: UnavailableArgument) async throws {
+    @MainActor func personalizationUnavailableIsShownWhenThereAreNoDefaultOrderLessons(argument: UnavailableArgument) async throws {
 
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
             appLanguage: argument.appLanguage,
@@ -170,16 +242,16 @@ struct GetPersonalizedLessonsUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: User has selected a country and there are no personalized lessons and no featured lessons.
+        Given: User has selected a country and there are neither ranked lessons for the country and language combination nor default order lessons for the language.
         When: Personalized lessons are requested.
         Then: I expect to see no lessons and the personalization unavailable strings.
         """
     )
-    @MainActor func personalizationUnavailableIsShownWhenACountryIsSelectedAndThereAreNoLessons() async throws {
+    @MainActor func personalizationUnavailableIsShownWhenThereAreNeitherRankedNorDefaultOrderLessons() async throws {
 
         let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
-            appLanguage: LanguageCodeDomainModel.english.value,
-            country: LocalizationSettingsCountryDomainModel(isoRegionCode: "ca"),
+            appLanguage: LanguageCodeDomainModel.spanish.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestPersonalizedLessonsCountry.canadaWithoutRankedResources),
             filterLessonsByLanguageId: nil
         )
 
@@ -203,54 +275,7 @@ struct GetPersonalizedLessonsUseCaseTests {
             filterLessonsByLanguageId: nil
         )
 
-        #expect(personalizedLessons.lessons.map({ $0.dataModelId }).sorted() == ["lesson-1", "lesson-2"])
-        #expect(personalizedLessons.unavailableStrings == nil)
-    }
-
-    @available(iOS 17.4, *)
-    @Test(
-        """
-        Given: There are no personalized lessons but there are featured lessons.
-        When: Personalized lessons are requested.
-        Then: I expect to see no lessons and no personalization unavailable strings.
-        """,
-        arguments: [
-            nil,
-            LocalizationSettingsCountryDomainModel(isoRegionCode: "ca")
-        ] as [LocalizationSettingsCountryDomainModel?]
-    )
-    @MainActor func personalizationUnavailableIsNotShownWhenThereAreFeaturedLessons(country: LocalizationSettingsCountryDomainModel?) async throws {
-
-        let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
-            appLanguage: LanguageCodeDomainModel.spanish.value,
-            country: country,
-            filterLessonsByLanguageId: nil,
-            hasFeaturedLessons: true
-        )
-
-        #expect(personalizedLessons.lessons.isEmpty)
-        #expect(personalizedLessons.unavailableStrings == nil)
-    }
-
-    @available(iOS 17.4, *)
-    @Test(
-        """
-        Given: There are default order lessons for my app language.
-        When: Featured lessons are or are not available for my localization.
-        Then: I expect to see the default order lessons either way and no personalization unavailable strings.
-        """,
-        arguments: [true, false]
-    )
-    @MainActor func defaultOrderLessonsAreShownWhetherOrNotThereAreFeaturedLessons(hasFeaturedLessons: Bool) async throws {
-
-        let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
-            appLanguage: LanguageCodeDomainModel.english.value,
-            country: nil,
-            filterLessonsByLanguageId: nil,
-            hasFeaturedLessons: hasFeaturedLessons
-        )
-
-        #expect(personalizedLessons.lessons.map({ $0.dataModelId }).sorted() == ["lesson-1", "lesson-2"])
+        #expect(personalizedLessons.lessons.map({ $0.dataModelId }) == ["lesson-1", "lesson-2"])
         #expect(personalizedLessons.unavailableStrings == nil)
     }
 }
@@ -260,7 +285,7 @@ struct GetPersonalizedLessonsUseCaseTests {
 extension GetPersonalizedLessonsUseCaseTests {
 
     @available(iOS 17.4, *)
-    @MainActor private func getPersonalizedLessons(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguageId: String?, hasFeaturedLessons: Bool = false) async throws -> PersonalizedLessonsDomainModel {
+    @MainActor private func getPersonalizedLessons(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterLessonsByLanguageId: String?) async throws -> PersonalizedLessonsDomainModel {
 
         let dependencies: TestDependencies = try getTestDependencies()
 
@@ -288,8 +313,7 @@ extension GetPersonalizedLessonsUseCaseTests {
                 .execute(
                     appLanguage: appLanguage,
                     country: country,
-                    filterLessonsByLanguageId: filterLessonsByLanguageId,
-                    hasFeaturedLessons: hasFeaturedLessons
+                    filterLessonsByLanguageId: filterLessonsByLanguageId
                 )
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
@@ -329,9 +353,9 @@ extension GetPersonalizedLessonsUseCaseTests {
         )
 
         let resourcesRepository: ResourcesRepository = testsDiContainer.core.dataLayer.getResourcesRepository()
-        
+
         let api = FakePersonalizedToolsApi(resourceIdsByPersonalizedToolsId: resourceIdsByPersonalizedToolsId)
-        
+
         let cache = PersonalizedToolsCache(
             persistence: SwiftRepositorySyncPersistence(
                 database: swiftDatabase,
@@ -426,7 +450,9 @@ extension GetPersonalizedLessonsUseCaseTests {
         return [
             TestPersonalizedLessonsId.defaultOrderEnglish: ["lesson-1", "lesson-2", "tool-1"],
             TestPersonalizedLessonsId.defaultOrderFrench: ["lesson-4"],
-            TestPersonalizedLessonsId.rankedUnitedStatesEnglish: ["lesson-3", "lesson-1"]
+            TestPersonalizedLessonsId.rankedUnitedStatesEnglish: ["lesson-3", "lesson-1"],
+            TestPersonalizedLessonsId.rankedUnitedStatesFrench: ["lesson-1"],
+            TestPersonalizedLessonsId.rankedMexicoEnglish: ["tool-1"]
         ]
     }
 
