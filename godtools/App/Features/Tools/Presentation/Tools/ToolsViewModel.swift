@@ -210,12 +210,12 @@ final class ToolsViewModel: ObservableObject {
         Publishers.CombineLatest3(
             $appLanguage.dropFirst(),
             $toolFilterCategorySelection.dropFirst(),
-            $selectedPersonalizedToolsFilterLanguage.dropFirst()
+            $selectedAllToolsFilterLanguage.dropFirst()
         )
         .map { (
             appLanguage: AppLanguageDomainModel,
             toolFilterCategory: ToolFilterCategoryDomainModel,
-            toolFilterLanguage: PersonalizedToolFilterLanguageDomainModel?
+            toolFilterLanguage: ToolFilterLanguageDomainModel?
         ) in
             
             // TODO: Send LocalizationSettingsCountryDomainModel. ~Levi
