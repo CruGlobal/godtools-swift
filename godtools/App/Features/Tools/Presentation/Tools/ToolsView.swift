@@ -53,17 +53,25 @@ struct ToolsView: View {
 
                     VStack(alignment: .leading, spacing: 0) {
 
-                        FeaturedToolsView(
-                            viewModel: viewModel,
-                            geometry: geometry,
-                            contentHorizontalInsets: contentHorizontalInsets
-                        )
-                        .padding([.top], 24)
+                        if !viewModel.featuredTools.isEmpty {
+                            
+                            FeaturedToolsView(
+                                viewModel: viewModel,
+                                geometry: geometry,
+                                contentHorizontalInsets: contentHorizontalInsets
+                            )
+                            .padding([.top], 24)
 
-                        SeparatorView()
-                            .padding([.top], 15)
-                            .padding([.bottom], 11)
-                            .padding([.leading, .trailing], contentHorizontalInsets)
+                            SeparatorView()
+                                .padding([.top], 15)
+                                .padding([.bottom], 11)
+                                .padding([.leading, .trailing], contentHorizontalInsets)
+                        }
+                        else {
+                            
+                            Spacer()
+                                    .frame(height: 20)
+                        }
 
                         ToolsFilterSectionView(
                             viewModel: viewModel,
