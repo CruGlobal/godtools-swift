@@ -207,23 +207,23 @@ final class ToolsViewModel: ObservableObject {
         }
         .store(in: &cancellables)
         
-        Publishers.CombineLatest3(
+        Publishers.CombineLatest4(
             $appLanguage.dropFirst(),
+            $localizationSettings,
             $toolFilterCategorySelection.dropFirst(),
             $selectedAllToolsFilterLanguage.dropFirst()
         )
         .map { (
             appLanguage: AppLanguageDomainModel,
+            localizationSettings: UserLocalizationSettingsDomainModel?,
             toolFilterCategory: ToolFilterCategoryDomainModel,
             toolFilterLanguage: ToolFilterLanguageDomainModel?
         ) in
-            
-            // TODO: Send LocalizationSettingsCountryDomainModel. ~Levi
-            
+                        
             getFeaturedToolsUseCase
                 .execute(
                     appLanguage: appLanguage,
-                    country: LocalizationSettingsCountryDomainModel.emptyValue,
+                    country: localizationSettings?.selectedCountry ?? LocalizationSettingsCountryDomainModel.emptyValue,
                     languageIdForAvailabilityText: toolFilterLanguage?.languageId
                 )
         }
