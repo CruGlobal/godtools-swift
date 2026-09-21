@@ -321,21 +321,18 @@ extension UserToolFilterSettingsRepositoryTests {
         """
         Given: The database is unavailable.
         When: A tool filter setting is observed.
-        Then: I expect to receive an empty value rather than the observer hanging.
+        Then: I expect the observer to fail with the persistence error rather than hang.
         """
     )
-    @MainActor func observingASettingWhenTheDatabaseIsUnavailableEmitsAnEmptyValue() async throws {
-        
+    @MainActor func observingASettingWhenTheDatabaseIsUnavailableFailsWithTheError() async throws {
+
         let repository: UserToolFilterSettingsRepository = getRepositoryWithFailingPersistence()
-        
-        let values: [String?] = await observeSettingValues(
-            repository: repository,
-            settingType: .toolsLanguageFilter,
-            expectedValueCount: 1,
-            whileObserving: nil
-        )
-        
-        #expect(values == [nil])
+
+        await #expect(throws: FakeFailingPersistenceError.self) {
+            for try await _ in repository.observeSettingValueChangedPublisher(settingType: .toolsLanguageFilter).values {
+
+            }
+        }
     }
 }
 
@@ -509,8 +506,10 @@ extension UserToolFilterSettingsRepositoryTests {
             repository
                 .observeSettingValueChangedPublisher(settingType: settingType)
                 .receive(on: DispatchQueue.main)
-                .sink { (value: String?) in
-                    
+                .sink { _ in
+
+                } receiveValue: { (value: String?) in
+
                     guard !didResume else {
                         return
                     }

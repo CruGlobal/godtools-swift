@@ -26,6 +26,7 @@ final class GetUserToolFilterCategoryUseCase: Sendable {
         
         return userToolFilterSettingsRepository
             .observeSettingValueChangedPublisher(settingType: .toolsCategoryFilter)
+            .replaceError(with: nil)
             .receive(on: DispatchQueue.global())
             .map { (categoryId: String?) in
                 return self.getToolFilterCategory(categoryId: categoryId, appLanguage: appLanguage)
