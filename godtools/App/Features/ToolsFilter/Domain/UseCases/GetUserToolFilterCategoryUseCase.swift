@@ -11,12 +11,12 @@ import Combine
 
 final class GetUserToolFilterCategoryUseCase: Sendable {
     
-    private let userToolFiltersRepository: UserToolFiltersRepository
+    private let userToolFilterSettingsRepository: UserToolFilterSettingsRepository
     private let getToolFilterCategory: GetToolFilterCategory
     
-    init(userToolFiltersRepository: UserToolFiltersRepository, getToolFilterCategory: GetToolFilterCategory) {
+    init(userToolFilterSettingsRepository: UserToolFilterSettingsRepository, getToolFilterCategory: GetToolFilterCategory) {
         
-        self.userToolFiltersRepository = userToolFiltersRepository
+        self.userToolFilterSettingsRepository = userToolFilterSettingsRepository
         self.getToolFilterCategory = getToolFilterCategory
     }
     
@@ -24,18 +24,16 @@ final class GetUserToolFilterCategoryUseCase: Sendable {
         appLanguage: AppLanguageDomainModel
     ) -> AnyPublisher<ToolFilterCategoryDomainModel, Never> {
         
-        return userToolFiltersRepository
-            .getUserToolCategoryFilterChangedPublisher()
+        return userToolFilterSettingsRepository
+            .observeSettingValueChangedPublisher(settingType: .toolsCategoryFilter)
             .receive(on: DispatchQueue.global())
-            .map {
-                return self.getToolFilterCategory(appLanguage: appLanguage)
+            .map { (categoryId: String?) in
+                return self.getToolFilterCategory(categoryId: categoryId, appLanguage: appLanguage)
             }
             .eraseToAnyPublisher()
     }
     
-    private func getToolFilterCategory(appLanguage: AppLanguageDomainModel) -> ToolFilterCategoryDomainModel {
-        
-        let categoryId: String? = userToolFiltersRepository.getUserToolCategoryFilter()?.categoryId
+    private func getToolFilterCategory(categoryId: String?, appLanguage: AppLanguageDomainModel) -> ToolFilterCategoryDomainModel {
         
         if let categoryId = categoryId {
             

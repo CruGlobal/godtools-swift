@@ -13,7 +13,7 @@ import RepositorySync
 final class RealmProductionConfig: Sendable {
     
     static let diskFileName: String = "godtools_realm"
-    static let schemaVersion: UInt64 = 46
+    static let schemaVersion: UInt64 = 47
     
     static func createConfig() throws -> RealmDatabaseConfig {
         
@@ -62,11 +62,9 @@ final class RealmProductionConfig: Sendable {
             RealmUserAppLanguage.self,
             RealmUserCounter.self,
             RealmUserDetails.self,
-            RealmUserLessonLanguageFilter.self,
             RealmUserLessonProgress.self,
             RealmUserLocalizationSettings.self,
-            RealmUserToolCategoryFilter.self,
-            RealmUserToolLanguageFilter.self,
+            RealmUserToolFilterSettings.self,
             RealmUserToolSettings.self
         ]
         

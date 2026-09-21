@@ -9,13 +9,19 @@
 import Foundation
 
 final class SetUserPersonalizedToolFilterLanguageUseCase: Sendable {
+    
+    private let userToolFilterSettingsRepository: UserToolFilterSettingsRepository
+    
+    init(userToolFilterSettingsRepository: UserToolFilterSettingsRepository) {
         
-    init() {
-
+        self.userToolFilterSettingsRepository = userToolFilterSettingsRepository
     }
     
     func execute(language: PersonalizedToolFilterLanguageDomainModel) async throws {
         
-        // TODO: Save personalized tool language filter language id (language.languageId) . ~Levi
+        try await userToolFilterSettingsRepository.storeSettingValue(
+            settingType: .personalizedToolsLanguageFilter,
+            value: language.languageId
+        )
     }
 }

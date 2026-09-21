@@ -10,16 +10,18 @@ import Foundation
 
 final class SetUserLessonFilterLanguageUseCase: Sendable {
     
-    private let userLessonFiltersRepository: UserLessonFiltersRepository
+    private let userToolFilterSettingsRepository: UserToolFilterSettingsRepository
     
-    init(userLessonFiltersRepository: UserLessonFiltersRepository) {
-        self.userLessonFiltersRepository = userLessonFiltersRepository
+    init(userToolFilterSettingsRepository: UserToolFilterSettingsRepository) {
+        
+        self.userToolFilterSettingsRepository = userToolFilterSettingsRepository
     }
     
     func execute(language: LessonFilterLanguageDomainModel) async throws {
         
-        try await userLessonFiltersRepository.storeUserLessonLanguageFilter(
-            languageId: language.languageId
+        try await userToolFilterSettingsRepository.storeSettingValue(
+            settingType: .lessonsLanguageFilter,
+            value: language.languageId
         )
     }
 }

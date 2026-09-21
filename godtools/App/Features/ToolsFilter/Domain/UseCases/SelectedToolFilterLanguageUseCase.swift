@@ -10,25 +10,20 @@ import Foundation
 
 final class SelectedToolFilterLanguageUseCase: Sendable {
     
-    private let userToolFiltersRepository: UserToolFiltersRepository
+    private let userToolFilterSettingsRepository: UserToolFilterSettingsRepository
     
-    init(userToolFiltersRepository: UserToolFiltersRepository) {
+    init(userToolFilterSettingsRepository: UserToolFilterSettingsRepository) {
         
-        self.userToolFiltersRepository = userToolFiltersRepository
+        self.userToolFilterSettingsRepository = userToolFilterSettingsRepository
     }
     
     func execute(language: ToolFilterLanguageDomainModel) async throws {
-  
-        guard !language.isAny else {
-            try await userToolFiltersRepository.deleteUserLanguageFilter()
-            return
-        }
         
-        guard let languageId = language.languageId else {
-            return
-        }
+        let languageId: String? = !language.isAny ? language.languageId : nil
         
-        try await userToolFiltersRepository
-            .storeUserLanguageFilter(languageId: languageId)
+        try await userToolFilterSettingsRepository.storeSettingValue(
+            settingType: .toolsLanguageFilter,
+            value: languageId
+        )
     }
 }

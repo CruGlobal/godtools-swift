@@ -12,33 +12,49 @@ import Combine
 final class GetUserPersonalizedToolFilterLanguageUseCase: Sendable {
     
     private let languagesRepository: LanguagesRepository
+    private let userToolFilterSettingsRepository: UserToolFilterSettingsRepository
     private let mapLanguageToPersonalizedToolFilterLanguage: MapLanguageToPersonalizedToolFilterLanguage
     
     init(
         languagesRepository: LanguagesRepository,
+        userToolFilterSettingsRepository: UserToolFilterSettingsRepository,
         mapLanguageToPersonalizedToolFilterLanguage: MapLanguageToPersonalizedToolFilterLanguage
     ) {
         
         self.languagesRepository = languagesRepository
+        self.userToolFilterSettingsRepository = userToolFilterSettingsRepository
         self.mapLanguageToPersonalizedToolFilterLanguage = mapLanguageToPersonalizedToolFilterLanguage
     }
     
     @MainActor func execute(appLanguage: AppLanguageDomainModel) -> AnyPublisher<PersonalizedToolFilterLanguageDomainModel?, Error> {
         
-        // TODO: Should observe changes similar to GetUserToolFilterLanguageUseCase. ~Levi
-                
-        // TODO: Remove. ~Levi
-        return Just(getFilterLanguage(appLanguage: appLanguage))
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-        // End Remove
+        return Publishers.CombineLatest(
+            languagesRepository.observeCollectionChangesPublisher(),
+            userToolFilterSettingsRepository
+                .observeSettingValueChangedPublisher(settingType: .personalizedToolsLanguageFilter)
+                .setFailureType(to: Error.self)
+        )
+        .map { (languagesChanged: Void, userFilterLanguageId: String?) in
+            
+            return self.getFilterLanguage(
+                userFilterLanguageId: userFilterLanguageId,
+                appLanguage: appLanguage
+            )
+        }
+        .eraseToAnyPublisher()
     }
     
-    private func getFilterLanguage(appLanguage: AppLanguageDomainModel) -> PersonalizedToolFilterLanguageDomainModel? {
+    private func getFilterLanguage(userFilterLanguageId: String?, appLanguage: AppLanguageDomainModel) -> PersonalizedToolFilterLanguageDomainModel? {
         
-        // TODO: Need to check for user persisted language id and return if exists. ~Levi
-        
-        if let language = languagesRepository.getLanguageByCode(code: appLanguage) {
+        if let userFilterLanguageId = userFilterLanguageId,
+           let language = languagesRepository.getLanguageById(id: userFilterLanguageId) {
+            
+            return mapLanguageToPersonalizedToolFilterLanguage.map(
+                language: language,
+                translatedInAppLanguage: appLanguage
+            )
+        }
+        else if let language = languagesRepository.getLanguageByCode(code: appLanguage) {
             
             return mapLanguageToPersonalizedToolFilterLanguage.map(
                 language: language,

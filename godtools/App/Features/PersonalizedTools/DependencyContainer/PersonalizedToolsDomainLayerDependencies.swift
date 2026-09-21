@@ -172,18 +172,23 @@ final class PersonalizedToolsDomainLayerDependencies: Sendable {
 
     func getSetUserPersonalizedLessonFilterLanguageUseCase() -> SetUserPersonalizedLessonFilterLanguageUseCase {
 
-        return SetUserPersonalizedLessonFilterLanguageUseCase()
+        return SetUserPersonalizedLessonFilterLanguageUseCase(
+            userToolFilterSettingsRepository: core.dataLayer.getUserToolFilterSettingsRepository()
+        )
     }
 
     func getSetUserPersonalizedToolFilterLanguageUseCase() -> SetUserPersonalizedToolFilterLanguageUseCase {
 
-        return SetUserPersonalizedToolFilterLanguageUseCase()
+        return SetUserPersonalizedToolFilterLanguageUseCase(
+            userToolFilterSettingsRepository: core.dataLayer.getUserToolFilterSettingsRepository()
+        )
     }
 
     func getUserPersonalizedLessonFilterLanguageUseCase() -> GetUserPersonalizedLessonFilterLanguageUseCase {
 
         return GetUserPersonalizedLessonFilterLanguageUseCase(
             languagesRepository: core.dataLayer.getLanguagesRepository(),
+            userToolFilterSettingsRepository: core.dataLayer.getUserToolFilterSettingsRepository(),
             mapLanguageToPersonalizedLessonFilterLanguage: getMapLanguageToPersonalizedLessonFilterLanguage()
         )
     }
@@ -192,6 +197,7 @@ final class PersonalizedToolsDomainLayerDependencies: Sendable {
 
         return GetUserPersonalizedToolFilterLanguageUseCase(
             languagesRepository: core.dataLayer.getLanguagesRepository(),
+            userToolFilterSettingsRepository: core.dataLayer.getUserToolFilterSettingsRepository(),
             mapLanguageToPersonalizedToolFilterLanguage: getMapLanguageToPersonalizedToolFilterLanguage()
         )
     }
