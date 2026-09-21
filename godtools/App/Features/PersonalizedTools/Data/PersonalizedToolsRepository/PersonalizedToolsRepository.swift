@@ -55,14 +55,14 @@ extension PersonalizedToolsRepository {
 
         let id: String = try PersonalizedToolsId(type: type).value
         
-        let personalizedTools: PersonalizedToolsDataModel? = try cache.persistence.getDataModel(
-            id: id
-        )
-        
         try await sync.syncType(
             requestPriority: requestPriority,
             type: type,
             forceNewSync: false
+        )
+
+        let personalizedTools: PersonalizedToolsDataModel? = try cache.persistence.getDataModel(
+            id: id
         )
 
         return try await getPersistedResources(

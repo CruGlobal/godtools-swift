@@ -130,7 +130,7 @@ struct LessonsView: View {
                             .padding([.top], lessonCardSpacing)
                         }
 
-                        if viewModel.selectedToggle == .personalized && viewModel.personalizedLessons.unavailableStrings == nil {
+                        if viewModel.selectedToggle == .personalized && !viewModel.personalizedLessons.lessons.isEmpty {
                             
                             PersonalizedChangeLocalizationView(
                                 geometry: geometry,

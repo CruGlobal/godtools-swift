@@ -48,7 +48,7 @@ final class PersonalizedToolsSync: Sendable {
             .defaultOrder(language: language)
         ]
         
-        if let country = country {
+        if let country = country, !country.isEmpty {
             types.append(.featured(country: country, language: language))
             types.append(.ranked(country: country, language: language))
         }
