@@ -11,8 +11,8 @@ import Foundation
 struct ToolsStringsDomainModel: Sendable {
 
     let favoritingToolBannerMessage: String
-    let toolSpotlightTitle: String
-    let toolSpotlightSubtitle: String
+    let featuredToolsTitle: String
+    let featuredToolsSubtitle: String
     let filterTitle: String
     let personalizedToolToggleTitle: String
     let allToolsToggleTitle: String
@@ -22,6 +22,6 @@ struct ToolsStringsDomainModel: Sendable {
     let viewAllToolsAction: String
 
     static var emptyValue: ToolsStringsDomainModel {
-        ToolsStringsDomainModel(favoritingToolBannerMessage: "", toolSpotlightTitle: "", toolSpotlightSubtitle: "", filterTitle: "", personalizedToolToggleTitle: "", allToolsToggleTitle: "", personalizedToolExplanationTitle: "", personalizedToolExplanationSubtitle: "", changePersonalizedToolSettingsAction: "", viewAllToolsAction: "")
+        ToolsStringsDomainModel(favoritingToolBannerMessage: "", featuredToolsTitle: "", featuredToolsSubtitle: "", filterTitle: "", personalizedToolToggleTitle: "", allToolsToggleTitle: "", personalizedToolExplanationTitle: "", personalizedToolExplanationSubtitle: "", changePersonalizedToolSettingsAction: "", viewAllToolsAction: "")
     }
 }

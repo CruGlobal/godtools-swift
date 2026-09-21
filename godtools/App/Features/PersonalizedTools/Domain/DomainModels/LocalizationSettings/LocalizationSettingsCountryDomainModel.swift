@@ -23,4 +23,8 @@ struct LocalizationSettingsCountryDomainModel: Sendable {
         self.countryNameTranslatedInOwnLanguage = countryNameTranslatedInOwnLanguage
         self.countryNameTranslatedInCurrentAppLanguage = countryNameTranslatedInCurrentAppLanguage
     }
+    
+    static var emptyValue: LocalizationSettingsCountryDomainModel {
+        return LocalizationSettingsCountryDomainModel(isoRegionCode: "", countryNameTranslatedInOwnLanguage: "", countryNameTranslatedInCurrentAppLanguage: "")
+    }
 }

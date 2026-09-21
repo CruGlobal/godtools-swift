@@ -152,8 +152,6 @@
 "toolSettings.chooseLanguage.title" = "Parallel Language";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
 "toolSettings.shareables.title" = "Related graphics";
-"allTools.spotlight.title" = "Tool Spotlight";
-"allTools.spotlight.description" = "Here are some tools we thought you might like";
 "training_tip_ask" = "Ask";
 "training_tip_consider" = "Consider";
 "training_tip_prepare" = "Prepare";
@@ -423,3 +421,6 @@ Press the About button on any tool for more info.";
 "screenShareTutorial.generateQRCodeButton.title" = "Generate QR code";
 
 "shareToolQrCode.message" = "Share by QR Code";
+
+"tools.featured.title" = "Featured";
+"tools.featured.subtitle" = "Here are some tools we thought you might like";

@@ -103,9 +103,6 @@ final class AppDiContainer: Sendable {
         let shareToolDataLayer = ShareToolDataLayerDependencies(coreDataLayer: dataLayer)
         let shareToolDomainLayer = ShareToolDomainLayerDependencies(core: core, dataLayer: shareToolDataLayer)
 
-        let spotlightToolsDataLayer = SpotlightToolsDataLayerDependencies(coreDataLayer: dataLayer)
-        let spotlightToolsDomainLayer = SpotlightToolsDomainLayerDependencies(core: core, dataLayer: spotlightToolsDataLayer)
-
         let toolDetailsDataLayer = ToolDetailsDataLayerDependencies(coreDataLayer: dataLayer)
         let toolDetailsDomainLayer = ToolDetailsDomainLayerDependencies(core: core, dataLayer: toolDetailsDataLayer)
 
@@ -153,7 +150,6 @@ final class AppDiContainer: Sendable {
             shareables: ShareablesDiContainer(dataLayer: shareablesDataLayer, domainLayer: shareablesDomainLayer),
             shareGodTools: ShareGodToolsDiContainer(dataLayer: shareGodToolsDataLayer, domainLayer: shareGodToolsDomainLayer),
             shareTool: ShareToolDiContainer(dataLayer: shareToolDataLayer, domainLayer: shareToolDomainLayer),
-            spotlightTools: SpotlightToolsDiContainer(dataLayer: spotlightToolsDataLayer, domainLayer: spotlightToolsDomainLayer),
             toolDetails: ToolDetailsDiContainer(dataLayer: toolDetailsDataLayer, domainLayer: toolDetailsDomainLayer),
             tools: ToolsDiContainer(dataLayer: toolsDataLayer, domainLayer: toolsDomainLayer),
             toolScreenShare: ToolScreenShareDiContainer(dataLayer: toolScreenShareDataLayer, domainLayer: toolScreenShareDomainLayer),
