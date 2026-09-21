@@ -43,8 +43,7 @@ final class GetFeaturedToolsUseCase: Sendable {
     
     @MainActor func execute(
         appLanguage: AppLanguageDomainModel,
-        country: LocalizationSettingsCountryDomainModel,
-        languageIdForAvailabilityText: String?
+        country: LocalizationSettingsCountryDomainModel
     ) -> AnyPublisher<[FeaturedToolListItemDomainModel], Error> {
         
         let countryCode: String = country.isoRegionCode
@@ -66,7 +65,7 @@ final class GetFeaturedToolsUseCase: Sendable {
                 try await self.getFeaturedTools(
                     appLanguage: appLanguage,
                     countryCode: countryCode,
-                    languageIdForAvailabilityText: languageIdForAvailabilityText
+                    languageIdForAvailabilityText: appLanguage
                 )
             }
         })

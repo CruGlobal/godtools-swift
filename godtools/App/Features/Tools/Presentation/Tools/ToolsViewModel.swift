@@ -207,24 +207,19 @@ final class ToolsViewModel: ObservableObject {
         }
         .store(in: &cancellables)
         
-        Publishers.CombineLatest4(
+        Publishers.CombineLatest(
             $appLanguage.dropFirst(),
-            $localizationSettings,
-            $toolFilterCategorySelection.dropFirst(),
-            $selectedAllToolsFilterLanguage.dropFirst()
+            $localizationSettings
         )
         .map { (
             appLanguage: AppLanguageDomainModel,
-            localizationSettings: UserLocalizationSettingsDomainModel?,
-            toolFilterCategory: ToolFilterCategoryDomainModel,
-            toolFilterLanguage: ToolFilterLanguageDomainModel?
+            localizationSettings: UserLocalizationSettingsDomainModel?
         ) in
                         
             getFeaturedToolsUseCase
                 .execute(
                     appLanguage: appLanguage,
-                    country: localizationSettings?.selectedCountry ?? LocalizationSettingsCountryDomainModel.emptyValue,
-                    languageIdForAvailabilityText: toolFilterLanguage?.languageId
+                    country: localizationSettings?.selectedCountry ?? LocalizationSettingsCountryDomainModel.emptyValue
                 )
         }
         .switchToLatest()
