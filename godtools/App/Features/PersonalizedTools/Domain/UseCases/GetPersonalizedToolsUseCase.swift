@@ -44,12 +44,7 @@ final class GetPersonalizedToolsUseCase: Sendable {
                 appLanguage: appLanguage
             )
         
-        let countryIsoRegionCode: String? = {
-            if let isoRegionCode = country?.isoRegionCode, !isoRegionCode.isEmpty {
-                return isoRegionCode
-            }
-            return nil
-        }()
+        let countryIsoRegionCode: String? = country?.isoRegionCodeIfSelected
         
         return Publishers.CombineLatest(
             personalizedToolsRepository

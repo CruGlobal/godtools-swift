@@ -45,7 +45,7 @@ final class PullToRefreshToolsUseCase: Sendable {
             appLanguage: appLanguage
         )
         
-        let country: String? = country?.isoRegionCode
+        let country: String? = country?.isoRegionCodeIfSelected
         
         try await personalizedToolsSync.sync(
             requestPriority: requestPriority,

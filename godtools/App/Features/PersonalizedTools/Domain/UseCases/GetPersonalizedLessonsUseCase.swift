@@ -46,12 +46,7 @@ final class GetPersonalizedLessonsUseCase: Sendable {
             appLanguage: appLanguage
         )
 
-        let countryIsoRegionCode: String? = {
-            if let isoRegionCode = country?.isoRegionCode, !isoRegionCode.isEmpty {
-                return isoRegionCode
-            }
-            return nil
-        }()
+        let countryIsoRegionCode: String? = country?.isoRegionCodeIfSelected
 
         return getPersonalizedLessonsPublisher(
             countryIsoRegionCode: countryIsoRegionCode,
@@ -115,7 +110,7 @@ final class GetPersonalizedLessonsUseCase: Sendable {
 
         if let countryIsoRegionCode = countryIsoRegionCode {
 
-            let rankedLessons: [ResourceDataModel] = try await getLessons(
+            let rankedLessons: [ResourceDataModel] = try await getLessonResources(
                 type: .ranked(country: countryIsoRegionCode, language: languageCode)
             )
 
@@ -124,12 +119,12 @@ final class GetPersonalizedLessonsUseCase: Sendable {
             }
         }
 
-        return try await getLessons(
+        return try await getLessonResources(
             type: .defaultOrder(language: languageCode)
         )
     }
 
-    private func getLessons(type: PersonalizedToolsType) async throws -> [ResourceDataModel] {
+    private func getLessonResources(type: PersonalizedToolsType) async throws -> [ResourceDataModel] {
 
         return try await personalizedToolsRepository
             .getTools(
