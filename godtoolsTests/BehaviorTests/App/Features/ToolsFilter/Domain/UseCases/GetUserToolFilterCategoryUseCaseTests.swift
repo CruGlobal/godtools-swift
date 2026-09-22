@@ -30,7 +30,7 @@ struct GetUserToolFilterCategoryUseCaseTests {
 
     struct TestDependencies {
         let resourcesRepository: ResourcesRepository
-        let userToolFiltersRepository: UserToolFiltersRepository
+        let userToolFilterSettingsRepository: UserToolFilterSettingsRepository
     }
 
     struct StoredCategoryArgument {
@@ -183,11 +183,11 @@ extension GetUserToolFilterCategoryUseCaseTests {
         let dependencies: TestDependencies = try getTestDependencies()
 
         if let storeCategoryId = storeCategoryId {
-            try await dependencies.userToolFiltersRepository.storeUserCategoryFilter(categoryId: storeCategoryId)
+            try await dependencies.userToolFilterSettingsRepository.storeSettingValue(settingType: .toolsCategoryFilter, value: storeCategoryId)
         }
 
         let useCase = GetUserToolFilterCategoryUseCase(
-            userToolFiltersRepository: dependencies.userToolFiltersRepository,
+            userToolFilterSettingsRepository: dependencies.userToolFilterSettingsRepository,
             getToolFilterCategory: getToolFilterCategory(resourcesRepository: dependencies.resourcesRepository)
         )
 
@@ -241,7 +241,7 @@ extension GetUserToolFilterCategoryUseCaseTests {
 
         return TestDependencies(
             resourcesRepository: testsDiContainer.core.dataLayer.getResourcesRepository(),
-            userToolFiltersRepository: testsDiContainer.feature.toolsFilter.dataLayer.getUserToolFiltersRepository()
+            userToolFilterSettingsRepository: testsDiContainer.core.dataLayer.getUserToolFilterSettingsRepository()
         )
     }
 

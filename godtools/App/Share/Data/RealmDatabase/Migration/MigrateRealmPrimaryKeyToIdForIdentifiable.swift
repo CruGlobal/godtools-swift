@@ -54,20 +54,8 @@ final class MigrateRealmPrimaryKeyToIdForIdentifiable: RealmMigrationInterface {
                 primaryKey: #keyPath(RealmLessonEvaluation.lessonId)
             ),
             Object(
-                className: RealmUserLessonLanguageFilter.className(),
-                primaryKey: #keyPath(RealmUserLessonLanguageFilter.filterId)
-            ),
-            Object(
                 className: RealmUserToolSettings.className(),
                 primaryKey: #keyPath(RealmUserToolSettings.toolId)
-            ),
-            Object(
-                className: RealmUserToolCategoryFilter.className(),
-                primaryKey: #keyPath(RealmUserToolCategoryFilter.filterId)
-            ),
-            Object(
-                className: RealmUserToolLanguageFilter.className(),
-                primaryKey: #keyPath(RealmUserToolLanguageFilter.filterId)
             ),
             Object(
                 className: RealmArticleAemData.className(),

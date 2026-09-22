@@ -46,13 +46,13 @@ struct SetAppLanguageUseCaseTests {
         
         let setAppLanguageUseCase = SetAppLanguageUseCase(
             userAppLanguageRepository: testsDiContainer.feature.appLanguage.dataLayer.getUserAppLanguageRepository(),
-            userLessonFiltersRepository: testsDiContainer.core.dataLayer.getUserLessonFiltersRepository(),
+            userToolFilterSettingsRepository: testsDiContainer.core.dataLayer.getUserToolFilterSettingsRepository(),
             languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository()
         )
         
-        let getUserLessonFiltersRepository = GetUserLessonFilterLanguageUseCase(
+        let getUserLessonFilterLanguageUseCase = GetUserLessonFilterLanguageUseCase(
             languagesRepository: testsDiContainer.core.dataLayer.getLanguagesRepository(),
-            userLessonFiltersRepository: testsDiContainer.core.dataLayer.getUserLessonFiltersRepository(),
+            userToolFilterSettingsRepository: testsDiContainer.core.dataLayer.getUserToolFilterSettingsRepository(),
             mapLanguageToLessonFilterLanguage: testsDiContainer.feature.lessonFilter.domainLayer.getMapLanguageToLessonFilterLanguage()
         )
         
@@ -71,7 +71,7 @@ struct SetAppLanguageUseCaseTests {
                 continuation.resume(returning: ())
             }
             
-            getUserLessonFiltersRepository
+            getUserLessonFilterLanguageUseCase
                 .execute(
                     appLanguage: appLanguageSpanish
                 )

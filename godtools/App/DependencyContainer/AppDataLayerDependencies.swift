@@ -827,32 +827,6 @@ final class AppDataLayerDependencies: Sendable {
         return getAppConfig().getUserDefaultsCache()
     }
     
-    func getUserLessonFiltersRepository() -> UserLessonFiltersRepository {
-        
-        let persistence: any Persistence<UserLessonLanguageFilterDataModel, UserLessonLanguageFilterDataModel>
-        
-        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
-            
-            persistence = SwiftRepositorySyncPersistence(
-                database: database,
-                mapping: SwiftUserLessonLanguageFilterMapping()
-            )
-        }
-        else {
-            
-            persistence = RealmRepositorySyncPersistence(
-                database: getSharedRealmDatabase(),
-                mapping: RealmUserLessonLanguageFilterMapping()
-            )
-        }
-        
-        return UserLessonFiltersRepository(
-            cache: UserLessonFiltersCache(
-                persistence: persistence
-            )
-        )
-    }
-    
     func getUserLessonProgressRepository() -> UserLessonProgressRepository {
         
         let persistence: any Persistence<UserLessonProgressDataModel, UserLessonProgressDataModel>
@@ -874,6 +848,32 @@ final class AppDataLayerDependencies: Sendable {
         
         return UserLessonProgressRepository(
             cache: UserLessonProgressCache(
+                persistence: persistence
+            )
+        )
+    }
+    
+    func getUserToolFilterSettingsRepository() -> UserToolFilterSettingsRepository {
+        
+        let persistence: any Persistence<UserToolFilterSettingsDataModel, UserToolFilterSettingsDataModel>
+        
+        if #available(iOS 17.4, *), let database = getSharedSwiftDatabase() {
+            
+            persistence = SwiftRepositorySyncPersistence(
+                database: database,
+                mapping: SwiftUserToolFilterSettingsMapping()
+            )
+        }
+        else {
+            
+            persistence = RealmRepositorySyncPersistence(
+                database: getSharedRealmDatabase(),
+                mapping: RealmUserToolFilterSettingsMapping()
+            )
+        }
+        
+        return UserToolFilterSettingsRepository(
+            cache: UserToolFilterSettingsCache(
                 persistence: persistence
             )
         )

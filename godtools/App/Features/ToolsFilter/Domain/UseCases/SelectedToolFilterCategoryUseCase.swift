@@ -10,21 +10,20 @@ import Foundation
 
 final class SelectedToolFilterCategoryUseCase: Sendable {
     
-    private let userToolFiltersRepository: UserToolFiltersRepository
+    private let userToolFilterSettingsRepository: UserToolFilterSettingsRepository
     
-    init(userToolFiltersRepository: UserToolFiltersRepository) {
+    init(userToolFilterSettingsRepository: UserToolFilterSettingsRepository) {
         
-        self.userToolFiltersRepository = userToolFiltersRepository
+        self.userToolFilterSettingsRepository = userToolFilterSettingsRepository
     }
     
     func execute(category: ToolFilterCategoryDomainModel) async throws {
         
-        guard category.categoryType != .any else {
-            try await userToolFiltersRepository.deleteUserCategoryFilter()
-            return
-        }
+        let categoryId: String? = category.categoryType != .any ? category.id : nil
         
-        try await userToolFiltersRepository
-            .storeUserCategoryFilter(categoryId: category.id)
+        try await userToolFilterSettingsRepository.storeSettingValue(
+            settingType: .toolsCategoryFilter,
+            value: categoryId
+        )
     }
 }

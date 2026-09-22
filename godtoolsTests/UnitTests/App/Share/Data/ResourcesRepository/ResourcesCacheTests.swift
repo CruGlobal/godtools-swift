@@ -270,30 +270,6 @@ struct ResourcesCacheTests {
         #expect(Set(languageIds) == expectedLanguageIds)
     }
 
-    // MARK: - Spotlight Tools
-
-    @available(iOS 17.4, *)
-    @Test
-    func getSpotlightToolsExcludesLessonsAndHiddenTools() throws {
-
-        let cache = try getCache()
-
-        let spotlightTools: [ResourceDataModel] = try cache.getSpotlightTools(sortByDefaultOrder: true)
-
-        #expect(spotlightTools.map { $0.id } == ["tract_0", "tract_2", "article_0"])
-    }
-
-    @available(iOS 17.4, *)
-    @Test
-    func getSpotlightToolsUnsorted() throws {
-
-        let cache = try getCache()
-
-        let spotlightTools: [ResourceDataModel] = try cache.getSpotlightTools(sortByDefaultOrder: false)
-
-        #expect(spotlightTools.map { $0.id }.sorted() == ["article_0", "tract_0", "tract_2"])
-    }
-
     // MARK: - All Tools List
 
     @available(iOS 17.4, *)

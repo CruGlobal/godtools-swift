@@ -181,7 +181,7 @@ final class DashboardFlow: GTFlow {
         case .backTappedFromToolLanguageFilter:
             navigationController.popViewController(animated: true)
             
-        case .spotlightToolTappedFromTools(let spotlightTool, let toolFilterLanguageId):
+        case .featuredToolTappedFromTools(let featuredTool, let toolFilterLanguageId):
             
             let toolFilterLanguageDataModel: LanguageDataModel?
             
@@ -193,7 +193,7 @@ final class DashboardFlow: GTFlow {
             }
             
             navigateToToolDetails(
-                toolId: spotlightTool.dataModelId,
+                toolId: featuredTool.dataModelId,
                 parallelLanguage: toolFilterLanguageDataModel?.localeId,
                 selectedLanguageIndex: 1
             )

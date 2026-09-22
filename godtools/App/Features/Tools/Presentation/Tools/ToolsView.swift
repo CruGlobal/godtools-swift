@@ -53,17 +53,25 @@ struct ToolsView: View {
 
                     VStack(alignment: .leading, spacing: 0) {
 
-                        ToolSpotlightView(
-                            viewModel: viewModel,
-                            geometry: geometry,
-                            contentHorizontalInsets: contentHorizontalInsets
-                        )
-                        .padding([.top], 24)
+                        if !viewModel.featuredTools.isEmpty {
+                            
+                            FeaturedToolsView(
+                                viewModel: viewModel,
+                                geometry: geometry,
+                                contentHorizontalInsets: contentHorizontalInsets
+                            )
+                            .padding([.top], 24)
 
-                        SeparatorView()
-                            .padding([.top], 15)
-                            .padding([.bottom], 11)
-                            .padding([.leading, .trailing], contentHorizontalInsets)
+                            SeparatorView()
+                                .padding([.top], 15)
+                                .padding([.bottom], 11)
+                                .padding([.leading, .trailing], contentHorizontalInsets)
+                        }
+                        else {
+                            
+                            Spacer()
+                                    .frame(height: 20)
+                        }
 
                         ToolsFilterSectionView(
                             viewModel: viewModel,
@@ -160,7 +168,7 @@ struct AllToolsView_Preview: PreviewProvider {
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsUseCase(),
             favoritingToolMessageCache: appDiContainer.core.dataLayer.getFavoritingToolMessageCache(),
-            getSpotlightToolsUseCase: appDiContainer.feature.spotlightTools.domainLayer.getSpotlightToolsUseCase(),
+            getFeaturedToolsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getFeaturedToolsUseCase(),
             getUserToolFilterCategoryUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFilterCategoryUseCase(),
             getUserToolFilterLanguageUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFilterLanguageUseCase(),
             getUserPersonalizedToolFilterLanguageUseCase: appDiContainer.feature.personalizedTools.domainLayer.getUserPersonalizedToolFilterLanguageUseCase(),
