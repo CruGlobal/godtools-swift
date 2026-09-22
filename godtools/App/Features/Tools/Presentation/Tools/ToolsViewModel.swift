@@ -207,24 +207,25 @@ final class ToolsViewModel: ObservableObject {
         }
         .store(in: &cancellables)
         
-        Publishers.CombineLatest3(
+        Publishers.CombineLatest(
             $appLanguage.dropFirst(),
-            $toolFilterCategorySelection.dropFirst(),
-            $selectedAllToolsFilterLanguage.dropFirst()
+            $localizationSettings
         )
         .map { (
             appLanguage: AppLanguageDomainModel,
-            toolFilterCategory: ToolFilterCategoryDomainModel,
-            toolFilterLanguage: ToolFilterLanguageDomainModel?
+            localizationSettings: UserLocalizationSettingsDomainModel?
         ) in
             
-            // TODO: Send LocalizationSettingsCountryDomainModel. ~Levi
+            guard let selectedCountry = localizationSettings?.selectedCountry else {
+                return Just(Array<FeaturedToolListItemDomainModel>())
+                    .setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            }
             
-            getFeaturedToolsUseCase
+            return getFeaturedToolsUseCase
                 .execute(
                     appLanguage: appLanguage,
-                    country: LocalizationSettingsCountryDomainModel.emptyValue,
-                    languageIdForAvailabilityText: toolFilterLanguage?.languageId
+                    country: selectedCountry
                 )
         }
         .switchToLatest()

@@ -32,7 +32,6 @@ final class GetUserPersonalizedToolFilterLanguageUseCase: Sendable {
             languagesRepository.observeCollectionChangesPublisher(),
             userToolFilterSettingsRepository
                 .observeSettingValueChangedPublisher(settingType: .personalizedToolsLanguageFilter)
-                .setFailureType(to: Error.self)
         )
         .map { (languagesChanged: Void, userFilterLanguageId: String?) in
             

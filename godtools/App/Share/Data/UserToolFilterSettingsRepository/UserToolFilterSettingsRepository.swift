@@ -27,25 +27,19 @@ final class UserToolFilterSettingsRepository: Sendable {
 
 extension UserToolFilterSettingsRepository {
     
-    @MainActor func observeSettingValueChangedPublisher(settingType: UserToolFilterSettingType, userId: String = UserToolFilterSettingsRepository.sharedUserId) -> AnyPublisher<String?, Never> {
+    @MainActor func observeSettingValueChangedPublisher(
+        settingType: UserToolFilterSettingType,
+        userId: String = UserToolFilterSettingsRepository.sharedUserId
+    ) -> AnyPublisher<String?, Error> {
         
         return cache
             .persistence
             .observeCollectionChangesPublisher()
-            .catch { _ in
-                return Just(Void())
-            }
-            .map { _ in
-                
-                return Deferred {
-                    Future<String?, Never> { promise in
-                        Task {
-                            promise(.success(await self.getSettingValue(settingType: settingType, userId: userId)))
-                        }
-                    }
+            .flatMap { (collectionChanged: Void) -> AnyPublisher<String?, Error> in
+                return AnyPublisher() {
+                    return await self.getSettingValue(settingType: settingType, userId: userId)
                 }
             }
-            .switchToLatest()
             .removeDuplicates()
             .eraseToAnyPublisher()
     }

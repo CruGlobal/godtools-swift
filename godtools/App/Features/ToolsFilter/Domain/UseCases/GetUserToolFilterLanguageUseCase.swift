@@ -26,6 +26,7 @@ final class GetUserToolFilterLanguageUseCase: Sendable {
         
         return userToolFilterSettingsRepository
             .observeSettingValueChangedPublisher(settingType: .toolsLanguageFilter)
+            .replaceError(with: nil)
             .receive(on: DispatchQueue.global())
             .map { (languageId: String?) in
                 return self.getToolFilterLanguage(languageId: languageId, appLanguage: appLanguage)
