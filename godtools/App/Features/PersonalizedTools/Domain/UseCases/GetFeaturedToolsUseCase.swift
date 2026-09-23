@@ -43,16 +43,21 @@ final class GetFeaturedToolsUseCase: Sendable {
     
     @MainActor func execute(
         appLanguage: AppLanguageDomainModel,
-        country: LocalizationSettingsCountryDomainModel
+        country: LocalizationSettingsCountryDomainModel?
     ) -> AnyPublisher<[FeaturedToolListItemDomainModel], Error> {
-        
-        let countryCode: String = country.isoRegionCode
+
+        guard let countryIsoRegionCode = country?.isoRegionCodeIfSelected else {
+
+            return Just([])
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
 
         return Publishers.CombineLatest(
             personalizedToolsRepository
                 .getPersonalizedToolsChanged(
                     requestPriority: .high,
-                    country: countryCode,
+                    country: countryIsoRegionCode,
                     language: appLanguage
                 ),
             resourcesRepository
@@ -64,7 +69,7 @@ final class GetFeaturedToolsUseCase: Sendable {
             return AnyPublisher() {
                 try await self.getFeaturedTools(
                     appLanguage: appLanguage,
-                    countryCode: countryCode,
+                    countryIsoRegionCode: countryIsoRegionCode,
                     languageIdForAvailabilityText: appLanguage
                 )
             }
@@ -74,7 +79,7 @@ final class GetFeaturedToolsUseCase: Sendable {
     
     private func getFeaturedTools(
         appLanguage: AppLanguageDomainModel,
-        countryCode: String,
+        countryIsoRegionCode: String,
         languageIdForAvailabilityText: String?
     ) async throws -> [FeaturedToolListItemDomainModel] {
         
@@ -85,7 +90,7 @@ final class GetFeaturedToolsUseCase: Sendable {
         let featuredToolResources: [ResourceDataModel] = try await personalizedToolsRepository
             .getTools(
                 requestPriority: .high,
-                type: .featured(country: countryCode, language: appLanguage),
+                type: .featured(country: countryIsoRegionCode, language: appLanguage),
                 resourceTypes: ResourceType.toolTypes,
                 sortByResponse: true
             )

@@ -60,13 +60,10 @@ final class GetPersonalizedToolsUseCase: Sendable {
         .flatMap { (personalizedToolsChanged, resourcesChanged) -> AnyPublisher<[ResourceDataModel], Error> in
             
             return AnyPublisher() {
-                try await self.personalizedToolsRepository
-                    .getTools(
-                        requestPriority: .high,
-                        type: self.getPersonalizedToolsType(countryIsoRegionCode: countryIsoRegionCode, languageCode: languageCode),
-                        resourceTypes: ResourceType.toolTypes,
-                        sortByResponse: true
-                    )
+                try await self.getRankedElseDefaultOrderTools(
+                    countryIsoRegionCode: countryIsoRegionCode,
+                    languageCode: languageCode
+                )
             }
         }
         .map { (resources: [ResourceDataModel]) in
@@ -89,16 +86,36 @@ final class GetPersonalizedToolsUseCase: Sendable {
         .eraseToAnyPublisher()
     }
 
-    private func getPersonalizedToolsType(
+    private func getRankedElseDefaultOrderTools(
         countryIsoRegionCode: String?,
         languageCode: String
-    ) -> PersonalizedToolsType {
+    ) async throws -> [ResourceDataModel] {
 
-        guard let countryIsoRegionCode = countryIsoRegionCode else {
-            return .defaultOrder(language: languageCode)
+        if let countryIsoRegionCode = countryIsoRegionCode {
+
+            let rankedTools: [ResourceDataModel] = try await getToolResources(
+                type: .ranked(country: countryIsoRegionCode, language: languageCode)
+            )
+
+            if !rankedTools.isEmpty {
+                return rankedTools
+            }
         }
 
-        return .ranked(country: countryIsoRegionCode, language: languageCode)
+        return try await getToolResources(
+            type: .defaultOrder(language: languageCode)
+        )
+    }
+
+    private func getToolResources(type: PersonalizedToolsType) async throws -> [ResourceDataModel] {
+
+        return try await personalizedToolsRepository
+            .getTools(
+                requestPriority: .high,
+                type: type,
+                resourceTypes: ResourceType.toolTypes,
+                sortByResponse: true
+            )
     }
 
     private func getToolsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedToolsUnavailableDomainModel {

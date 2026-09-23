@@ -216,16 +216,10 @@ final class ToolsViewModel: ObservableObject {
             localizationSettings: UserLocalizationSettingsDomainModel?
         ) in
             
-            guard let selectedCountry = localizationSettings?.selectedCountry else {
-                return Just(Array<FeaturedToolListItemDomainModel>())
-                    .setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
-            }
-            
-            return getFeaturedToolsUseCase
+            getFeaturedToolsUseCase
                 .execute(
                     appLanguage: appLanguage,
-                    country: selectedCountry
+                    country: localizationSettings?.selectedCountry
                 )
         }
         .switchToLatest()

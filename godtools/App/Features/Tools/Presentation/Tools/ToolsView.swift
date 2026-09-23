@@ -122,7 +122,7 @@ struct ToolsView: View {
                             }
                         }
                         
-                        if viewModel.selectedToggle == .personalized && viewModel.personalizedTools.unavailableStrings == nil {
+                        if viewModel.selectedToggle == .personalized && !viewModel.personalizedTools.tools.isEmpty {
                             
                             PersonalizedChangeLocalizationView(
                                 geometry: geometry,
