@@ -38,8 +38,7 @@ final class GetPersonalizedLessonsUseCase: Sendable {
     @MainActor func execute(
         appLanguage: AppLanguageDomainModel,
         country: LocalizationSettingsCountryDomainModel?,
-        filterLessonsByLanguageId: String?,
-        hasFeaturedLessons: Bool
+        filterLessonsByLanguageId: String?
     ) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> {
 
         let languageCode: String = getLanguageElseAppLanguage.getLanguageCode(
@@ -47,19 +46,13 @@ final class GetPersonalizedLessonsUseCase: Sendable {
             appLanguage: appLanguage
         )
 
-        let countryIsoRegionCode: String? = {
-            if let isoRegionCode = country?.isoRegionCode, !isoRegionCode.isEmpty {
-                return isoRegionCode
-            }
-            return nil
-        }()
+        let countryIsoRegionCode: String? = country?.isoRegionCodeIfSelected
 
         return getPersonalizedLessonsPublisher(
             countryIsoRegionCode: countryIsoRegionCode,
             languageCode: languageCode,
             appLanguage: appLanguage,
-            filterLessonsByLanguageId: filterLessonsByLanguageId,
-            hasFeaturedLessons: hasFeaturedLessons
+            filterLessonsByLanguageId: filterLessonsByLanguageId
         )
     }
 
@@ -67,8 +60,7 @@ final class GetPersonalizedLessonsUseCase: Sendable {
         countryIsoRegionCode: String?,
         languageCode: String,
         appLanguage: AppLanguageDomainModel,
-        filterLessonsByLanguageId: String?,
-        hasFeaturedLessons: Bool
+        filterLessonsByLanguageId: String?
     ) -> AnyPublisher<PersonalizedLessonsDomainModel, Error> {
 
         return Publishers.CombineLatest3(
@@ -87,13 +79,10 @@ final class GetPersonalizedLessonsUseCase: Sendable {
         .flatMap({ (personalizedLessonsChanged, resourcesChanged, lessonProgressChanged) -> AnyPublisher<[ResourceDataModel], Error> in
 
             return AnyPublisher() {
-                try await self.personalizedToolsRepository
-                    .getTools(
-                        requestPriority: .high,
-                        type: self.getPersonalizedToolsType(countryIsoRegionCode: countryIsoRegionCode, languageCode: languageCode),
-                        resourceTypes: [.lesson],
-                        sortByResponse: true
-                    )
+                try await self.getRankedElseDefaultOrderLessons(
+                    countryIsoRegionCode: countryIsoRegionCode,
+                    languageCode: languageCode
+                )
             }
         })
         .tryMap { (resources: [ResourceDataModel]) in
@@ -104,8 +93,7 @@ final class GetPersonalizedLessonsUseCase: Sendable {
                 filterLessonsByLanguageId: filterLessonsByLanguageId
             )
 
-            let showsPersonalizationUnavailable: Bool = lessons.isEmpty && !hasFeaturedLessons
-            let unavailableStrings: PersonalizedLessonsUnavailableDomainModel? = showsPersonalizationUnavailable ? self.getLessonsUnavailable(appLanguage: appLanguage) : nil
+            let unavailableStrings: PersonalizedLessonsUnavailableDomainModel? = lessons.isEmpty ? self.getLessonsUnavailable(appLanguage: appLanguage) : nil
 
             return PersonalizedLessonsDomainModel(
                 lessons: lessons,
@@ -114,17 +102,37 @@ final class GetPersonalizedLessonsUseCase: Sendable {
         }
         .eraseToAnyPublisher()
     }
-    
-    private func getPersonalizedToolsType(
+
+    private func getRankedElseDefaultOrderLessons(
         countryIsoRegionCode: String?,
         languageCode: String
-    ) -> PersonalizedToolsType {
+    ) async throws -> [ResourceDataModel] {
 
-        guard let countryIsoRegionCode = countryIsoRegionCode else {
-            return .defaultOrder(language: languageCode)
+        if let countryIsoRegionCode = countryIsoRegionCode {
+
+            let rankedLessons: [ResourceDataModel] = try await getLessonResources(
+                type: .ranked(country: countryIsoRegionCode, language: languageCode)
+            )
+
+            if !rankedLessons.isEmpty {
+                return rankedLessons
+            }
         }
 
-        return .ranked(country: countryIsoRegionCode, language: languageCode)
+        return try await getLessonResources(
+            type: .defaultOrder(language: languageCode)
+        )
+    }
+
+    private func getLessonResources(type: PersonalizedToolsType) async throws -> [ResourceDataModel] {
+
+        return try await personalizedToolsRepository
+            .getTools(
+                requestPriority: .high,
+                type: type,
+                resourceTypes: [.lesson],
+                sortByResponse: true
+            )
     }
 
     private func getLessonsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedLessonsUnavailableDomainModel {

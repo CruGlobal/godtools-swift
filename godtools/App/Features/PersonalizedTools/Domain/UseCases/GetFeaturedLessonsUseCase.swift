@@ -40,7 +40,7 @@ final class GetFeaturedLessonsUseCase: Sendable {
 
     @MainActor func execute(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?) -> AnyPublisher<[FeaturedLessonDomainModel], Error> {
 
-        guard let countryIsoRegionCode = getCountryIsoRegionCode(country: country) else {
+        guard let countryIsoRegionCode = country?.isoRegionCodeIfSelected else {
 
             return Just([])
                 .setFailureType(to: Error.self)
@@ -67,15 +67,6 @@ final class GetFeaturedLessonsUseCase: Sendable {
             }
         })
         .eraseToAnyPublisher()
-    }
-
-    private func getCountryIsoRegionCode(country: LocalizationSettingsCountryDomainModel?) -> String? {
-
-        guard let isoRegionCode = country?.isoRegionCode, !isoRegionCode.isEmpty else {
-            return nil
-        }
-
-        return isoRegionCode
     }
 
     private func asyncExecute(appLanguage: AppLanguageDomainModel, countryIsoRegionCode: String) async throws -> [FeaturedLessonDomainModel] {
