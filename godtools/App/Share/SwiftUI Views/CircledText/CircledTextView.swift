@@ -49,14 +49,11 @@ struct CircledTextView: View {
     }
 }
 
-struct CircledTextView_Preview: PreviewProvider {
-           
-    static var previews: some View {
-        
-        CircledTextView(
-            backgroundColor: .white,
-            tintColor: .red,
-            text: "4"
-        )
-    }
+#Preview {
+    
+    CircledTextView(
+        backgroundColor: .white,
+        tintColor: .red,
+        text: "4"
+    )
 }

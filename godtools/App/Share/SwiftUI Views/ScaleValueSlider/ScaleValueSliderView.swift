@@ -174,20 +174,17 @@ struct ScaleValueSliderView: View {
     }
 }
 
-struct ScaleValueSliderView_Preview: PreviewProvider {
-           
-    @State static private var scale: Int = 4
+#Preview {
     
-    static var previews: some View {
+    let scale: Int = 4
+    
+    GeometryReader { geometry in
         
-        GeometryReader { geometry in
-            
-            ScaleValueSliderView(
-                viewWidth: 300,
-                tintColor: ColorPalette.gtBlue.color,
-                scaleIntValue: ScaleValueSliderView_Preview.$scale,
-                scaleDisplayValue: "\(ScaleValueSliderView_Preview.scale)"
-            )
-        }
+        ScaleValueSliderView(
+            viewWidth: 300,
+            tintColor: ColorPalette.gtBlue.color,
+            scaleIntValue: .constant(scale),
+            scaleDisplayValue: "\(scale)"
+        )
     }
 }
