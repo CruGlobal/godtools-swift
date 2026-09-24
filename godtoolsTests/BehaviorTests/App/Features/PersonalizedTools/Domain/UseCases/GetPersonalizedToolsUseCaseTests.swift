@@ -18,10 +18,18 @@ private enum TestPersonalizedToolsLanguageId {
     static let french: String = "1"
 }
 
+private enum TestPersonalizedToolsCountry {
+    static let unitedStatesWithRankedTools: String = "us"
+    static let canadaWithoutRankedResources: String = "ca"
+    static let mexicoWithRankedLessonsOnly: String = "mx"
+}
+
 private enum TestPersonalizedToolsId {
     static let defaultOrderEnglish: String = "default_order_en"
     static let defaultOrderFrench: String = "default_order_fr"
     static let rankedUnitedStatesEnglish: String = "ranked_us_en"
+    static let rankedUnitedStatesFrench: String = "ranked_us_fr"
+    static let rankedMexicoEnglish: String = "ranked_mx_en"
 }
 
 struct GetPersonalizedToolsUseCaseTests {
@@ -55,32 +63,32 @@ struct GetPersonalizedToolsUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: User has selected a country.
+        Given: User has selected a country that has ranked tools for their language.
         When: Personalized tools are requested.
-        Then: I expect to see the tools personalized for my country and language.
+        Then: I expect to see the ranked tools in the order the api returned them.
         """
     )
-    @MainActor func personalizedToolsForMySelectedCountryAreReturned() async throws {
+    @MainActor func rankedToolsForMySelectedCountryAreReturnedInApiOrder() async throws {
 
         let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
             appLanguage: LanguageCodeDomainModel.english.value,
-            country: LocalizationSettingsCountryDomainModel(isoRegionCode: "us"),
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestPersonalizedToolsCountry.unitedStatesWithRankedTools),
             filterByLanguageId: nil
         )
 
-        #expect(personalizedTools.tools.map({ $0.id }).sorted() == ["tool-1", "tool-3"])
+        #expect(personalizedTools.tools.map({ $0.id }) == ["tool-3", "tool-1"])
         #expect(personalizedTools.unavailableStrings == nil)
     }
 
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: User has not selected a country.
+        Given: User has not selected a country and there are default order tools for their language.
         When: Personalized tools are requested.
-        Then: I expect to see the default order tools for my app language.
+        Then: I expect to see the default order tools in the order the api returned them.
         """
     )
-    @MainActor func defaultOrderToolsAreReturnedWhenNoCountryIsSelected() async throws {
+    @MainActor func defaultOrderToolsAreReturnedInApiOrderWhenNoCountryIsSelected() async throws {
 
         let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
             appLanguage: LanguageCodeDomainModel.english.value,
@@ -88,7 +96,71 @@ struct GetPersonalizedToolsUseCaseTests {
             filterByLanguageId: nil
         )
 
-        #expect(personalizedTools.tools.map({ $0.id }).sorted() == ["tool-1", "tool-2"])
+        #expect(personalizedTools.tools.map({ $0.id }) == ["tool-2", "tool-1"])
+        #expect(personalizedTools.unavailableStrings == nil)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User has selected a country that has no ranked tools for their language and there are default order tools for their language.
+        When: Personalized tools are requested.
+        Then: I expect to see the default order tools for my language.
+        """,
+        arguments: [
+            TestPersonalizedToolsCountry.canadaWithoutRankedResources,
+            TestPersonalizedToolsCountry.mexicoWithRankedLessonsOnly
+        ]
+    )
+    @MainActor func defaultOrderToolsAreReturnedWhenTheSelectedCountryHasNoRankedTools(isoRegionCode: String) async throws {
+
+        let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: isoRegionCode),
+            filterByLanguageId: nil
+        )
+
+        #expect(personalizedTools.tools.map({ $0.id }) == ["tool-2", "tool-1"])
+        #expect(personalizedTools.unavailableStrings == nil)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User has selected both a country and a tools filter language that has ranked tools for that country.
+        When: Personalized tools are requested.
+        Then: I expect to see the ranked tools for the filter language rather than the ranked tools for my app language.
+        """
+    )
+    @MainActor func rankedToolsAreLookedUpByTheSelectedFilterLanguageRatherThanTheAppLanguage() async throws {
+
+        let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestPersonalizedToolsCountry.unitedStatesWithRankedTools),
+            filterByLanguageId: TestPersonalizedToolsLanguageId.french
+        )
+
+        #expect(personalizedTools.tools.map({ $0.id }) == ["tool-1"])
+        #expect(personalizedTools.unavailableStrings == nil)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User has selected both a country and a tools filter language, and there are no ranked tools for that country and filter language.
+        When: Personalized tools are requested.
+        Then: I expect to fall back to the default order tools for the filter language rather than for my app language.
+        """
+    )
+    @MainActor func defaultOrderFallbackIsLookedUpByTheSelectedFilterLanguageRatherThanTheAppLanguage() async throws {
+
+        let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestPersonalizedToolsCountry.canadaWithoutRankedResources),
+            filterByLanguageId: TestPersonalizedToolsLanguageId.french
+        )
+
+        #expect(personalizedTools.tools.map({ $0.id }) == ["tool-4", "tool-1"])
         #expect(personalizedTools.unavailableStrings == nil)
     }
 
@@ -127,14 +199,14 @@ struct GetPersonalizedToolsUseCaseTests {
             filterByLanguageId: TestPersonalizedToolsLanguageId.french
         )
 
-        #expect(personalizedTools.tools.map({ $0.id }) == ["tool-4"])
+        #expect(personalizedTools.tools.map({ $0.id }) == ["tool-4", "tool-1"])
         #expect(personalizedTools.unavailableStrings == nil)
     }
 
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: There are no personalized tools.
+        Given: User has not selected a country and there are no default order tools for their language.
         When: Personalized tools are requested.
         Then: I expect to see the personalization unavailable strings translated in my app language.
         """,
@@ -151,7 +223,7 @@ struct GetPersonalizedToolsUseCaseTests {
             )
         ]
     )
-    @MainActor func personalizationUnavailableIsShownWhenThereAreNoTools(argument: UnavailableArgument) async throws {
+    @MainActor func personalizationUnavailableIsShownWhenThereAreNoDefaultOrderTools(argument: UnavailableArgument) async throws {
 
         let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
             appLanguage: argument.appLanguage,
@@ -169,16 +241,16 @@ struct GetPersonalizedToolsUseCaseTests {
     @available(iOS 17.4, *)
     @Test(
         """
-        Given: User has selected a country and there are no personalized tools.
+        Given: User has selected a country and there are neither ranked tools for the country and language combination nor default order tools for the language.
         When: Personalized tools are requested.
         Then: I expect to see no tools and the personalization unavailable strings.
         """
     )
-    @MainActor func personalizationUnavailableIsShownWhenACountryIsSelectedAndThereAreNoTools() async throws {
+    @MainActor func personalizationUnavailableIsShownWhenThereAreNeitherRankedNorDefaultOrderTools() async throws {
 
         let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
-            appLanguage: LanguageCodeDomainModel.english.value,
-            country: LocalizationSettingsCountryDomainModel(isoRegionCode: "ca"),
+            appLanguage: LanguageCodeDomainModel.spanish.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestPersonalizedToolsCountry.canadaWithoutRankedResources),
             filterByLanguageId: nil
         )
 
@@ -202,7 +274,7 @@ struct GetPersonalizedToolsUseCaseTests {
             filterByLanguageId: nil
         )
 
-        #expect(personalizedTools.tools.map({ $0.id }).sorted() == ["tool-1", "tool-2"])
+        #expect(personalizedTools.tools.map({ $0.id }) == ["tool-2", "tool-1"])
         #expect(personalizedTools.unavailableStrings == nil)
     }
 }
@@ -373,9 +445,11 @@ extension GetPersonalizedToolsUseCaseTests {
     private var resourceIdsByPersonalizedToolsId: [String: [String]] {
 
         return [
-            TestPersonalizedToolsId.defaultOrderEnglish: ["tool-1", "tool-2", "lesson-1"],
-            TestPersonalizedToolsId.defaultOrderFrench: ["tool-4"],
-            TestPersonalizedToolsId.rankedUnitedStatesEnglish: ["tool-3", "tool-1"]
+            TestPersonalizedToolsId.defaultOrderEnglish: ["tool-2", "tool-1", "lesson-1"],
+            TestPersonalizedToolsId.defaultOrderFrench: ["tool-4", "tool-1"],
+            TestPersonalizedToolsId.rankedUnitedStatesEnglish: ["tool-3", "tool-1"],
+            TestPersonalizedToolsId.rankedUnitedStatesFrench: ["tool-1"],
+            TestPersonalizedToolsId.rankedMexicoEnglish: ["lesson-1"]
         ]
     }
 
