@@ -23,6 +23,7 @@ private enum TestUserId {
 
 struct UserToolFilterSettingsRepositoryTests {
     
+    private static let firstValueTimeoutNanoseconds: UInt64 = 30_000_000_000
     private static let settingDidNotChangeTimeoutNanoseconds: UInt64 = 3_000_000_000
     
     struct SettingTypeArgument {
@@ -401,7 +402,7 @@ extension UserToolFilterSettingsRepositoryTests {
             repository: repository,
             settingType: .toolsLanguageFilter,
             expectedValueCount: 2,
-            timeoutNanoseconds: Self.settingDidNotChangeTimeoutNanoseconds,
+            afterFirstValueTimeoutNanoseconds: Self.settingDidNotChangeTimeoutNanoseconds,
             whileObserving: {
                 try await repository.storeSettingValue(settingType: .lessonsLanguageFilter, value: TestValue.spanish)
             }
@@ -427,7 +428,7 @@ extension UserToolFilterSettingsRepositoryTests {
             repository: repository,
             settingType: .toolsLanguageFilter,
             expectedValueCount: 2,
-            timeoutNanoseconds: Self.settingDidNotChangeTimeoutNanoseconds,
+            afterFirstValueTimeoutNanoseconds: Self.settingDidNotChangeTimeoutNanoseconds,
             whileObserving: {
                 try await repository.storeSettingValue(settingType: .toolsLanguageFilter, value: TestValue.french)
             }
@@ -482,26 +483,38 @@ extension UserToolFilterSettingsRepositoryTests {
         )
     }
     
-    @MainActor private func observeSettingValues(repository: UserToolFilterSettingsRepository, settingType: UserToolFilterSettingType, expectedValueCount: Int, timeoutNanoseconds: UInt64? = nil, whileObserving: (() async throws -> Void)?) async -> [String?] {
+    @MainActor private func observeSettingValues(repository: UserToolFilterSettingsRepository, settingType: UserToolFilterSettingType, expectedValueCount: Int, afterFirstValueTimeoutNanoseconds: UInt64? = nil, whileObserving: (() async throws -> Void)?) async -> [String?] {
         
         var cancellables: Set<AnyCancellable> = Set()
+        var timeoutCancellable: AnyCancellable?
         var values: [String?] = Array()
+        var didResume: Bool = false
         
-        await withCheckedContinuation { continuation in
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
             
-            let timeoutTask = Task {
+            func resume() {
                 
-                if let timeoutNanoseconds = timeoutNanoseconds {
-                    try await Task.sleep(nanoseconds: timeoutNanoseconds)
-                }
-                else {
-                    try await Task.defaultTestSleep()
+                guard !didResume else {
+                    return
                 }
                 
+                didResume = true
+                timeoutCancellable?.cancel()
                 continuation.resume(returning: ())
             }
             
-            var didResume: Bool = false
+            func startTimeout(nanoseconds: UInt64) {
+                
+                timeoutCancellable?.cancel()
+                
+                timeoutCancellable = Just(())
+                    .delay(for: .nanoseconds(Int(nanoseconds)), scheduler: DispatchQueue.main)
+                    .sink { _ in
+                        resume()
+                    }
+            }
+            
+            startTimeout(nanoseconds: Self.firstValueTimeoutNanoseconds)
             
             repository
                 .observeSettingValueChangedPublisher(settingType: settingType)
@@ -516,10 +529,16 @@ extension UserToolFilterSettingsRepositoryTests {
                     
                     values.append(value)
                     
-                    if values.count == 1, let whileObserving = whileObserving {
+                    if values.count == 1 {
                         
-                        Task {
-                            try await whileObserving()
+                        if let afterFirstValueTimeoutNanoseconds = afterFirstValueTimeoutNanoseconds {
+                            startTimeout(nanoseconds: afterFirstValueTimeoutNanoseconds)
+                        }
+                        
+                        if let whileObserving = whileObserving {
+                            Task {
+                                try await whileObserving()
+                            }
                         }
                     }
                     
@@ -527,9 +546,7 @@ extension UserToolFilterSettingsRepositoryTests {
                         return
                     }
                     
-                    didResume = true
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
+                    resume()
                 }
                 .store(in: &cancellables)
         }
