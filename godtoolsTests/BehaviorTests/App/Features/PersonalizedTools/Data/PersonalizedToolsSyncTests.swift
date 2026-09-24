@@ -19,20 +19,9 @@ private enum TestPersonalizedToolsSyncId {
     static let rankedUnitedStatesEnglish: String = "ranked_us_en"
 }
 
-private enum TestCacheObservation {
-    static let windowNanoseconds: UInt64 = 500_000_000
-}
-
-@MainActor private final class ChangeCounter {
-
-    private(set) var count: Int = 0
-
-    func increment() {
-        count += 1
-    }
-}
-
 struct PersonalizedToolsSyncTests {
+
+    private static let absenceGracePeriodNanoseconds: UInt64 = 500_000_000
 
     @available(iOS 17.4, *)
     @Test(
@@ -102,11 +91,13 @@ struct PersonalizedToolsSyncTests {
             forceNewSync: true
         )
 
-        let versionAfterFirstSync: Int? = try cache.persistence.getDataModel(
+        let cachedAfterFirstSync: PersonalizedToolsDataModel? = try cache.persistence.getDataModel(
             id: TestPersonalizedToolsSyncId.defaultOrderEnglish
-        )?.resourceIds.count
+        )
 
-        let changeCounter = ChangeCounter()
+        #expect(cachedAfterFirstSync?.resourceIds == ["tool-1", "tool-2"])
+
+        var changeCount: Int = 0
 
         let cancellable: AnyCancellable = cache.persistence
             .observeCollectionChangesPublisher()
@@ -115,7 +106,7 @@ struct PersonalizedToolsSyncTests {
 
             }, receiveValue: { _ in
 
-                changeCounter.increment()
+                changeCount += 1
             })
 
         try await sync.sync(
@@ -125,12 +116,11 @@ struct PersonalizedToolsSyncTests {
             forceNewSync: true
         )
 
-        try await Task.sleep(nanoseconds: TestCacheObservation.windowNanoseconds)
+        try await Task.sleep(nanoseconds: Self.absenceGracePeriodNanoseconds)
 
         cancellable.cancel()
 
-        #expect(versionAfterFirstSync == 2)
-        #expect(changeCounter.count == 0)
+        #expect(changeCount == 0)
     }
 
     @available(iOS 17.4, *)
@@ -138,7 +128,7 @@ struct PersonalizedToolsSyncTests {
         """
         Given: A list of tools is already cached and the api now returns a different list.
         When: Personalized tools are synced again.
-        Then: I expect the cache to be updated with the new list and observers to be notified within the same window the unchanged case checks.
+        Then: I expect the cache to be updated with the new list and observers of the cache to be notified.
         """
     )
     @MainActor func aChangedListIsWrittenToTheCache() async throws {
@@ -166,35 +156,51 @@ struct PersonalizedToolsSyncTests {
             syncInvalidatorPersistence: FakeSyncInvalidatorPersistence()
         )
 
-        let changeCounter = ChangeCounter()
+        var cancellables: Set<AnyCancellable> = Set()
 
-        let cancellable: AnyCancellable = cache.persistence
-            .observeCollectionChangesPublisher()
-            .dropFirst()
-            .sink(receiveCompletion: { _ in
+        var observersWereNotified: Bool = false
 
-            }, receiveValue: { _ in
+        await withCheckedContinuation { continuation in
 
-                changeCounter.increment()
-            })
+            let timeoutTask = Task {
+                try await Task.defaultTestSleep()
+                continuation.resume(returning: ())
+            }
 
-        try await secondSync.sync(
-            requestPriority: .high,
-            country: nil,
-            language: LanguageCodeDomainModel.english.value,
-            forceNewSync: true
-        )
+            cache.persistence
+                .observeCollectionChangesPublisher()
+                .dropFirst()
+                .sink(receiveCompletion: { _ in
 
-        try await Task.sleep(nanoseconds: TestCacheObservation.windowNanoseconds)
+                }, receiveValue: { _ in
 
-        cancellable.cancel()
+                    guard !observersWereNotified else {
+                        return
+                    }
+
+                    observersWereNotified = true
+
+                    timeoutTask.cancel()
+                    continuation.resume(returning: ())
+                })
+                .store(in: &cancellables)
+
+            Task {
+                try await secondSync.sync(
+                    requestPriority: .high,
+                    country: nil,
+                    language: LanguageCodeDomainModel.english.value,
+                    forceNewSync: true
+                )
+            }
+        }
 
         let defaultOrder: PersonalizedToolsDataModel? = try cache.persistence.getDataModel(
             id: TestPersonalizedToolsSyncId.defaultOrderEnglish
         )
 
         #expect(defaultOrder?.resourceIds == ["tool-3"])
-        #expect(changeCounter.count >= 1)
+        #expect(observersWereNotified)
     }
 }
 
