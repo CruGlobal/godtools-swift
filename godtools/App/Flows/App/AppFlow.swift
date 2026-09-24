@@ -25,7 +25,6 @@ final class AppFlow: RootFlow {
     private let deepLinkingService: DeepLinkingService
     private let appMessaging: AppMessagingInterface
     private let appLaunchObserver: AppLaunchObserver = AppLaunchObserver()
-    private let launchCountRepository: LaunchCountRepositoryInterface
     private let launchCountTracker: LaunchCountTracker
     private let dashboardFlow: DashboardFlow
     private let swiftDataMigration: SwiftDataMigration
@@ -59,7 +58,6 @@ final class AppFlow: RootFlow {
         self.rootController = rootController
         self.deepLinkingService = appDeepLinkingService
         self.appMessaging = appDiContainer.core.dataLayer.getAppMessaging()
-        self.launchCountRepository = appDiContainer.core.dataLayer.getLaunchCountRepository()
         self.launchCountTracker = appDiContainer.core.dataLayer.getLaunchCountTracker()
         self.swiftDataMigration = appDiContainer.core.dataLayer.getSwiftDataMigration()
         
@@ -165,10 +163,6 @@ final class AppFlow: RootFlow {
                     
                     await launchCountTracker.incrementLaunchCountIfNeeded()
                     
-                    let launchCount: Int = launchCountRepository.getLaunchCount()
-                    let hasPossibleDeferredDeepLinkInPasteboardForDynalink: Bool = UIPasteboard.general.hasURLs
-                    let shouldOpenPasteboardForDeferredDeepLink: Bool = launchCount == 1 && hasPossibleDeferredDeepLinkInPasteboardForDynalink
-                    
                     let onboardingTutorialIsAvailable: Bool = await appDiContainer.feature.onboarding.domainLayer.getOnboardingTutorialIsAvailableUseCase().execute()
                     
                     if !onboardingTutorialIsAvailable {
@@ -185,10 +179,6 @@ final class AppFlow: RootFlow {
                         
                         appLaunchedFromDeepLink = nil
                         navigate(step: AppFlowStep.deepLink(deepLinkType: deepLink))
-                    }
-                    else if shouldOpenPasteboardForDeferredDeepLink {
-                        
-                        navigate(step: AppFlowStep.showDeferredDeepLinkModal)
                     }
                     else if onboardingTutorialIsAvailable {
                         
@@ -239,20 +229,6 @@ final class AppFlow: RootFlow {
                 }
             )
  
-        case .showDeferredDeepLinkModal:
-            
-            let deferredDeepLinkModal = getDeferredDeepLinkModal()
-            presentView(view: deferredDeepLinkModal, animated: true)
-            
-        case .handleDeepLinkFromDeferredDeepLinkModal(let deepLink):
-            dismissView(animated: false, completion: { [weak self] in
-                self?.navigate(step: AppFlowStep.deepLink(deepLinkType: deepLink))
-            })
-          
-        case .closeTappedFromDeferredDeepLinkModal:
-            dashboardFlow.navigateToDashboard()
-            dismissView(animated: true)
-            
         case .onboardingFlowCompleted( _):
             
             pushFlow(flow: dashboardFlow, animated: false)
@@ -558,28 +534,6 @@ extension AppFlow {
                 flow: TutorialFlow(appDiContainer: appDiContainer)
             )
         }
-    }
-    
-    private func getDeferredDeepLinkModal() -> UIViewController {
-        
-        let viewModel = DeferredDeepLinkModalViewModel(
-            stepEmitter: stepEmitter,
-            getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
-            getDeferredDeepLinkModalStringsUseCase: appDiContainer.feature.deferredDeepLink.domainLayer.getDeferredDeepLinkModalStringsUseCase(),
-            trackActionAnalyticsUseCase: appDiContainer.core.domainLayer.getTrackActionAnalyticsUseCase(),
-            deepLinkingService: deepLinkingService
-        )
-        
-        let view = DeferredDeepLinkModalView(viewModel: viewModel)
-        
-        let hostingController = AppHostingController<DeferredDeepLinkModalView>(
-            rootView: view,
-            navigationBar: nil
-        )
-        
-        hostingController.modalPresentationStyle = .fullScreen
-        
-        return hostingController
     }
     
     private func pushArticleFlow(aemUri: String) {

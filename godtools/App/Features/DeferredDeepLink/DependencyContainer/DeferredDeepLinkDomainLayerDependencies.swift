@@ -19,12 +19,6 @@ final class DeferredDeepLinkDomainLayerDependencies: Sendable {
         self.dataLayer = dataLayer
     }
     
-    func getDeferredDeepLinkModalStringsUseCase() -> GetDeferredDeepLinkModalStringsUseCase {
-        return GetDeferredDeepLinkModalStringsUseCase(
-            localizationServices: core.dataLayer.getLocalizationServices()
-        )
-    }
-    
     func getDeferredDeepLinkUseCase() -> GetDeferredDeepLinkUseCaseInterface {
         
         guard core.dataLayer.getAppBuild().target != .uiTests else {

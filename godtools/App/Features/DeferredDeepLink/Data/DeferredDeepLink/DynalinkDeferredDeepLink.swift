@@ -9,7 +9,7 @@
 import Foundation
 import DynalinksSDK
 
-final class DynalinkDeferredDeepLink: Sendable {
+final class DynalinkDeferredDeepLink: DynalinkDeferredDeepLinkInterface {
     
     private let errorReporting: ErrorReportingInterface
     
