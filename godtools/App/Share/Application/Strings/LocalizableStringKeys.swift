@@ -51,8 +51,6 @@ enum LocalizableStringKeys: String {
     case dashboardPersonalizedToolToggleAllLessonsTitle = "dashboard.personalizedToolToggle.allLessonsTitle"
     case dashboardPersonalizedToolToggleAllToolsTitle = "dashboard.personalizedToolToggle.allToolsTitle"
     case dashboardPersonalizedToolTogglePersonalizedTitle = "dashboard.personalizedToolToggle.personalizedTitle"
-    case deferredDeepLinkModalTitle = "deferredDeepLinkModal.title"
-    case deferredDeepLinkModalMessage = "deferredDeepLinkModal.message"
     case deleteAccountTitle = "deleteAccount.title"
     case deleteAccountSubtitle = "deleteAccount.subtitle"
     case deleteAccountConfirmButtonTitle = "deleteAccount.confirmButton.title"
