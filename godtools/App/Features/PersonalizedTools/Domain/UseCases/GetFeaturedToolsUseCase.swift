@@ -69,8 +69,7 @@ final class GetFeaturedToolsUseCase: Sendable {
             return AnyPublisher() {
                 try await self.getFeaturedTools(
                     appLanguage: appLanguage,
-                    countryIsoRegionCode: countryIsoRegionCode,
-                    languageIdForAvailabilityText: appLanguage
+                    countryIsoRegionCode: countryIsoRegionCode
                 )
             }
         })
@@ -79,11 +78,10 @@ final class GetFeaturedToolsUseCase: Sendable {
     
     private func getFeaturedTools(
         appLanguage: AppLanguageDomainModel,
-        countryIsoRegionCode: String,
-        languageIdForAvailabilityText: String?
+        countryIsoRegionCode: String
     ) async throws -> [FeaturedToolListItemDomainModel] {
-        
-        let languageForAvailabilityTextModel: LanguageDataModel? = getLanguage(id: languageIdForAvailabilityText)
+
+        let languageForAvailabilityTextModel: LanguageDataModel? = languagesRepository.getLanguageByCode(code: appLanguage)
         
         let strings: ToolListItemStringsDomainModel = getToolListItemStrings.getStrings(appLanguage: appLanguage)
 
@@ -133,14 +131,5 @@ final class GetFeaturedToolsUseCase: Sendable {
         }
 
         return featuredTools
-    }
-    
-    private func getLanguage(id: String?) -> LanguageDataModel? {
-        
-        guard let id = id else {
-            return nil
-        }
-        
-        return languagesRepository.getLanguageById(id: id)
     }
 }

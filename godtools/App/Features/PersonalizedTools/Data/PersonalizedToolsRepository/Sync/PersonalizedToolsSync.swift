@@ -126,9 +126,20 @@ final class PersonalizedToolsSync: Sendable {
             )
         }
         
+        let resourceIds: [String] = resourceCodables.map { $0.id }
+
+        let cachedResourceIds: [String]? = try cache.persistence.getDataModel(id: personalizedToolId.value)?.resourceIds
+
+        guard resourceIds != (cachedResourceIds ?? []) else {
+
+            await syncInvalidator.didSync()
+
+            return
+        }
+
         let dataModel = try PersonalizedToolsDataModel(
             type: type,
-            resourceIds: resourceCodables.map { $0.id }
+            resourceIds: resourceIds
         )
 
         _ = try await cache.persistence.writeObjects(externalObjects: [dataModel])

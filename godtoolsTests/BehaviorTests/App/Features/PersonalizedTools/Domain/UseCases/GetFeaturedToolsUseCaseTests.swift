@@ -19,8 +19,8 @@ private enum TestFeaturedToolsLanguageId {
 }
 
 private enum TestFeaturedToolsCountry {
-    static let unitedStatesWithFeaturedTools: String = "us"
-    static let canadaWithoutFeaturedTools: String = "ca"
+    static let withFeaturedTools: String = "us"
+    static let withoutFeaturedTools: String = "ca"
 }
 
 private enum TestFeaturedToolsId {
@@ -81,10 +81,36 @@ struct GetFeaturedToolsUseCaseTests {
 
         let featuredTools: [FeaturedToolListItemDomainModel] = try await getFeaturedTools(
             appLanguage: LanguageCodeDomainModel.english.value,
-            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestFeaturedToolsCountry.unitedStatesWithFeaturedTools)
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestFeaturedToolsCountry.withFeaturedTools)
         )
 
         #expect(featuredTools.map({ $0.dataModelId }) == ["tool-2", "tool-1"])
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User has selected a country that has featured tools available in their app language.
+        When: Featured tools are requested.
+        Then: I expect each tool to report that it is available in my app language.
+        """
+    )
+    @MainActor func featuredToolsReportLanguageAvailabilityInMyAppLanguage() async throws {
+
+        let featuredTools: [FeaturedToolListItemDomainModel] = try await getFeaturedTools(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestFeaturedToolsCountry.withFeaturedTools)
+        )
+
+        #expect(!featuredTools.isEmpty)
+
+        for featuredTool in featuredTools {
+
+            let languageAvailability: ToolLanguageAvailabilityDomainModel = try #require(featuredTool.languageAvailability)
+
+            #expect(languageAvailability.isAvailable)
+            #expect(!languageAvailability.availabilityString.isEmpty)
+        }
     }
 
     @available(iOS 17.4, *)
@@ -99,7 +125,7 @@ struct GetFeaturedToolsUseCaseTests {
 
         let featuredTools: [FeaturedToolListItemDomainModel] = try await getFeaturedTools(
             appLanguage: LanguageCodeDomainModel.english.value,
-            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestFeaturedToolsCountry.unitedStatesWithFeaturedTools)
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestFeaturedToolsCountry.withFeaturedTools)
         )
 
         #expect(!featuredTools.map({ $0.dataModelId }).contains("tool-hidden"))
@@ -117,7 +143,7 @@ struct GetFeaturedToolsUseCaseTests {
 
         let featuredTools: [FeaturedToolListItemDomainModel] = try await getFeaturedTools(
             appLanguage: LanguageCodeDomainModel.english.value,
-            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestFeaturedToolsCountry.canadaWithoutFeaturedTools)
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestFeaturedToolsCountry.withoutFeaturedTools)
         )
 
         #expect(featuredTools.isEmpty)
@@ -135,7 +161,7 @@ struct GetFeaturedToolsUseCaseTests {
 
         let featuredTools: [FeaturedToolListItemDomainModel] = try await getFeaturedTools(
             appLanguage: LanguageCodeDomainModel.french.value,
-            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestFeaturedToolsCountry.unitedStatesWithFeaturedTools)
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestFeaturedToolsCountry.withFeaturedTools)
         )
 
         #expect(featuredTools.isEmpty)
