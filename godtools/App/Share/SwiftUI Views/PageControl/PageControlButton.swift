@@ -48,14 +48,11 @@ struct PageControlButton: View {
     }
 }
 
-struct PageControlButton_Previews: PreviewProvider {
+#Preview {
     
-    @State private static var currentPage: Int = 1
+    let currentPage: Int = 1
     
-    static var previews: some View {
-        
-        let attributes = PageControlAttributes(deselectedColor: .gray, selectedColor: .blue, circleSize: 10, circleSpacing: 20)
-        
-        PageControlButton(page: 0, attributes: attributes, currentPage: $currentPage)
-    }
+    let attributes = PageControlAttributes(deselectedColor: .gray, selectedColor: .blue, circleSize: 10, circleSpacing: 20)
+    
+    PageControlButton(page: 0, attributes: attributes, currentPage: .constant(currentPage))
 }
