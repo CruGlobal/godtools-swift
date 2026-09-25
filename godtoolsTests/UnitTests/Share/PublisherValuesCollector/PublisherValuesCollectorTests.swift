@@ -137,6 +137,44 @@ struct PublisherValuesCollectorTests {
     }
 
     @Test
+    @MainActor func cancellingBeforeTheWaitStartsThrowsCancellationError() async {
+
+        let waitTask: Task<Int, Error> = Task { @MainActor in
+            try await PassthroughSubject<Int, Never>().awaitFirstValue()
+        }
+
+        waitTask.cancel()
+
+        await #expect(throws: CancellationError.self) {
+            try await waitTask.value
+        }
+    }
+
+    @Test
+    @MainActor func cancellingWhileWaitingForAValueThrowsCancellationError() async {
+
+        let (subscribedStream, subscribedContinuation): (AsyncStream<Void>, AsyncStream<Void>.Continuation) = AsyncStream.makeStream(of: Void.self)
+
+        let waitTask: Task<Int, Error> = Task { @MainActor in
+            try await PassthroughSubject<Int, Never>()
+                .handleEvents(receiveSubscription: { _ in
+                    subscribedContinuation.yield()
+                })
+                .awaitFirstValue()
+        }
+
+        for await _ in subscribedStream {
+            break
+        }
+
+        waitTask.cancel()
+
+        await #expect(throws: CancellationError.self) {
+            try await waitTask.value
+        }
+    }
+
+    @Test
     @MainActor func racingAValueAgainstTheTimeoutResumesExactlyOnce() async {
 
         for _ in 0 ..< Self.raceIterationCount {

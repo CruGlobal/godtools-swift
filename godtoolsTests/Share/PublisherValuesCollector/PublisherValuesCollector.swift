@@ -145,29 +145,22 @@ final class PublisherValuesCollector<Output>: @unchecked Sendable {
             return
         }
 
-        let whileObservingTask: Task<Void, Never> = Task { [weak self] in
-
-            do {
-                try await whileObserving()
-            }
-            catch let error {
-                self?.finish(reason: .failed(error: error))
-            }
-        }
-
         lock.lock()
 
-        let isFinished: Bool = self.isFinished
-
         if !isFinished {
-            self.whileObservingTask = whileObservingTask
+
+            whileObservingTask = Task { [weak self] in
+
+                do {
+                    try await whileObserving()
+                }
+                catch let error {
+                    self?.finish(reason: .failed(error: error))
+                }
+            }
         }
 
         lock.unlock()
-
-        if isFinished {
-            whileObservingTask.cancel()
-        }
     }
 
     private func finish(reason: FinishReason) {
