@@ -174,7 +174,8 @@ final class PublisherValuesCollector<Output>: @unchecked Sendable {
 
         isFinished = true
 
-        let result: Result<[Output], Error> = getResult(reason: reason)
+        let hasReceivedExpectedValues: Bool = values.count >= expectedValueCount
+        let result: Result<[Output], Error> = getResult(reason: hasReceivedExpectedValues ? .receivedExpectedValues : reason)
         let continuation: CheckedContinuation<[Output], Error>? = self.continuation
         let cancellable: AnyCancellable? = self.cancellable
         let timeoutTask: Task<Void, Never>? = self.timeoutTask
