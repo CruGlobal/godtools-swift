@@ -6,50 +6,67 @@
 //  Copyright © 2022 Cru. All rights reserved.
 //
 
-import UIKit
-import Lottie
 import SwiftUI
+import Lottie
 
-struct AnimatedSwiftUIView: UIViewRepresentable {
+struct AnimatedSwiftUIView: View {
     
     private let viewModel: AnimatedViewModel
-    private let contentMode: UIView.ContentMode
+    private let contentMode: ContentMode
     
-    init(viewModel: AnimatedViewModel, contentMode: UIView.ContentMode) {
+    init(viewModel: AnimatedViewModel, contentMode: ContentMode) {
         
         self.viewModel = viewModel
         self.contentMode = contentMode
     }
     
-    func makeUIView(context: Context) -> UIView {
-                
-        let view: UIView = UIView(frame: .zero)
+    var body: some View {
         
-        let animationView: LottieAnimationView = LottieAnimationView()
+        RetainedAnimationLottieView(viewModel: viewModel, contentMode: contentMode)
+            .id(viewModel.animationDataResource)
+    }
+}
+
+private struct RetainedAnimationLottieView: View {
+    
+    private let viewModel: AnimatedViewModel
+    private let contentMode: ContentMode
+    
+    @State private var animation: LottieAnimation?
+    
+    init(viewModel: AnimatedViewModel, contentMode: ContentMode) {
         
-        animationView.animation = viewModel.animationData
-        animationView.loopMode = viewModel.loop ? .loop : .playOnce
-        animationView.contentMode = contentMode
-                
-        if viewModel.autoPlay {
-            animationView.play()
-        }
-        else {
-            animationView.stop()
-        }
-        
-        animationView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(animationView)
-                
-        NSLayoutConstraint.activate([
-            animationView.heightAnchor.constraint(equalTo: view.heightAnchor),
-            animationView.widthAnchor.constraint(equalTo: view.widthAnchor)
-        ])
-        
-        return view
+        self.viewModel = viewModel
+        self.contentMode = contentMode
+        _animation = State(initialValue: viewModel.animationData)
     }
     
-    func updateUIView(_ uiView: UIView, context: Context) {
+    var body: some View {
         
+        LottieView(animation: animation)
+            .playbackMode(playbackMode)
+            .resizable()
+            .configure(\.contentMode, to: animationViewContentMode)
+    }
+    
+    private var playbackMode: LottiePlaybackMode {
+        
+        guard viewModel.autoPlay else {
+            return .paused(at: .frame(0))
+        }
+        
+        let loopMode: LottieLoopMode = viewModel.loop ? .loop : .playOnce
+        
+        return .playing(.fromProgress(nil, toProgress: 1, loopMode: loopMode))
+    }
+    
+    private var animationViewContentMode: UIView.ContentMode {
+        
+        switch contentMode {
+        case .fit:
+            return .scaleAspectFit
+        case .fill:
+            return .scaleAspectFill
+        }
     }
 }
