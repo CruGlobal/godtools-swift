@@ -50,7 +50,7 @@ struct OnboardingTutorialMediaView: View {
             
             AnimatedSwiftUIView(
                 viewModel: viewModel.getAnimationViewModel(),
-                contentMode: .scaleAspectFill
+                contentMode: .fill
             )
             .frame(width: animationWidth, height: animationHeight)
             .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30))

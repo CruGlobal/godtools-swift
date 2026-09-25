@@ -36,7 +36,7 @@ struct ToolDetailsMediaView: View {
                 
                 AnimatedSwiftUIView(
                     viewModel: viewModel,
-                    contentMode: .scaleAspectFill
+                    contentMode: .fill
                 )
                 .frame(width: mediaViewSize.width, height: mediaViewSize.height)
             
