@@ -33,8 +33,6 @@
 "toolSettings.chooseLanguage.title" = "Parallellspråk";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallell";
 "toolSettings.shareables.title" = "Relaterte grafikker";
-"allTools.spotlight.title" = "Framhevede verktøy";
-"allTools.spotlight.description" = "Her er noen verktøy vi tror du vil like";
 "tool_menu_item.lessons" = "Leksjoner";
 
 "onboardingTutorial.beginButton.title" = "Begynn";

@@ -122,8 +122,6 @@
 "toolSettings.chooseLanguage.title" = "병행 언어";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "병행";
 "toolSettings.shareables.title" = "관련 그래픽";
-"allTools.spotlight.title" = "도구 스포트라이트";
-"allTools.spotlight.description" = "좋아할 수도 있는 도구를 소개합니다";
 "training_tip_ask" = "요청";
 "training_tip_consider" = "고려";
 "training_tip_prepare" = "준비";
