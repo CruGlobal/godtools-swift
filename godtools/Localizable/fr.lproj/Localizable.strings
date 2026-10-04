@@ -122,8 +122,6 @@
 "toolSettings.chooseLanguage.title" = "Langue secondaire";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "secondaire";
 "toolSettings.shareables.title" = "Graphiques connexes";
-"allTools.spotlight.title" = "Pleins feux sur les outils";
-"allTools.spotlight.description" = "Voici quelques outils qui pourraient vous intéresser";
 "training_tip_ask" = "Demandez";
 "training_tip_consider" = "Considérez";
 "training_tip_prepare" = "Préparez";

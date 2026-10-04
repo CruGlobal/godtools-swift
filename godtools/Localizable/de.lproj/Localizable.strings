@@ -136,8 +136,6 @@
 "toolSettings.chooseLanguage.title" = "Zweite Sprache";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallel";
 "toolSettings.shareables.title" = "Verwandte Grafiken";
-"allTools.spotlight.title" = "Tool-Highlights";
-"allTools.spotlight.description" = "Hier sind einige Tools, die dir gefallen könnten.";
 "training_tip_ask" = "Nachfragen";
 "training_tip_consider" = "Betrachten";
 "training_tip_prepare" = "Vorbereiten";

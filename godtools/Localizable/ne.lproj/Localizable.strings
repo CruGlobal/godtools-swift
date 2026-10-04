@@ -122,8 +122,6 @@
 "toolSettings.chooseLanguage.title" = "समानान्तर भाषा";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "समानान्तर";
 "toolSettings.shareables.title" = "सम्बन्धित ग्राफिक्स";
-"allTools.spotlight.title" = "उपकरण स्पटलाइट";
-"allTools.spotlight.description" = "यहाँ केहि उपकरणहरु छन् जुन हामीले तपाईलाई मन पर्न सक्छ";
 "training_tip_ask" = "सोध्नुहोस्";
 "training_tip_consider" = "सोच्नुहोस्";
 "training_tip_prepare" = "तयारी हुनुहोस्";

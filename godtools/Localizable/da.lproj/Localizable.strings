@@ -32,8 +32,6 @@
 "toolSettings.option.trainingTips.hide.title" = "Skjul tip";
 "toolSettings.chooseLanguage.title" = "Parallelt sprog";
 "toolSettings.shareables.title" = "Relateret grafik";
-"allTools.spotlight.title" = "Fremhævede værktøjer";
-"allTools.spotlight.description" = "Her er nogle værktøjer, vi troede, du kunne lide";
 "tool_menu_item.lessons" = "Lektioner";
 
 "onboardingTutorial.beginButton.title" = "Begynd";
