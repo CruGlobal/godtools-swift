@@ -33,8 +33,6 @@
 "toolSettings.chooseLanguage.title" = "Parallellt språk";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Parallellt";
 "toolSettings.shareables.title" = "Relevant grafiskt material";
-"allTools.spotlight.title" = "Utvalda verktyg";
-"allTools.spotlight.description" = "Här är några alternativ som vi tror att du kommer att gilla";
 "tool_menu_item.lessons" = "Lektioner";
 "tool_offline_favorite_message" = "Gör ett verktyg tillgängligt utan internetuppkoppling genom att trycka på hjärtikonen. Då läggs det till i dina favoriter.";
 
