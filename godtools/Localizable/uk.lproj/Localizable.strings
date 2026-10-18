@@ -33,8 +33,6 @@
 "toolSettings.chooseLanguage.title" = "Додаткова мова";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Додатково";
 "toolSettings.shareables.title" = "Пов'язані зображення";
-"allTools.spotlight.title" = "Огляд інструментів";
-"allTools.spotlight.description" = "Вам можуть сподобатися ці інструменти";
 "tool_menu_item.lessons" = "Уроки";
 
 "onboardingTutorial.beginButton.title" = "Почати";
