@@ -27,8 +27,6 @@
 "toolSettings.chooseLanguage.title" = "ภาษาพาราเลล";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "พาราเลล";
 "toolSettings.shareables.title" = "กราฟิกที่เกี่ยวข้อง";
-"allTools.spotlight.title" = "เครื่องมือโดดเด่น";
-"allTools.spotlight.description" = "นี่คือเครื่องมือที่เราคิดว่าคุณอาจชอบ";
 "tool_menu_item.lessons" = "บทเรียน";
 
 "onboardingTutorial.beginButton.title" = "เริ่มต้น";

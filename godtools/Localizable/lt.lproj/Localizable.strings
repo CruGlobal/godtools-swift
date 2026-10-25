@@ -33,8 +33,6 @@
 "toolSettings.chooseLanguage.title" = "Paralelinė kalba";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Paralelinė";
 "toolSettings.shareables.title" = "Susijusi grafika";
-"allTools.spotlight.title" = "Rekomenduojami įrankiai";
-"allTools.spotlight.description" = "Čia pateikiami kai kurie įrankiai, kurie mūsų manymu, jums gali patikti.";
 "tool_menu_item.lessons" = "Pamokos";
 
 "onboardingTutorial.beginButton.title" = "Pradėti";
