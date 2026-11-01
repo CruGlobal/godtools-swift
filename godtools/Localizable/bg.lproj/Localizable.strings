@@ -33,8 +33,6 @@
 "toolSettings.chooseLanguage.title" = "Успореден език";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Още един";
 "toolSettings.shareables.title" = "Свързани изображения";
-"allTools.spotlight.title" = "Осветяване на приложения";
-"allTools.spotlight.description" = "Ето някои приложения, които мислим, че ще ви харесат";
 "training_tip_ask" = "Задай въпрос";
 "training_tip_consider" = "Обмисли";
 "close" = "Затвори";

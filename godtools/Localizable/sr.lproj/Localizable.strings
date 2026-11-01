@@ -33,8 +33,6 @@
 "toolSettings.chooseLanguage.title" = "Паралелни језик";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Паралелни";
 "toolSettings.shareables.title" = "Повезане графике";
-"allTools.spotlight.title" = "Издвојени алат";
-"allTools.spotlight.description" = "Ево неких алата који би вам се могли свидети";
 "tool_menu_item.lessons" = "Лекције";
 
 "onboardingTutorial.beginButton.title" = "Почни";

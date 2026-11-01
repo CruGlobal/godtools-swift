@@ -122,8 +122,6 @@
 "toolSettings.chooseLanguage.title" = "اللغة الموازية";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "الموازية";
 "toolSettings.shareables.title" = "الرسومات ذات الصلة";
-"allTools.spotlight.title" = "تسليط الضوء على الأداة";
-"allTools.spotlight.description" = "إليك بعض الأدوات التي نعتقد أنها قد تنال إعجابك";
 "training_tip_ask" = "إسأل";
 "training_tip_consider" = "فكر فيه";
 "training_tip_prepare" = "حضر";

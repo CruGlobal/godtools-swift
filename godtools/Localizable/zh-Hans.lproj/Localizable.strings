@@ -122,8 +122,6 @@
 "toolSettings.chooseLanguage.title" = "平行显示语言";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "同步 ";
 "toolSettings.shareables.title" = "相关图片";
-"allTools.spotlight.title" = "热门工具";
-"allTools.spotlight.description" = "这是我们觉得你可能喜欢的一些工具";
 "training_tip_ask" = "提问";
 "training_tip_consider" = "考虑";
 "training_tip_prepare" = "准备";
