@@ -122,8 +122,6 @@
 "toolSettings.chooseLanguage.title" = "Idioma paralelo";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Paralelo";
 "toolSettings.shareables.title" = "Gráficos relacionados";
-"allTools.spotlight.title" = "Herramientas destacadas";
-"allTools.spotlight.description" = "Estas son algunas herramientas que pensamos que podrían gustarle";
 "training_tip_ask" = "Pregunta";
 "training_tip_consider" = "Considera";
 "training_tip_prepare" = "Prepara";

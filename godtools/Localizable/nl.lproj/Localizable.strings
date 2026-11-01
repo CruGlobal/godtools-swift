@@ -32,8 +32,6 @@
 "toolSettings.option.trainingTips.hide.title" = "Tips verbergen";
 "toolSettings.chooseLanguage.title" = "Parallelle Taal";
 "toolSettings.shareables.title" = "Relevante afbeeldingen";
-"allTools.spotlight.title" = "Uitgelicht";
-"allTools.spotlight.description" = "Hier zijn wat tools die vast zullen bevallen";
 "tool_menu_item.lessons" = "Lessen";
 
 /* This is a tutorial phrase and is optional to translate. The tutorial is not shown in every language. Usually just with those that have lessons and tips translated. */

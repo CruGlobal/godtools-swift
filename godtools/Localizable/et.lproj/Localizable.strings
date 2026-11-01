@@ -33,8 +33,6 @@
 "toolSettings.chooseLanguage.title" = "Teine keel";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Teine";
 "toolSettings.shareables.title" = "Seotud pildid";
-"allTools.spotlight.title" = "Esiletõstetud tööriistad";
-"allTools.spotlight.description" = "Siit leiad mõned tööriistad, mis sulle meeldida võiksid.";
 "tool_menu_item.lessons" = "Koolitus";
 "tool_offline_favorite_message" = "Tee tööriist kättesaadavaks võrguühenduseta, puudutades südameikoonil, et lisada see lemmikute hulka.";
 

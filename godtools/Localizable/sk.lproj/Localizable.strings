@@ -33,8 +33,6 @@
 "toolSettings.chooseLanguage.title" = "Vedľajší jazyk";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Vedľajší";
 "toolSettings.shareables.title" = "Súvisiaca grafika";
-"allTools.spotlight.title" = "Výber nástrojov";
-"allTools.spotlight.description" = "Tu nájdete niektoré nástroje, o ktorých sa domnievame, že by sa vám mohli páčiť";
 "tool_menu_item.lessons" = "Lekcie";
 
 "onboardingTutorial.beginButton.title" = "Začať";
