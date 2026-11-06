@@ -20,6 +20,7 @@ final class GetLessonsStringsUseCase: Sendable {
     func execute(translateInLanguage: AppLanguageDomainModel) -> LessonsStringsDomainModel {
 
         let titleKey: String = LocalizableStringKeys.lessonsPageTitle.key
+        let allTitleKey: String = LocalizableStringKeys.toolMenuItemLessons.key
         let subtitleKey: String = LocalizableStringKeys.lessonsPageSubtitle.key
         let featuredTitleKey: String = LocalizableStringKeys.lessonsFeaturedTitle.key
         let featuredSubtitleKey: String = LocalizableStringKeys.lessonsFeaturedSubtitle.key
@@ -34,6 +35,7 @@ final class GetLessonsStringsUseCase: Sendable {
         let strings: [String: String] = localizationServices.stringsForKeys(
             keys: [
                 titleKey,
+                allTitleKey,
                 subtitleKey,
                 featuredTitleKey,
                 featuredSubtitleKey,
@@ -51,6 +53,7 @@ final class GetLessonsStringsUseCase: Sendable {
 
         return LessonsStringsDomainModel(
             title: strings[titleKey] ?? "",
+            allTitle: strings[allTitleKey] ?? "",
             subtitle: strings[subtitleKey] ?? "",
             featuredTitle: strings[featuredTitleKey] ?? "",
             featuredSubtitle: strings[featuredSubtitleKey] ?? "",

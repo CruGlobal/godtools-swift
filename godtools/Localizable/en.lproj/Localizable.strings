@@ -422,5 +422,7 @@ Press the About button on any tool for more info.";
 
 "shareToolQrCode.message" = "Share by QR Code";
 
+"tools.pageTitle" = "Tools made for you";
+"tools.pageSubtitle" = "Unique tools designed to help you have more and better conversations about Jesus.";
 "tools.featured.title" = "Featured";
 "tools.featured.subtitle" = "Here are some tools we thought you might like";

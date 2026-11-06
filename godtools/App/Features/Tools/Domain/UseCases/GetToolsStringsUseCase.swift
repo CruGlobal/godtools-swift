@@ -19,6 +19,9 @@ final class GetToolsStringsUseCase: Sendable {
     
     func execute(translateInLanguage: AppLanguageDomainModel) -> ToolsStringsDomainModel {
 
+        let titleKey: String = LocalizableStringKeys.toolsPageTitle.key
+        let allTitleKey: String = LocalizableStringKeys.toolMenuItemTools.key
+        let subtitleKey: String = LocalizableStringKeys.toolsPageSubtitle.key
         let favoritingToolBannerMessageKey: String = LocalizableStringKeys.toolOfflineFavoriteMessage.key
         let featuredToolsTitleKey: String = LocalizableStringKeys.toolsFeaturedTitle.key
         let featuredToolsSubtitleKey: String = LocalizableStringKeys.toolsFeaturedSubtitle.key
@@ -32,6 +35,9 @@ final class GetToolsStringsUseCase: Sendable {
 
         let strings: [String: String] = localizationServices.stringsForKeys(
             keys: [
+                titleKey,
+                allTitleKey,
+                subtitleKey,
                 favoritingToolBannerMessageKey,
                 featuredToolsTitleKey,
                 featuredToolsSubtitleKey,
@@ -48,6 +54,9 @@ final class GetToolsStringsUseCase: Sendable {
         )
 
         return ToolsStringsDomainModel(
+            title: strings[titleKey] ?? "",
+            allTitle: strings[allTitleKey] ?? "",
+            subtitle: strings[subtitleKey] ?? "",
             favoritingToolBannerMessage: strings[favoritingToolBannerMessageKey] ?? "",
             featuredToolsTitle: strings[featuredToolsTitleKey] ?? "",
             featuredToolsSubtitle: strings[featuredToolsSubtitleKey] ?? "",

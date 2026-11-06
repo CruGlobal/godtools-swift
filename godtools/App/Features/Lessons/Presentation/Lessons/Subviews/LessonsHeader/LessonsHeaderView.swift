@@ -21,7 +21,7 @@ struct LessonsHeaderView: View {
         
         VStack(alignment: .leading, spacing: 0) {
             
-            Text(viewModel.strings.title)
+            Text(viewModel.headerTitle)
                 .font(FontLibrary.sfProTextRegular.font(size: 28))
                 .foregroundColor(ColorPalette.gtGrey.color)
                         

@@ -265,6 +265,16 @@ final class LessonsViewModel: ObservableObject {
         pullToRefreshLessonsTask?.cancel()
     }
 
+    var headerTitle: String {
+        
+        switch selectedToggle {
+        case .personalized:
+            return strings.title
+        case .all:
+            return strings.allTitle
+        }
+    }
+
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
         let strings = getLessonsStringsUseCase
