@@ -18,7 +18,6 @@ protocol AppConfigInterface: Sendable {
     var isOptInNotificationModalEnabled: Bool { get }
     var shouldSyncInitialLanguages: Bool { get }
     var shouldSyncInitialResources: Bool { get }
-    var showsPersonalization: Bool { get }
     var urlRequestsEnabled: Bool { get }
     
     func getAppleAppId() -> String

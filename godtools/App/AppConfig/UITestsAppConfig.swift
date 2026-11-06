@@ -13,7 +13,6 @@ import SwiftData
 
 final class UITestsAppConfig: AppConfigInterface {
     
-    let showsPersonalization: Bool = true
     
     init() {
         

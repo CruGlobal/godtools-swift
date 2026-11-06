@@ -84,15 +84,7 @@ final class OnboardingFlow: GTFlow {
             case .userChoseAppLanguage(let appLanguage):
                 
                 onboardingSettings.setAppLanguage(appLanguage: appLanguage)
-                
-                guard GodToolsApp.showsPersonalization else {
-                    removeAllFlows()
-                    if let tutorialVC = onboardingTutorialViewController {
-                        navigationController.popToViewController(tutorialVC, animated: true)
-                    }
-                    return
-                }
-                
+
                 navigateToLocalizationSettings()
             }
             
@@ -144,27 +136,20 @@ final class OnboardingFlow: GTFlow {
                 
                 trackOnboardingStartAnalytics(onboardingTutorialView: onboardingTutorialView)
             }
-            else if !GodToolsApp.showsPersonalization {
-                
-                navigateToNextTutorialPage(onboardingTutorialView: onboardingTutorialView)
+            else if onboardingSettings.appLanguage == nil {
+
+                pushFlow(
+                    flow: ChooseAppLanguageFlow(appDiContainer: appDiContainer),
+                    animated: true
+                )
+            }
+            else if onboardingSettings.country == nil {
+
+                navigateToLocalizationSettings()
             }
             else {
-                                
-                if onboardingSettings.appLanguage == nil {
-                    
-                    pushFlow(
-                        flow: ChooseAppLanguageFlow(appDiContainer: appDiContainer),
-                        animated: true
-                    )
-                }
-                else if onboardingSettings.country == nil {
-                    
-                    navigateToLocalizationSettings()
-                }
-                else {
-                    
-                    navigateToNextTutorialPage(onboardingTutorialView: onboardingTutorialView)
-                }
+
+                navigateToNextTutorialPage(onboardingTutorialView: onboardingTutorialView)
             }
             
         case .endTutorialFromOnboardingTutorial:

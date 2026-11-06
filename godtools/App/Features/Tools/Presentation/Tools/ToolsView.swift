@@ -31,7 +31,7 @@ struct ToolsView: View {
             
             VStack(alignment: .center, spacing: 0) {
 
-                if GodToolsApp.showsPersonalization {
+                if viewModel.personalizationIsEnabled {
                     
                     PersonalizedToolToggle(
                         geometry: geometry,
@@ -63,7 +63,7 @@ struct ToolsView: View {
                             .padding(.vertical, 16)
                             .padding(.horizontal, contentHorizontalInsets)
 
-                        if !viewModel.featuredTools.isEmpty {
+                        if viewModel.personalizationIsEnabled && !viewModel.featuredTools.isEmpty {
 
                             FeaturedToolsView(
                                 viewModel: viewModel,
@@ -169,6 +169,7 @@ struct AllToolsView_Preview: PreviewProvider {
             getToolsStringsUseCase: appDiContainer.feature.tools.domainLayer.getToolsStringsUseCase(),
             getAllToolsUseCase: appDiContainer.feature.tools.domainLayer.getAllToolsUseCase(),
             getPersonalizedToolsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedToolsUseCase(),
+            getPersonalizationEnabledUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizationEnabledUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsUseCase(),
             favoritingToolMessageCache: appDiContainer.core.dataLayer.getFavoritingToolMessageCache(),

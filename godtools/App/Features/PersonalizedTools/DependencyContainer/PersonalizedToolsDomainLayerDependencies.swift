@@ -87,7 +87,14 @@ final class PersonalizedToolsDomainLayerDependencies: Sendable {
         )
     }
 
-    func getPersonalizedLessonFilterLanguagesStringsUseCase() -> GetPersonalizedLessonFilterLanguagesStringsUseCase {
+    func getPersonalizationEnabledUseCase() -> GetPersonalizationEnabledUseCase {
+
+        return GetPersonalizationEnabledUseCase(
+            remoteConfigRepository: core.dataLayer.getRemoteConfigRepository()
+        )
+    }
+
+    func getPersonalizedLessonFilterLanguagesStringsUseCase() ->GetPersonalizedLessonFilterLanguagesStringsUseCase {
 
         return GetPersonalizedLessonFilterLanguagesStringsUseCase(
             localizationServices: core.dataLayer.getLocalizationServices()
