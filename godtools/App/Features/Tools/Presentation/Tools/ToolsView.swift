@@ -63,7 +63,7 @@ struct ToolsView: View {
                             .padding(.vertical, 16)
                             .padding(.horizontal, contentHorizontalInsets)
 
-                        if viewModel.personalizationIsEnabled && !viewModel.featuredTools.isEmpty {
+                        if viewModel.selectedToggle == .personalized && !viewModel.featuredTools.isEmpty {
 
                             FeaturedToolsView(
                                 viewModel: viewModel,

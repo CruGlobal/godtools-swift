@@ -58,7 +58,7 @@ struct LessonsView: View {
                             .padding(.vertical, 16)
                             .padding(.horizontal, contentHorizontalInsets)
 
-                        if viewModel.personalizationIsEnabled && !viewModel.featuredLessons.isEmpty {
+                        if viewModel.selectedToggle == .personalized && !viewModel.featuredLessons.isEmpty {
 
                             FeaturedLessonsView(
                                 viewModel: viewModel,
