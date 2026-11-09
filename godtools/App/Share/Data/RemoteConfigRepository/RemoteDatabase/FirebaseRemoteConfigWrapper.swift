@@ -22,6 +22,13 @@ actor FirebaseRemoteConfigWrapper: RemoteConfigRemoteDatabaseInterface {
         settings.minimumFetchInterval = secondsInHour * minFetchInHours
         
         remoteConfig.configSettings = settings
+
+        remoteConfig.setDefaults([
+            "ui_dashboard_personalization_enabled": true as NSNumber,
+            "ui_opt_in_notification_enabled": true as NSNumber,
+            "ui_opt_in_notification_time_interval": 41 as NSNumber,
+            "ui_opt_in_notification_prompt_limit": 5 as NSNumber
+        ])
     }
     
     func syncFromRemoteDatabase() async throws {
