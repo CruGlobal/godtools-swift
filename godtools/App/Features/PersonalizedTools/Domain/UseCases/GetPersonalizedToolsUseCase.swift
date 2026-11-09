@@ -116,6 +116,7 @@ final class GetPersonalizedToolsUseCase: Sendable {
                 resourceTypes: ResourceType.toolTypes,
                 sortByResponse: true
             )
+            .filter { !$0.isHidden }
     }
 
     private func getToolsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedToolsUnavailableDomainModel {

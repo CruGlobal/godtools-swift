@@ -37,6 +37,7 @@ struct GetPersonalizedToolsUseCaseTests {
     struct ToolFixture {
         let id: String
         let resourceType: ResourceType
+        let isHidden: Bool
         let languageCodes: [LanguageCodeDomainModel]
     }
 
@@ -181,6 +182,44 @@ struct GetPersonalizedToolsUseCaseTests {
         )
 
         #expect(!personalizedTools.tools.map({ $0.id }).contains("lesson-1"))
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: A ranked tool for the user's selected country is hidden.
+        When: Personalized tools are requested.
+        Then: I expect the hidden tool to be excluded.
+        """
+    )
+    @MainActor func hiddenRankedToolsAreExcludedFromPersonalizedTools() async throws {
+
+        let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestPersonalizedToolsCountry.unitedStatesWithRankedTools),
+            filterByLanguageId: nil
+        )
+
+        #expect(!personalizedTools.tools.map({ $0.id }).contains("tool-hidden"))
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: A default order tool is hidden.
+        When: Personalized tools are requested.
+        Then: I expect the hidden tool to be excluded.
+        """
+    )
+    @MainActor func hiddenDefaultOrderToolsAreExcludedFromPersonalizedTools() async throws {
+
+        let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: nil,
+            filterByLanguageId: nil
+        )
+
+        #expect(!personalizedTools.tools.map({ $0.id }).contains("tool-hidden"))
     }
 
     @available(iOS 17.4, *)
@@ -406,6 +445,7 @@ extension GetPersonalizedToolsUseCaseTests {
             let resource = SwiftResource()
             resource.id = fixture.id
             resource.resourceType = fixture.resourceType.rawValue
+            resource.isHidden = fixture.isHidden
 
             for languageCode in fixture.languageCodes {
 
@@ -445,9 +485,9 @@ extension GetPersonalizedToolsUseCaseTests {
     private var resourceIdsByPersonalizedToolsId: [String: [String]] {
 
         return [
-            TestPersonalizedToolsId.defaultOrderEnglish: ["tool-2", "tool-1", "lesson-1"],
+            TestPersonalizedToolsId.defaultOrderEnglish: ["tool-2", "tool-hidden", "tool-1", "lesson-1"],
             TestPersonalizedToolsId.defaultOrderFrench: ["tool-4", "tool-1"],
-            TestPersonalizedToolsId.rankedUnitedStatesEnglish: ["tool-3", "tool-1"],
+            TestPersonalizedToolsId.rankedUnitedStatesEnglish: ["tool-3", "tool-hidden", "tool-1"],
             TestPersonalizedToolsId.rankedUnitedStatesFrench: ["tool-1"],
             TestPersonalizedToolsId.rankedMexicoEnglish: ["lesson-1"]
         ]
@@ -456,11 +496,12 @@ extension GetPersonalizedToolsUseCaseTests {
     private var allTools: [ToolFixture] {
 
         return [
-            ToolFixture(id: "tool-1", resourceType: .tract, languageCodes: [.english, .french]),
-            ToolFixture(id: "tool-2", resourceType: .tract, languageCodes: [.english]),
-            ToolFixture(id: "tool-3", resourceType: .article, languageCodes: [.english]),
-            ToolFixture(id: "tool-4", resourceType: .tract, languageCodes: [.french]),
-            ToolFixture(id: "lesson-1", resourceType: .lesson, languageCodes: [.english])
+            ToolFixture(id: "tool-1", resourceType: .tract, isHidden: false, languageCodes: [.english, .french]),
+            ToolFixture(id: "tool-2", resourceType: .tract, isHidden: false, languageCodes: [.english]),
+            ToolFixture(id: "tool-3", resourceType: .article, isHidden: false, languageCodes: [.english]),
+            ToolFixture(id: "tool-4", resourceType: .tract, isHidden: false, languageCodes: [.french]),
+            ToolFixture(id: "tool-hidden", resourceType: .tract, isHidden: true, languageCodes: [.english]),
+            ToolFixture(id: "lesson-1", resourceType: .lesson, isHidden: false, languageCodes: [.english])
         ]
     }
 }
