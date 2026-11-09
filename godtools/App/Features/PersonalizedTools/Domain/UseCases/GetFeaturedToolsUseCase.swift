@@ -14,7 +14,7 @@ final class GetFeaturedToolsUseCase: Sendable {
     private let resourcesRepository: ResourcesRepository
     private let personalizedToolsRepository: PersonalizedToolsRepository
     private let favoritedResourcesRepository: FavoritedResourcesRepository
-    private let languagesRepository: LanguagesRepository
+    private let getLanguageElseAppLanguage: GetLanguageElseAppLanguage
     private let getTranslatedToolName: GetTranslatedToolName
     private let getTranslatedToolCategory: GetTranslatedToolCategory
     private let getToolListItemStrings: GetToolListItemStrings
@@ -24,7 +24,7 @@ final class GetFeaturedToolsUseCase: Sendable {
         resourcesRepository: ResourcesRepository,
         personalizedToolsRepository: PersonalizedToolsRepository,
         favoritedResourcesRepository: FavoritedResourcesRepository,
-        languagesRepository: LanguagesRepository,
+        getLanguageElseAppLanguage: GetLanguageElseAppLanguage,
         getTranslatedToolName: GetTranslatedToolName,
         getTranslatedToolCategory: GetTranslatedToolCategory,
         getToolListItemStrings: GetToolListItemStrings,
@@ -34,7 +34,7 @@ final class GetFeaturedToolsUseCase: Sendable {
         self.resourcesRepository = resourcesRepository
         self.personalizedToolsRepository = personalizedToolsRepository
         self.favoritedResourcesRepository = favoritedResourcesRepository
-        self.languagesRepository = languagesRepository
+        self.getLanguageElseAppLanguage = getLanguageElseAppLanguage
         self.getTranslatedToolName = getTranslatedToolName
         self.getTranslatedToolCategory = getTranslatedToolCategory
         self.getToolListItemStrings = getToolListItemStrings
@@ -43,7 +43,8 @@ final class GetFeaturedToolsUseCase: Sendable {
     
     @MainActor func execute(
         appLanguage: AppLanguageDomainModel,
-        country: LocalizationSettingsCountryDomainModel?
+        country: LocalizationSettingsCountryDomainModel?,
+        filterByLanguageId: String?
     ) -> AnyPublisher<[FeaturedToolListItemDomainModel], Error> {
 
         guard let countryIsoRegionCode = country?.isoRegionCodeIfSelected else {
@@ -53,12 +54,18 @@ final class GetFeaturedToolsUseCase: Sendable {
                 .eraseToAnyPublisher()
         }
 
+        let languageCode: String = getLanguageElseAppLanguage
+            .getLanguageCode(
+                languageId: filterByLanguageId,
+                appLanguage: appLanguage
+            )
+
         return Publishers.CombineLatest(
             personalizedToolsRepository
                 .getPersonalizedToolsChanged(
                     requestPriority: .high,
                     country: countryIsoRegionCode,
-                    language: appLanguage
+                    language: languageCode
                 ),
             resourcesRepository
                 .observeCollectionChangesPublisher()
@@ -69,7 +76,9 @@ final class GetFeaturedToolsUseCase: Sendable {
             return AnyPublisher() {
                 try await self.getFeaturedTools(
                     appLanguage: appLanguage,
-                    countryIsoRegionCode: countryIsoRegionCode
+                    countryIsoRegionCode: countryIsoRegionCode,
+                    languageCode: languageCode,
+                    filterByLanguageId: filterByLanguageId
                 )
             }
         })
@@ -78,17 +87,19 @@ final class GetFeaturedToolsUseCase: Sendable {
     
     private func getFeaturedTools(
         appLanguage: AppLanguageDomainModel,
-        countryIsoRegionCode: String
+        countryIsoRegionCode: String,
+        languageCode: String,
+        filterByLanguageId: String?
     ) async throws -> [FeaturedToolListItemDomainModel] {
 
-        let languageForAvailabilityTextModel: LanguageDataModel? = languagesRepository.getLanguageByCode(code: appLanguage)
+        let languageForAvailabilityTextModel: LanguageDataModel? = getLanguageElseAppLanguage.getLanguage(languageId: filterByLanguageId, appLanguage: appLanguage)
         
         let strings: ToolListItemStringsDomainModel = getToolListItemStrings.getStrings(appLanguage: appLanguage)
 
         let featuredToolResources: [ResourceDataModel] = try await personalizedToolsRepository
             .getTools(
                 requestPriority: .high,
-                type: .featured(country: countryIsoRegionCode, language: appLanguage),
+                type: .featured(country: countryIsoRegionCode, language: languageCode),
                 resourceTypes: ResourceType.toolTypes,
                 sortByResponse: true
             )

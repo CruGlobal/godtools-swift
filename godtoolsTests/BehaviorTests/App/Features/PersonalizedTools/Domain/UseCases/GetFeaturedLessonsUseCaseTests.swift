@@ -415,6 +415,97 @@ struct GetFeaturedLessonsUseCaseTests {
         #expect(lesson.bannerImageId == "banner-first")
         #expect(lesson.analyticsToolName == "lessonfirst")
     }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User is viewing featured lessons with English as their app language.
+        When: Arabic is selected as the lessons filter language and different lessons are curated for Arabic.
+        Then: I expect to see the lessons curated for Arabic rather than the lessons curated for my app language.
+        """
+    )
+    @MainActor func featuredLessonsAreLookedUpByTheSelectedFilterLanguageRatherThanTheAppLanguage() async throws {
+
+        let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            filterLessonsByLanguageId: LanguageCodeDomainModel.arabic.rawValue
+        )
+
+        #expect(featuredLessons.map({ $0.dataModelId }) == [TestLessonId.featuredThird])
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User is viewing featured lessons with English as their app language.
+        When: No lessons filter language is selected.
+        Then: I expect to see the lessons curated for my app language.
+        """
+    )
+    @MainActor func appLanguageIsUsedWhenNoFilterLanguageIsSelected() async throws {
+
+        let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            filterLessonsByLanguageId: nil
+        )
+
+        #expect(featuredLessons.count == 4)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User is viewing featured lessons with English as their app language.
+        When: A lessons filter language is selected that has no curated featured lessons for my country.
+        Then: I expect to see no featured lessons rather than the lessons curated for my app language.
+        """
+    )
+    @MainActor func noFeaturedLessonsAreReturnedWhenNoneAreCuratedForTheSelectedFilterLanguage() async throws {
+
+        let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            filterLessonsByLanguageId: LanguageCodeDomainModel.french.rawValue
+        )
+
+        #expect(featuredLessons.isEmpty)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User is viewing featured lessons with English as their app language.
+        When: Spanish is selected as the lessons filter language.
+        Then: I expect each lesson's availability to reflect Spanish, while the names stay in my app language and read left to right.
+        """,
+        arguments: [
+            AvailabilityArgument(
+                appLanguage: LanguageCodeDomainModel.english.value,
+                lessonId: TestLessonId.featuredFirst,
+                expectedAvailabilityString: "Español ✓",
+                expectedIsAvailable: true
+            ),
+            AvailabilityArgument(
+                appLanguage: LanguageCodeDomainModel.english.value,
+                lessonId: TestLessonId.featuredSecond,
+                expectedAvailabilityString: "Español not available",
+                expectedIsAvailable: false
+            )
+        ]
+    )
+    @MainActor func availabilityFollowsTheSelectedFilterLanguageWhileNamesStayInMyAppLanguage(argument: AvailabilityArgument) async throws {
+
+        let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
+            appLanguage: argument.appLanguage,
+            filterLessonsByLanguageId: LanguageCodeDomainModel.spanish.rawValue
+        )
+
+        let lesson: FeaturedLessonDomainModel = try #require(featuredLessons.first(where: { $0.dataModelId == argument.lessonId }))
+
+        #expect(lesson.availabilityInAppLanguage.availabilityString == argument.expectedAvailabilityString)
+        #expect(lesson.availabilityInAppLanguage.isAvailable == argument.expectedIsAvailable)
+        #expect(!lesson.name.contains("Lección"))
+        #expect(lesson.nameLanguageDirection == .leftToRight)
+    }
 }
 
 // MARK: - Test Helpers
@@ -422,7 +513,7 @@ struct GetFeaturedLessonsUseCaseTests {
 extension GetFeaturedLessonsUseCaseTests {
 
     @available(iOS 17.4, *)
-    @MainActor private func getFeaturedLessons(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel? = LocalizationSettingsCountryDomainModel(isoRegionCode: TestCountryCode.withFeaturedLessons), lessonProgress: [LessonProgress] = []) async throws -> [FeaturedLessonDomainModel] {
+    @MainActor private func getFeaturedLessons(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel? = LocalizationSettingsCountryDomainModel(isoRegionCode: TestCountryCode.withFeaturedLessons), filterLessonsByLanguageId: String? = nil, lessonProgress: [LessonProgress] = []) async throws -> [FeaturedLessonDomainModel] {
 
         let useCase: GetFeaturedLessonsUseCase = try await getUseCase(lessonProgress: lessonProgress)
 
@@ -438,7 +529,7 @@ extension GetFeaturedLessonsUseCaseTests {
             }
 
             useCase
-                .execute(appLanguage: appLanguage, country: country)
+                .execute(appLanguage: appLanguage, country: country, filterLessonsByLanguageId: filterLessonsByLanguageId)
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
 
@@ -511,6 +602,7 @@ extension GetFeaturedLessonsUseCaseTests {
             resourcesRepository: resourcesRepository,
             personalizedToolsRepository: personalizedToolsRepository,
             languagesRepository: languagesRepository,
+            getLanguageElseAppLanguage: GetLanguageElseAppLanguage(languagesRepository: languagesRepository),
             getTranslatedToolName: GetTranslatedToolName(
                 resourcesRepository: resourcesRepository,
                 translationsRepository: testsDiContainer.core.dataLayer.getTranslationsRepository()
@@ -567,6 +659,7 @@ extension GetFeaturedLessonsUseCaseTests {
         let languagesByCode: [LanguageCodeDomainModel: SwiftLanguage] = [
             .arabic: Self.createLanguage(code: .arabic, directionString: "rtl"),
             .english: Self.createLanguage(code: .english, directionString: "ltr"),
+            .french: Self.createLanguage(code: .french, directionString: "ltr"),
             .spanish: Self.createLanguage(code: .spanish, directionString: "ltr")
         ]
 
@@ -652,7 +745,7 @@ extension GetFeaturedLessonsUseCaseTests {
                 language: appLanguageCode.value
             )
 
-            resourceIdsById[personalizedToolsId.value] = curatedFeaturedResourceIds
+            resourceIdsById[personalizedToolsId.value] = appLanguageCode == .arabic ? [TestLessonId.featuredThird] : curatedFeaturedResourceIds
         }
 
         return resourceIdsById

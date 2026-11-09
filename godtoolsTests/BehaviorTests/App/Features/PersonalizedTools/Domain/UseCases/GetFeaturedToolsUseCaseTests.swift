@@ -21,10 +21,12 @@ private enum TestFeaturedToolsLanguageId {
 private enum TestFeaturedToolsCountry {
     static let withFeaturedTools: String = "us"
     static let withoutFeaturedTools: String = "ca"
+    static let withFrenchFeaturedToolsOnly: String = "mx"
 }
 
 private enum TestFeaturedToolsId {
     static let featuredUnitedStatesEnglish: String = "featured_us_en"
+    static let featuredMexicoFrench: String = "featured_mx_fr"
 }
 
 struct GetFeaturedToolsUseCaseTests {
@@ -166,6 +168,84 @@ struct GetFeaturedToolsUseCaseTests {
 
         #expect(featuredTools.isEmpty)
     }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User has selected a country with featured tools curated only for French, and their app language is English.
+        When: Featured tools are requested with French as the filter language.
+        Then: I expect to see the featured tools curated for French rather than for my app language.
+        """
+    )
+    @MainActor func featuredToolsAreLookedUpByTheSelectedFilterLanguageRatherThanTheAppLanguage() async throws {
+
+        let featuredTools: [FeaturedToolListItemDomainModel] = try await getFeaturedTools(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestFeaturedToolsCountry.withFrenchFeaturedToolsOnly),
+            filterByLanguageId: TestFeaturedToolsLanguageId.french
+        )
+
+        #expect(featuredTools.map({ $0.dataModelId }) == ["tool-3"])
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User has selected a country with featured tools curated only for French, and their app language is English.
+        When: Featured tools are requested without a filter language.
+        Then: I expect to see no featured tools because none are curated for my app language.
+        """
+    )
+    @MainActor func appLanguageIsUsedWhenNoFilterLanguageIsSelected() async throws {
+
+        let featuredTools: [FeaturedToolListItemDomainModel] = try await getFeaturedTools(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestFeaturedToolsCountry.withFrenchFeaturedToolsOnly),
+            filterByLanguageId: nil
+        )
+
+        #expect(featuredTools.isEmpty)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User has selected a country whose featured tools are curated for English but not for the selected filter language.
+        When: Featured tools are requested with that filter language.
+        Then: I expect to see no featured tools rather than the featured tools for my app language.
+        """
+    )
+    @MainActor func noFeaturedToolsAreReturnedWhenNoneAreCuratedForTheSelectedFilterLanguage() async throws {
+
+        let featuredTools: [FeaturedToolListItemDomainModel] = try await getFeaturedTools(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestFeaturedToolsCountry.withFeaturedTools),
+            filterByLanguageId: TestFeaturedToolsLanguageId.french
+        )
+
+        #expect(featuredTools.isEmpty)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User has selected a French filter language and a featured tool is available only in French.
+        When: Featured tools are requested while the app language is English.
+        Then: I expect the tool to report that it is available, since availability follows the filter language.
+        """
+    )
+    @MainActor func languageAvailabilityFollowsTheSelectedFilterLanguage() async throws {
+
+        let featuredTools: [FeaturedToolListItemDomainModel] = try await getFeaturedTools(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestFeaturedToolsCountry.withFrenchFeaturedToolsOnly),
+            filterByLanguageId: TestFeaturedToolsLanguageId.french
+        )
+
+        let languageAvailability: ToolLanguageAvailabilityDomainModel = try #require(featuredTools.first?.languageAvailability)
+
+        #expect(languageAvailability.isAvailable)
+    }
 }
 
 // MARK: - Test Helpers
@@ -173,7 +253,7 @@ struct GetFeaturedToolsUseCaseTests {
 extension GetFeaturedToolsUseCaseTests {
 
     @available(iOS 17.4, *)
-    @MainActor private func getFeaturedTools(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?) async throws -> [FeaturedToolListItemDomainModel] {
+    @MainActor private func getFeaturedTools(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterByLanguageId: String? = nil) async throws -> [FeaturedToolListItemDomainModel] {
 
         let dependencies: TestDependencies = try getTestDependencies()
 
@@ -181,7 +261,7 @@ extension GetFeaturedToolsUseCaseTests {
             resourcesRepository: dependencies.resourcesRepository,
             personalizedToolsRepository: dependencies.personalizedToolsRepository,
             favoritedResourcesRepository: dependencies.favoritedResourcesRepository,
-            languagesRepository: dependencies.languagesRepository,
+            getLanguageElseAppLanguage: GetLanguageElseAppLanguage(languagesRepository: dependencies.languagesRepository),
             getTranslatedToolName: dependencies.getTranslatedToolName,
             getTranslatedToolCategory: dependencies.getTranslatedToolCategory,
             getToolListItemStrings: dependencies.getToolListItemStrings,
@@ -202,7 +282,8 @@ extension GetFeaturedToolsUseCaseTests {
             useCase
                 .execute(
                     appLanguage: appLanguage,
-                    country: country
+                    country: country,
+                    filterByLanguageId: filterByLanguageId
                 )
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { _ in
@@ -325,7 +406,8 @@ extension GetFeaturedToolsUseCaseTests {
     private var resourceIdsByPersonalizedToolsId: [String: [String]] {
 
         return [
-            TestFeaturedToolsId.featuredUnitedStatesEnglish: ["tool-2", "tool-hidden", "tool-1"]
+            TestFeaturedToolsId.featuredUnitedStatesEnglish: ["tool-2", "tool-hidden", "tool-1"],
+            TestFeaturedToolsId.featuredMexicoFrench: ["tool-3"]
         ]
     }
 
@@ -334,6 +416,7 @@ extension GetFeaturedToolsUseCaseTests {
         return [
             ToolFixture(id: "tool-1", resourceType: .tract, isHidden: false, languageCodes: [.english]),
             ToolFixture(id: "tool-2", resourceType: .tract, isHidden: false, languageCodes: [.english]),
+            ToolFixture(id: "tool-3", resourceType: .tract, isHidden: false, languageCodes: [.french]),
             ToolFixture(id: "tool-hidden", resourceType: .tract, isHidden: true, languageCodes: [.english])
         ]
     }

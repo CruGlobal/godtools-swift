@@ -119,16 +119,18 @@ final class LessonsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$localizationSettings)
 
-        Publishers.CombineLatest(
+        Publishers.CombineLatest3(
             $appLanguage.dropFirst(),
-            $localizationSettings
+            $localizationSettings,
+            $selectedPersonalizedLessonsFilterLanguage.dropFirst()
         )
-        .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?) in
+        .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?, languageFilter: PersonalizedLessonFilterLanguageDomainModel?) in
 
             getFeaturedLessonsUseCase
                 .execute(
                     appLanguage: appLanguage,
-                    country: localizationSettings?.selectedCountry
+                    country: localizationSettings?.selectedCountry,
+                    filterLessonsByLanguageId: languageFilter?.languageId
                 )
         }
         .switchToLatest()
