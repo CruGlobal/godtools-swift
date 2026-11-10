@@ -27,7 +27,7 @@ struct ToolDetailsTool {
         self.appLanguage = appLanguage
         self.toolId = toolId
         self.primaryLanguage = primaryLanguage ?? appLanguage
-        self.parallelLanguage = parallelLanguage != primaryLanguage ? parallelLanguage : nil
+        self.parallelLanguage = parallelLanguage != self.primaryLanguage ? parallelLanguage : nil
         self.selectedLanguageIndex = selectedLanguageIndex
     }
     
