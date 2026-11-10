@@ -24,6 +24,12 @@ private enum TestPersonalizedToolsCountry {
     static let mexicoWithRankedLessonsOnly: String = "mx"
 }
 
+private enum TestPersonalizedToolsCategory {
+    static let gospel: String = "gospel"
+    static let articles: String = "articles"
+    static let training: String = "training"
+}
+
 private enum TestPersonalizedToolsId {
     static let defaultOrderEnglish: String = "default_order_en"
     static let defaultOrderFrench: String = "default_order_fr"
@@ -36,6 +42,7 @@ struct GetPersonalizedToolsUseCaseTests {
 
     struct ToolFixture {
         let id: String
+        let category: String
         let resourceType: ResourceType
         let isHidden: Bool
         let languageCodes: [LanguageCodeDomainModel]
@@ -316,6 +323,50 @@ struct GetPersonalizedToolsUseCaseTests {
         #expect(personalizedTools.tools.map({ $0.id }) == ["tool-2", "tool-1"])
         #expect(personalizedTools.unavailableStrings == nil)
     }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User has selected a country that has ranked tools for their language.
+        When: Personalized tools are requested for a selected category, whatever the casing of the category.
+        Then: I expect to see only the visible ranked tools in that category.
+        """,
+        arguments: [
+            TestPersonalizedToolsCategory.gospel,
+            TestPersonalizedToolsCategory.gospel.uppercased()
+        ]
+    )
+    @MainActor func rankedToolsAreFilteredByTheSelectedCategory(categoryId: String) async throws {
+
+        let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestPersonalizedToolsCountry.unitedStatesWithRankedTools),
+            filterToolsByCategory: ToolFilterCategoryDomainModel.createCategory(id: categoryId, title: "", toolsAvailable: ""),
+            filterByLanguageId: nil
+        )
+
+        #expect(personalizedTools.tools.map({ $0.id }) == ["tool-1"])
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User has not selected a country and there are default order tools for their language.
+        When: Personalized tools are requested for a selected category.
+        Then: I expect to see only the visible default order tools in that category, in the order the api returned them.
+        """
+    )
+    @MainActor func defaultOrderToolsAreFilteredByTheSelectedCategory() async throws {
+
+        let personalizedTools: PersonalizedToolsDomainModel = try await getPersonalizedTools(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: nil,
+            filterToolsByCategory: ToolFilterCategoryDomainModel.createCategory(id: TestPersonalizedToolsCategory.gospel, title: "", toolsAvailable: ""),
+            filterByLanguageId: nil
+        )
+
+        #expect(personalizedTools.tools.map({ $0.id }) == ["tool-2", "tool-1"])
+    }
 }
 
 // MARK: - Test Helpers
@@ -323,13 +374,14 @@ struct GetPersonalizedToolsUseCaseTests {
 extension GetPersonalizedToolsUseCaseTests {
 
     @available(iOS 17.4, *)
-    @MainActor private func getPersonalizedTools(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterByLanguageId: String?) async throws -> PersonalizedToolsDomainModel {
+    @MainActor private func getPersonalizedTools(appLanguage: AppLanguageDomainModel, country: LocalizationSettingsCountryDomainModel?, filterToolsByCategory: ToolFilterCategoryDomainModel = ToolFilterCategoryDomainModel.emptyValue, filterByLanguageId: String?) async throws -> PersonalizedToolsDomainModel {
 
         let dependencies: TestDependencies = try getTestDependencies()
 
         let useCase = GetPersonalizedToolsUseCase(
             resourcesRepository: dependencies.resourcesRepository,
             personalizedToolsRepository: dependencies.personalizedToolsRepository,
+            getPersonalizedToolResources: GetPersonalizedToolResources(personalizedToolsRepository: dependencies.personalizedToolsRepository),
             getLanguageElseAppLanguage: GetLanguageElseAppLanguage(languagesRepository: dependencies.languagesRepository),
             getToolsListItems: dependencies.getToolsListItems,
             localizationServices: getLocalizationServices()
@@ -350,6 +402,7 @@ extension GetPersonalizedToolsUseCaseTests {
                 .execute(
                     appLanguage: appLanguage,
                     country: country,
+                    filterToolsByCategory: filterToolsByCategory,
                     filterByLanguageId: filterByLanguageId
                 )
                 .receive(on: DispatchQueue.main)
@@ -445,6 +498,7 @@ extension GetPersonalizedToolsUseCaseTests {
             let resource = SwiftResource()
             resource.id = fixture.id
             resource.resourceType = fixture.resourceType.rawValue
+            resource.attrCategory = fixture.category
             resource.isHidden = fixture.isHidden
 
             for languageCode in fixture.languageCodes {
@@ -496,12 +550,12 @@ extension GetPersonalizedToolsUseCaseTests {
     private var allTools: [ToolFixture] {
 
         return [
-            ToolFixture(id: "tool-1", resourceType: .tract, isHidden: false, languageCodes: [.english, .french]),
-            ToolFixture(id: "tool-2", resourceType: .tract, isHidden: false, languageCodes: [.english]),
-            ToolFixture(id: "tool-3", resourceType: .article, isHidden: false, languageCodes: [.english]),
-            ToolFixture(id: "tool-4", resourceType: .tract, isHidden: false, languageCodes: [.french]),
-            ToolFixture(id: "tool-hidden", resourceType: .tract, isHidden: true, languageCodes: [.english]),
-            ToolFixture(id: "lesson-1", resourceType: .lesson, isHidden: false, languageCodes: [.english])
+            ToolFixture(id: "tool-1", category: TestPersonalizedToolsCategory.gospel, resourceType: .tract, isHidden: false, languageCodes: [.english, .french]),
+            ToolFixture(id: "tool-2", category: TestPersonalizedToolsCategory.gospel, resourceType: .tract, isHidden: false, languageCodes: [.english]),
+            ToolFixture(id: "tool-3", category: TestPersonalizedToolsCategory.articles, resourceType: .article, isHidden: false, languageCodes: [.english]),
+            ToolFixture(id: "tool-4", category: TestPersonalizedToolsCategory.training, resourceType: .tract, isHidden: false, languageCodes: [.french]),
+            ToolFixture(id: "tool-hidden", category: TestPersonalizedToolsCategory.gospel, resourceType: .tract, isHidden: true, languageCodes: [.english]),
+            ToolFixture(id: "lesson-1", category: "", resourceType: .lesson, isHidden: false, languageCodes: [.english])
         ]
     }
 }

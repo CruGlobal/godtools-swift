@@ -44,8 +44,14 @@ struct ToolsFilterSectionView: View {
                     accessibility: .toolsCategoryFilter,
                     width: buttonWidth,
                     tappedClosure: {
-                        
-                        viewModel.toolCategoryFilterTapped()
+
+                        switch viewModel.selectedToggle {
+
+                        case .personalized:
+                            viewModel.personalizedToolCategoryFilterTapped()
+                        case .all:
+                            viewModel.toolCategoryFilterTapped()
+                        }
                     }
                 )
                 

@@ -154,7 +154,10 @@ final class DashboardFlow: GTFlow {
             dismissFlow()
                         
         case .toolCategoryFilterTappedFromTools:
-            navigationController.pushViewController(getToolCategoryFilterSelection(), animated: true)
+            navigationController.pushViewController(getToolCategoryFilterSelection(mode: .allTools), animated: true)
+
+        case .personalizedToolCategoryFilterTappedFromTools:
+            navigationController.pushViewController(getToolCategoryFilterSelection(mode: .personalized), animated: true)
             
         case .toolLanguageFilterTappedFromTools:
             navigationController.pushViewController(getToolLanguageFilterSelection(), animated: true)
@@ -554,15 +557,19 @@ extension DashboardFlow {
 
 extension DashboardFlow {
     
-    private func getToolCategoryFilterSelection() -> UIViewController {
-        
+    private func getToolCategoryFilterSelection(mode: ToolFilterCategorySelectionViewModel.Mode) -> UIViewController {
+
         let viewModel = ToolFilterCategorySelectionViewModel(
             stepEmitter: stepEmitter,
+            mode: mode,
             getToolFilterCategoriesStringsUseCase: appDiContainer.feature.toolsFilter.domainLayer.getToolFilterCategoriesStringsUseCase(),
             getToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getToolFilterCategoriesUseCase(),
             searchToolFilterCategoriesUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSearchToolFilterCategoriesUseCase(),
             getUserToolFilterCategoryUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFilterCategoryUseCase(),
             getUserToolFilterLanguageUseCase: appDiContainer.feature.toolsFilter.domainLayer.getUserToolFilterLanguageUseCase(),
+            getUserPersonalizedToolFilterLanguageUseCase: appDiContainer.feature.personalizedTools.domainLayer.getUserPersonalizedToolFilterLanguageUseCase(),
+            getPersonalizedToolFilterCategoriesUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedToolFilterCategoriesUseCase(),
+            getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsUseCase(),
             selectedToolFilterCategoryUseCase: appDiContainer.feature.toolsFilter.domainLayer.getSelectedToolFilterCategoryUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getSearchBarStringsUseCase: appDiContainer.core.domainLayer.getSearchBarStringsUseCase()

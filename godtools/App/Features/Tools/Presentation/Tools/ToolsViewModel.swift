@@ -144,21 +144,24 @@ final class ToolsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$localizationSettings)
         
-        Publishers.CombineLatest3(
+        Publishers.CombineLatest4(
             $appLanguage.dropFirst(),
             $selectedPersonalizedToolsFilterLanguage.dropFirst(),
-            $localizationSettings
+            $localizationSettings,
+            $toolFilterCategorySelection.dropFirst()
         )
         .map { (
             appLanguage: AppLanguageDomainModel,
             toolFilterLanguage: PersonalizedToolFilterLanguageDomainModel?,
-            localizationSettings: UserLocalizationSettingsDomainModel?
+            localizationSettings: UserLocalizationSettingsDomainModel?,
+            toolFilterCategory: ToolFilterCategoryDomainModel
         ) in
-            
+
             getPersonalizedToolsUseCase
                 .execute(
                     appLanguage: appLanguage,
                     country: localizationSettings?.selectedCountry,
+                    filterToolsByCategory: toolFilterCategory,
                     filterByLanguageId: toolFilterLanguage?.languageId
                 )
         }
@@ -540,6 +543,11 @@ extension ToolsViewModel {
     func toolCategoryFilterTapped() {
         
         stepEmitter.emit(step: AppFlowStep.toolCategoryFilterTappedFromTools)
+    }
+
+    func personalizedToolCategoryFilterTapped() {
+
+        stepEmitter.emit(step: AppFlowStep.personalizedToolCategoryFilterTappedFromTools)
     }
     
     func toolLanguageFilterTapped() {

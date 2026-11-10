@@ -13,6 +13,7 @@ final class GetPersonalizedToolsUseCase: Sendable {
 
     private let resourcesRepository: ResourcesRepository
     private let personalizedToolsRepository: PersonalizedToolsRepository
+    private let getPersonalizedToolResources: GetPersonalizedToolResources
     private let getLanguageElseAppLanguage: GetLanguageElseAppLanguage
     private let getToolsListItems: GetToolsListItems
     private let localizationServices: LocalizationServicesInterface
@@ -20,6 +21,7 @@ final class GetPersonalizedToolsUseCase: Sendable {
     init(
         resourcesRepository: ResourcesRepository,
         personalizedToolsRepository: PersonalizedToolsRepository,
+        getPersonalizedToolResources: GetPersonalizedToolResources,
         getLanguageElseAppLanguage: GetLanguageElseAppLanguage,
         getToolsListItems: GetToolsListItems,
         localizationServices: LocalizationServicesInterface
@@ -27,6 +29,7 @@ final class GetPersonalizedToolsUseCase: Sendable {
 
         self.resourcesRepository = resourcesRepository
         self.personalizedToolsRepository = personalizedToolsRepository
+        self.getPersonalizedToolResources = getPersonalizedToolResources
         self.getLanguageElseAppLanguage = getLanguageElseAppLanguage
         self.getToolsListItems = getToolsListItems
         self.localizationServices = localizationServices
@@ -35,6 +38,7 @@ final class GetPersonalizedToolsUseCase: Sendable {
     @MainActor func execute(
         appLanguage: AppLanguageDomainModel,
         country: LocalizationSettingsCountryDomainModel?,
+        filterToolsByCategory: ToolFilterCategoryDomainModel,
         filterByLanguageId: String?
     ) -> AnyPublisher<PersonalizedToolsDomainModel, Error> {
         
@@ -60,10 +64,14 @@ final class GetPersonalizedToolsUseCase: Sendable {
         .flatMap { (personalizedToolsChanged, resourcesChanged) -> AnyPublisher<[ResourceDataModel], Error> in
             
             return AnyPublisher() {
-                try await self.getRankedElseDefaultOrderTools(
-                    countryIsoRegionCode: countryIsoRegionCode,
-                    languageCode: languageCode
-                )
+
+                let tools: [ResourceDataModel] = try await self.getPersonalizedToolResources
+                    .getRankedElseDefaultOrderTools(
+                        countryIsoRegionCode: countryIsoRegionCode,
+                        languageCode: languageCode
+                    )
+
+                return self.filterTools(tools: tools, byCategory: filterToolsByCategory)
             }
         }
         .map { (resources: [ResourceDataModel]) in
@@ -86,37 +94,13 @@ final class GetPersonalizedToolsUseCase: Sendable {
         .eraseToAnyPublisher()
     }
 
-    private func getRankedElseDefaultOrderTools(
-        countryIsoRegionCode: String?,
-        languageCode: String
-    ) async throws -> [ResourceDataModel] {
+    private func filterTools(tools: [ResourceDataModel], byCategory category: ToolFilterCategoryDomainModel) -> [ResourceDataModel] {
 
-        if let countryIsoRegionCode = countryIsoRegionCode {
-
-            let rankedTools: [ResourceDataModel] = try await getToolResources(
-                type: .ranked(country: countryIsoRegionCode, language: languageCode)
-            )
-
-            if !rankedTools.isEmpty {
-                return rankedTools
-            }
+        guard let categoryId = category.filterId else {
+            return tools
         }
 
-        return try await getToolResources(
-            type: .defaultOrder(language: languageCode)
-        )
-    }
-
-    private func getToolResources(type: PersonalizedToolsType) async throws -> [ResourceDataModel] {
-
-        return try await personalizedToolsRepository
-            .getTools(
-                requestPriority: .high,
-                type: type,
-                resourceTypes: ResourceType.toolTypes,
-                sortByResponse: true
-            )
-            .filter { !$0.isHidden }
+        return tools.filter { $0.attrCategory.caseInsensitiveCompare(categoryId) == .orderedSame }
     }
 
     private func getToolsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedToolsUnavailableDomainModel {

@@ -86,6 +86,7 @@ enum AppFlowStep: FlowStep {
         
     // tools list
     case toolCategoryFilterTappedFromTools
+    case personalizedToolCategoryFilterTappedFromTools
     case toolLanguageFilterTappedFromTools
     case personalizedToolLanguageFilterTappedFromTools
     case featuredToolTappedFromTools(featuredTool: FeaturedToolListItemDomainModel, toolFilterLanguageId: String?)
