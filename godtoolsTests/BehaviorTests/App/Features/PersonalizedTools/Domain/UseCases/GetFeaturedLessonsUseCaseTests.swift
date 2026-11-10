@@ -71,6 +71,13 @@ struct GetFeaturedLessonsUseCaseTests {
         let expectedLanguageDirection: LanguageDirectionDomainModel
     }
 
+    struct FilterLanguageArgument {
+        let lessonId: String
+        let expectedName: String
+        let expectedAvailabilityString: String
+        let expectedIsAvailable: Bool
+    }
+
     private let englishLessonCompleted: String = "Completed"
     private let englishCompletionProgress: String = "%@ complete"
     private let englishLanguageNotAvailable: String = "%@ not available"
@@ -475,36 +482,58 @@ struct GetFeaturedLessonsUseCaseTests {
         """
         Given: User is viewing featured lessons with English as their app language.
         When: Spanish is selected as the lessons filter language.
-        Then: I expect each lesson's availability to reflect Spanish, while the names stay in my app language and read left to right.
+        Then: I expect each lesson's name to be in Spanish, while its availability is translated in my app language.
         """,
         arguments: [
-            AvailabilityArgument(
-                appLanguage: LanguageCodeDomainModel.english.value,
+            FilterLanguageArgument(
                 lessonId: TestLessonId.featuredFirst,
-                expectedAvailabilityString: "Español ✓",
+                expectedName: "Lección primera",
+                expectedAvailabilityString: "Spanish ✓",
                 expectedIsAvailable: true
             ),
-            AvailabilityArgument(
-                appLanguage: LanguageCodeDomainModel.english.value,
+            FilterLanguageArgument(
                 lessonId: TestLessonId.featuredSecond,
-                expectedAvailabilityString: "Español not available",
+                expectedName: "Lesson Second",
+                expectedAvailabilityString: "Spanish not available",
                 expectedIsAvailable: false
             )
         ]
     )
-    @MainActor func availabilityFollowsTheSelectedFilterLanguageWhileNamesStayInMyAppLanguage(argument: AvailabilityArgument) async throws {
+    @MainActor func namesFollowTheSelectedFilterLanguageWhileAvailabilityIsTranslatedInMyAppLanguage(argument: FilterLanguageArgument) async throws {
 
         let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
-            appLanguage: argument.appLanguage,
+            appLanguage: LanguageCodeDomainModel.english.value,
             filterLessonsByLanguageId: LanguageCodeDomainModel.spanish.rawValue
         )
 
         let lesson: FeaturedLessonDomainModel = try #require(featuredLessons.first(where: { $0.dataModelId == argument.lessonId }))
 
+        #expect(lesson.name == argument.expectedName)
         #expect(lesson.availabilityInAppLanguage.availabilityString == argument.expectedAvailabilityString)
         #expect(lesson.availabilityInAppLanguage.isAvailable == argument.expectedIsAvailable)
-        #expect(!lesson.name.contains("Lección"))
         #expect(lesson.nameLanguageDirection == .leftToRight)
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: User is viewing featured lessons with English as their app language.
+        When: Arabic, a right to left language, is selected as the lessons filter language.
+        Then: I expect the lesson name language direction to be right to left rather than my app language's direction.
+        """
+    )
+    @MainActor func lessonNameLanguageDirectionFollowsTheSelectedFilterLanguage() async throws {
+
+        let featuredLessons: [FeaturedLessonDomainModel] = try await getFeaturedLessons(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            filterLessonsByLanguageId: LanguageCodeDomainModel.arabic.rawValue
+        )
+
+        #expect(featuredLessons.isEmpty == false)
+
+        for featuredLesson in featuredLessons {
+            #expect(featuredLesson.nameLanguageDirection == .rightToLeft)
+        }
     }
 }
 

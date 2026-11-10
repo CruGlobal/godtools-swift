@@ -85,8 +85,7 @@ final class GetFeaturedLessonsUseCase: Sendable {
 
     private func asyncExecute(appLanguage: AppLanguageDomainModel, countryIsoRegionCode: String, languageCode: String, filterLessonsByLanguageId: String?) async throws -> [FeaturedLessonDomainModel] {
 
-        let appLanguageModel: LanguageDataModel? = languagesRepository.getLanguageByCode(code: appLanguage)
-        let languageForAvailabilityModel: LanguageDataModel? = getLanguageElseAppLanguage.getLanguage(languageId: filterLessonsByLanguageId, appLanguage: appLanguage)
+        let lessonLanguageModel: LanguageDataModel? = getLanguageElseAppLanguage.getLanguage(languageId: filterLessonsByLanguageId, appLanguage: appLanguage)
 
         let featuredLessonsDataModels: [ResourceDataModel] = try await personalizedToolsRepository
             .getTools(
@@ -103,8 +102,8 @@ final class GetFeaturedLessonsUseCase: Sendable {
 
             let toolLanguageAvailability: ToolLanguageAvailabilityDomainModel
 
-            if let language = languageForAvailabilityModel {
-                toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: language)
+            if let language = lessonLanguageModel {
+                toolLanguageAvailability = self.getTranslatedToolLanguageAvailability.getTranslatedLanguageAvailability(resource: resource, language: language, translateInLanguage: appLanguage)
             }
             else {
                 toolLanguageAvailability = ToolLanguageAvailabilityDomainModel(availabilityString: "", isAvailable: false)
@@ -117,8 +116,8 @@ final class GetFeaturedLessonsUseCase: Sendable {
 
             let nameLanguageDirection: LanguageDirectionDomainModel
 
-            if let filterLanguageModel = appLanguageModel {
-                nameLanguageDirection = filterLanguageModel.languageDirectionDomainModel
+            if let lessonLanguageModel = lessonLanguageModel {
+                nameLanguageDirection = lessonLanguageModel.languageDirectionDomainModel
             } else {
                 nameLanguageDirection = .leftToRight
             }
@@ -129,7 +128,7 @@ final class GetFeaturedLessonsUseCase: Sendable {
                     availabilityInAppLanguage: toolLanguageAvailability,
                     bannerImageId: resource.attrBanner,
                     dataModelId: resource.id,
-                    name: self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: appLanguage),
+                    name: self.getTranslatedToolName.getToolName(resource: resource, translateInLanguage: lessonLanguageModel?.code ?? appLanguage),
                     nameLanguageDirection: nameLanguageDirection,
                     lessonProgress: lessonProgress
                 )
