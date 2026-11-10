@@ -9,10 +9,10 @@
 "dashboard.personalizedLessonFooter.title" = "Displaying localized Lessons list";
 "dashboard.personalizedLessonFooter.subtitle" = "The lessons shown in your Personalized Lessons page are selected based on your Language and Localization setting. You can alter this by editing your setting.";
 
-"localizationSettings.preferNotToSay" = "I'd prefer not to say";
+"localizationSettings.preferNotToSay" = "I prefer not to say";
 "localizationSettings.navBar.title" = "Select a country";
 "localizationSettings.localizationHeader.title" = "Select your localization";
-"localizationSettings.localizationHeader.description" = "Choose from a country below to set your localization and see prioritized content and recommendations based on your location.";
+"localizationSettings.localizationHeader.description" = "Choose a country below to set your localization and get prioritized content and recommendations based on your location.";
 "localizationSettings.confirmation.title" = "You have selected %@ as your localization.";
 "localizationSettings.confirmation.titleNoCountry" = "You have not selected a localization for your GodTools experience.";
 "localizationSettings.confirmation.description" = "Would you like to continue?";
