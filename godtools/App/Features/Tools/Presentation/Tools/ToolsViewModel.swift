@@ -352,6 +352,16 @@ final class ToolsViewModel: ObservableObject {
         }
     }
 
+    private var selectedLanguageFilterLanguageId: String? {
+
+        switch selectedToggle {
+        case .personalized:
+            return selectedPersonalizedToolsFilterLanguage?.languageId
+        case .all:
+            return selectedAllToolsFilterLanguage?.languageId
+        }
+    }
+
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
         let strings = getToolsStringsUseCase
@@ -474,7 +484,7 @@ final class ToolsViewModel: ObservableObject {
                 .execute(
                     appLanguage: weakSelf.appLanguage,
                     country: weakSelf.localizationSettings?.selectedCountry,
-                    filterToolsByLanguageId: weakSelf.selectedAllToolsFilterLanguage?.languageId
+                    filterToolsByLanguageId: weakSelf.selectedLanguageFilterLanguageId
                 )
         }
     }
@@ -551,7 +561,7 @@ extension ToolsViewModel {
         
         trackToolTappedAnalytics(tool: featuredTool)
         
-        stepEmitter.emit(step: AppFlowStep.featuredToolTappedFromTools(featuredTool: featuredTool, toolFilterLanguageId: selectedAllToolsFilterLanguage?.languageId))
+        stepEmitter.emit(step: AppFlowStep.featuredToolTappedFromTools(featuredTool: featuredTool, toolFilterLanguageId: selectedPersonalizedToolsFilterLanguage?.languageId))
     }
     
     func toolFavoriteTapped(tool: ToolListItemDomainModel) {
@@ -563,7 +573,7 @@ extension ToolsViewModel {
 
         trackToolTappedAnalytics(tool: tool)
 
-        stepEmitter.emit(step: AppFlowStep.toolTappedFromTools(tool: tool, toolFilterLanguageId: selectedAllToolsFilterLanguage?.languageId))
+        stepEmitter.emit(step: AppFlowStep.toolTappedFromTools(tool: tool, toolFilterLanguageId: selectedLanguageFilterLanguageId))
     }
 
     func changeLocalizationSettingsTapped() {

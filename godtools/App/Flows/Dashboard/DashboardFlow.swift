@@ -75,17 +75,16 @@ final class DashboardFlow: GTFlow {
         case .doneTappedFromMenu:
             closeMenu(animated: true)
             
-        case .featuredLessonTappedFromLessons(let featuredLesson):
-            navigateToToolInAppLanguage(
-                toolDataModelId: featuredLesson.dataModelId,
-                trainingTipsEnabled: false,
-                toolOpenedFrom: .dashboardLessonsFeaturedLesson,
-                persistToolLanguageSettings: nil
+        case .featuredLessonTappedFromLessons(let featuredLesson, let languageFilterLanguageId):
+            navigateToLesson(
+                lessonId: featuredLesson.dataModelId,
+                languageFilterLanguageId: languageFilterLanguageId,
+                toolOpenedFrom: .dashboardLessonsFeaturedLesson
             )
             
         case .lessonTappedFromLessonsList(let lessonListItem, let languageFilterLanguageId):
             navigateToLesson(
-                lessonListItem: lessonListItem,
+                lessonId: lessonListItem.dataModelId,
                 languageFilterLanguageId: languageFilterLanguageId,
                 toolOpenedFrom: .dashboardLessons
             )
@@ -182,64 +181,15 @@ final class DashboardFlow: GTFlow {
             navigationController.popViewController(animated: true)
             
         case .featuredToolTappedFromTools(let featuredTool, let toolFilterLanguageId):
-            
-            let toolFilterLanguageDataModel: LanguageDataModel?
-            
-            if let languageId = toolFilterLanguageId {
-                toolFilterLanguageDataModel = appDiContainer.core.dataLayer.getLanguagesRepository().getLanguageById(id: languageId)
-            }
-            else {
-                toolFilterLanguageDataModel = nil
-            }
-            
-            navigateToToolDetails(
+            navigateToToolDetailsWithToolFilterLanguage(
                 toolId: featuredTool.dataModelId,
-                parallelLanguage: toolFilterLanguageDataModel?.localeId,
-                selectedLanguageIndex: 1
+                toolFilterLanguageId: toolFilterLanguageId
             )
                         
         case .toolTappedFromTools(let tool, let toolFilterLanguageId):
-            
-            let toolFilterLanguageDataModel: LanguageDataModel?
-            
-            if let languageId = toolFilterLanguageId {
-                toolFilterLanguageDataModel = appDiContainer.core.dataLayer.getLanguagesRepository().getLanguageById(id: languageId)
-            }
-            else {
-                toolFilterLanguageDataModel = nil
-            }
-            
-            let resourcesRepository: ResourcesRepository = appDiContainer.core.dataLayer.getResourcesRepository()
-            
-            let primaryLanguage: AppLanguageDomainModel?
-            let parallelLanguage: AppLanguageDomainModel?
-            
-            if let toolResource = resourcesRepository.getResourceById(id: tool.dataModelId),
-               toolResource.resourceTypeEnum == .article {
-                
-                parallelLanguage = nil
-                
-                if let toolFilterLanguageDataModel = toolFilterLanguageDataModel,
-                   toolResource.supportsLanguage(languageId: toolFilterLanguageDataModel.id) {
-                    
-                    primaryLanguage = toolFilterLanguageDataModel.localeId
-                }
-                else {
-                    
-                    primaryLanguage = appLanguage
-                }
-            }
-            else {
-                
-                primaryLanguage = nil
-                parallelLanguage = toolFilterLanguageDataModel?.localeId
-            }
-            
-            navigateToToolDetails(
+            navigateToToolDetailsWithToolFilterLanguage(
                 toolId: tool.dataModelId,
-                primaryLanguage: primaryLanguage,
-                parallelLanguage: parallelLanguage,
-                selectedLanguageIndex: 1
+                toolFilterLanguageId: toolFilterLanguageId
             )
             
         case .changeLocalizationSettingsTappedFromTools:
@@ -764,7 +714,7 @@ extension DashboardFlow {
     }
     
     private func navigateToLesson(
-        lessonListItem: LessonListItemDomainModel,
+        lessonId: String,
         languageFilterLanguageId: String?,
         toolOpenedFrom: ToolOpenedFrom
     ) {
@@ -772,7 +722,7 @@ extension DashboardFlow {
         if let languageFilterLanguageId = languageFilterLanguageId {
             
             navigateToTool(
-                toolDataModelId: lessonListItem.dataModelId,
+                toolDataModelId: lessonId,
                 languageIds: [languageFilterLanguageId],
                 selectedLanguageIndex: 0,
                 trainingTipsEnabled: false,
@@ -783,7 +733,7 @@ extension DashboardFlow {
         else {
             
             navigateToToolInAppLanguage(
-                toolDataModelId: lessonListItem.dataModelId,
+                toolDataModelId: lessonId,
                 trainingTipsEnabled: false,
                 toolOpenedFrom: toolOpenedFrom,
                 persistToolLanguageSettings: nil
@@ -846,6 +796,51 @@ extension DashboardFlow {
 
 extension DashboardFlow {
     
+    private func navigateToToolDetailsWithToolFilterLanguage(toolId: String, toolFilterLanguageId: String?) {
+
+        let toolFilterLanguageDataModel: LanguageDataModel?
+
+        if let languageId = toolFilterLanguageId {
+            toolFilterLanguageDataModel = appDiContainer.core.dataLayer.getLanguagesRepository().getLanguageById(id: languageId)
+        }
+        else {
+            toolFilterLanguageDataModel = nil
+        }
+
+        let resourcesRepository: ResourcesRepository = appDiContainer.core.dataLayer.getResourcesRepository()
+
+        let primaryLanguage: AppLanguageDomainModel?
+        let parallelLanguage: AppLanguageDomainModel?
+
+        if let toolResource = resourcesRepository.getResourceById(id: toolId),
+           toolResource.resourceTypeEnum == .article {
+
+            parallelLanguage = nil
+
+            if let toolFilterLanguageDataModel = toolFilterLanguageDataModel,
+               toolResource.supportsLanguage(languageId: toolFilterLanguageDataModel.id) {
+
+                primaryLanguage = toolFilterLanguageDataModel.localeId
+            }
+            else {
+
+                primaryLanguage = appLanguage
+            }
+        }
+        else {
+
+            primaryLanguage = nil
+            parallelLanguage = toolFilterLanguageDataModel?.localeId
+        }
+
+        navigateToToolDetails(
+            toolId: toolId,
+            primaryLanguage: primaryLanguage,
+            parallelLanguage: parallelLanguage,
+            selectedLanguageIndex: 1
+        )
+    }
+
     func navigateToToolDetails(
         toolId: String,
         primaryLanguage: AppLanguageDomainModel? = nil,

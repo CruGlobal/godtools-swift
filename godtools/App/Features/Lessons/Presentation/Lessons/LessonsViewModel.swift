@@ -298,6 +298,16 @@ final class LessonsViewModel: ObservableObject {
         }
     }
 
+    private var selectedLanguageFilterLanguageId: String? {
+
+        switch selectedToggle {
+        case .personalized:
+            return selectedPersonalizedLessonsFilterLanguage?.languageId
+        case .all:
+            return selectedAllLessonsFilterLanguage?.languageId
+        }
+    }
+
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
         let strings = getLessonsStringsUseCase
@@ -438,7 +448,7 @@ final class LessonsViewModel: ObservableObject {
                 .execute(
                     appLanguage: weakSelf.appLanguage,
                     country: weakSelf.localizationSettings?.selectedCountry,
-                    languageFilterLanguageId: weakSelf.selectedAllLessonsFilterLanguage?.languageId
+                    languageFilterLanguageId: weakSelf.selectedLanguageFilterLanguageId
                 )
         }
     }
@@ -490,7 +500,7 @@ extension LessonsViewModel {
         stepEmitter.emit(
             step: AppFlowStep.lessonTappedFromLessonsList(
                 lessonListItem: lessonListItem,
-                languageFilterLanguageId: selectedAllLessonsFilterLanguage?.languageId
+                languageFilterLanguageId: selectedLanguageFilterLanguageId
             )
         )
 
@@ -499,7 +509,12 @@ extension LessonsViewModel {
 
     func featuredLessonTapped(featuredLesson: FeaturedLessonDomainModel) {
 
-        stepEmitter.emit(step: AppFlowStep.featuredLessonTappedFromLessons(featuredLesson: featuredLesson))
+        stepEmitter.emit(
+            step: AppFlowStep.featuredLessonTappedFromLessons(
+                featuredLesson: featuredLesson,
+                languageFilterLanguageId: selectedPersonalizedLessonsFilterLanguage?.languageId
+            )
+        )
 
         trackFeaturedLessonTappedAnalytics(featuredLesson: featuredLesson)
     }
