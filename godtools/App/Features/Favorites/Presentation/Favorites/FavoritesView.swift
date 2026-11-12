@@ -52,6 +52,7 @@ struct FavoritesView: View {
                         viewModel: viewModel,
                         contentHorizontalInsets: contentHorizontalInsets
                     )
+                    .listRowInsets(EdgeInsets())
                     
                     if viewModel.favoritedTools.count > 0 {
                         
@@ -80,6 +81,7 @@ struct FavoritesView: View {
                             )
                             .buttonStyle(.plain)
                             .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: 15, leading: contentHorizontalInsets, bottom: 0, trailing: contentHorizontalInsets))
                         }
                         .onMove { from, to in
                             viewModel.toolMoved(fromOffsets: from, toOffset: to)

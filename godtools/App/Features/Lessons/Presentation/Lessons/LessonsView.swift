@@ -10,6 +10,8 @@ import SwiftUI
 
 struct LessonsView: View {
 
+    private static let additionalCardSpacingToMatchToolCards: CGFloat = 10
+
     private let contentHorizontalInsets: CGFloat
     private let lessonCardSpacing: CGFloat
 
@@ -113,7 +115,7 @@ struct LessonsView: View {
                         }
                         else if !viewModel.lessonsList.isEmpty {
                             
-                            LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
+                            LazyVStack(alignment: .center, spacing: lessonCardSpacing + LessonsView.additionalCardSpacingToMatchToolCards) {
 
                                 ForEach(viewModel.lessonsList) { (lessonListItem: LessonListItemDomainModel) in
 
