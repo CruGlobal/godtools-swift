@@ -85,9 +85,35 @@ struct LocalizationSettingsCountriesRepositoryTests {
         )
 
         let countryNames = countries.map { $0.countryNameTranslatedInCurrentAppLanguage }
-        let sortedNames = countryNames.sorted()
+        let sortedNames = countryNames.sorted { $0.compare($1, locale: Locale(identifier: appLanguage)) == .orderedAscending }
 
         #expect(countryNames == sortedNames)
+    }
+
+    @Test(
+        """
+        Given: User is viewing the localization settings countries list
+        When: A country name starts with an accented letter
+        Then: It should be sorted alongside the unaccented letter instead of after "Z"
+        """
+    )
+    func countriesWithAccentedNamesAreSortedWithTheirBaseLetter() {
+
+        let repository = LocalizationSettingsCountriesRepository()
+
+        let countryIsoRegionCodes: [String] = repository
+            .getCountries(appLanguage: "en")
+            .map { $0.isoRegionCode }
+
+        guard let alandIndex = countryIsoRegionCodes.firstIndex(of: "AX"),
+              let afghanistanIndex = countryIsoRegionCodes.firstIndex(of: "AF"),
+              let albaniaIndex = countryIsoRegionCodes.firstIndex(of: "AL") else {
+            Issue.record("Expected Afghanistan, Åland Islands and Albania to be in the list")
+            return
+        }
+
+        #expect(afghanistanIndex < alandIndex)
+        #expect(alandIndex < albaniaIndex)
     }
 
     @Test(

@@ -165,7 +165,7 @@ struct GetLocalizationSettingsCountryListUseCaseTests {
         """
         Given: User has previously selected a country in the Localization Settings
         When: The country list is retrieved
-        Then: The selected country should be first in the list and the remaining countries should keep their original order
+        Then: The selected country should be first among the countries, below "Prefer not to say" when shown, and the remaining countries should keep their original order
         """,
         arguments: [
             SelectedCountryTestArgument(
@@ -176,7 +176,7 @@ struct GetLocalizationSettingsCountryListUseCaseTests {
             SelectedCountryTestArgument(
                 selectedCountryIsoRegionCode: "JP",
                 showsPreferNotToSay: true,
-                expectedListItemIds: ["JP", "prefer_not_to_say", "US", "ES"]
+                expectedListItemIds: ["prefer_not_to_say", "JP", "US", "ES"]
             ),
             SelectedCountryTestArgument(
                 selectedCountryIsoRegionCode: "US",
