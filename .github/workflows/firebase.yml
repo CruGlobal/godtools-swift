@@ -49,6 +49,11 @@ jobs:
             fi
         shell: bash
 
+      - name: Load Match Deploy Key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.MATCH_DEPLOY_KEY }}
+
       - name: Build And Deploy For Firebase Distribution
         env:
           MATCH_GIT_BASIC_AUTHORIZATION_PAT: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION_PAT }}

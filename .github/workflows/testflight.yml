@@ -31,6 +31,11 @@ jobs:
       - name: Increment Xcode Project Build Number
         run: bundle exec fastlane cru_shared_lane_increment_xcode_project_build_number
 
+      - name: Load Match Deploy Key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.MATCH_DEPLOY_KEY }}
+
       - name: Build And Deploy For TestFlight Release
         env:
           MATCH_GIT_BASIC_AUTHORIZATION_PAT: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION_PAT }}
