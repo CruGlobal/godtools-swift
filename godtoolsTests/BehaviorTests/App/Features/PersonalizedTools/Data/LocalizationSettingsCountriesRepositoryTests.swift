@@ -6,6 +6,7 @@
 //  Copyright © 2026 Cru. All rights reserved.
 //
 
+import Foundation
 import Testing
 @testable import godtools
 
