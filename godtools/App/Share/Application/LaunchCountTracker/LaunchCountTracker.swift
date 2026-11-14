@@ -15,6 +15,7 @@ final class LaunchCountTracker {
     private let launchCountRepository: LaunchCountRepositoryInterface
 
     private var incrementLaunchCountNeeded: Bool = true
+    private var incrementLaunchCountTask: Task<Void, Never>?
 
     init(launchCountRepository: LaunchCountRepositoryInterface) {
 
@@ -52,11 +53,19 @@ final class LaunchCountTracker {
 
     func incrementLaunchCountIfNeeded() async {
 
-        guard incrementLaunchCountNeeded else {
-            return
+        if incrementLaunchCountNeeded {
+
+            incrementLaunchCountNeeded = false
+
+            incrementLaunchCountTask = Task {
+                await incrementLaunchCount()
+            }
         }
 
-        incrementLaunchCountNeeded = false
+        await incrementLaunchCountTask?.value
+    }
+
+    private func incrementLaunchCount() async {
 
         let launchCount: Int = launchCountRepository.getLaunchCount()
 

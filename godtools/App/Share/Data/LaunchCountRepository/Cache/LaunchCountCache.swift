@@ -48,6 +48,9 @@ final class LaunchCountCache: LaunchCountCacheInterface {
 
     func getLaunchCount() -> Int {
 
+        // Writes happen off the calling thread, so a cached Realm instance can be stale until refreshed.
+        _ = try? getRealmPersistence()?.openRealm().refresh()
+
         do {
 
             let dataModel: LaunchCountDataModel? = try persistence.getDataModel(id: LaunchCountCache.sharedLaunchCountId)
