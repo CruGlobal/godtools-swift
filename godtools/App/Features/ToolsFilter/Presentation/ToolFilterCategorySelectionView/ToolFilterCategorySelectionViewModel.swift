@@ -12,6 +12,11 @@ import Flow
 
 @MainActor
 final class ToolFilterCategorySelectionViewModel: ObservableObject {
+
+    enum Mode: Sendable {
+        case allTools
+        case personalized
+    }
         
     private let stepEmitter: FlowStepEmitter
     private let getToolFilterCategoriesStringsUseCase: GetToolFilterCategoriesStringsUseCase
@@ -19,6 +24,9 @@ final class ToolFilterCategorySelectionViewModel: ObservableObject {
     private let searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase
     private let getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase
     private let getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase
+    private let getUserPersonalizedToolFilterLanguageUseCase: GetUserPersonalizedToolFilterLanguageUseCase
+    private let getPersonalizedToolFilterCategoriesUseCase: GetPersonalizedToolFilterCategoriesUseCase
+    private let getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase
     private let selectedToolFilterCategoryUseCase: SelectedToolFilterCategoryUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getSearchBarStringsUseCase: GetSearchBarStringsUseCase
@@ -27,6 +35,7 @@ final class ToolFilterCategorySelectionViewModel: ObservableObject {
         
     @Published private var appLanguage = AppLanguageDomainModel.english
     @Published private var allCategories: [ToolFilterCategoryDomainModel] = Array()
+    @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
     
     @Published private(set) var searchBarStrings = SearchBarStringsDomainModel.emptyValue
     @Published private(set) var strings = ToolFilterCategoriesStringsDomainModel.emptyValue
@@ -38,11 +47,15 @@ final class ToolFilterCategorySelectionViewModel: ObservableObject {
     
     init(
         stepEmitter: FlowStepEmitter,
+        mode: Mode,
         getToolFilterCategoriesStringsUseCase: GetToolFilterCategoriesStringsUseCase,
         getToolFilterCategoriesUseCase: GetToolFilterCategoriesUseCase,
         searchToolFilterCategoriesUseCase: SearchToolFilterCategoriesUseCase,
         getUserToolFilterCategoryUseCase: GetUserToolFilterCategoryUseCase,
         getUserToolFilterLanguageUseCase: GetUserToolFilterLanguageUseCase,
+        getUserPersonalizedToolFilterLanguageUseCase: GetUserPersonalizedToolFilterLanguageUseCase,
+        getPersonalizedToolFilterCategoriesUseCase: GetPersonalizedToolFilterCategoriesUseCase,
+        getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase,
         selectedToolFilterCategoryUseCase: SelectedToolFilterCategoryUseCase,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
         getSearchBarStringsUseCase: GetSearchBarStringsUseCase
@@ -54,6 +67,9 @@ final class ToolFilterCategorySelectionViewModel: ObservableObject {
         self.searchToolFilterCategoriesUseCase = searchToolFilterCategoriesUseCase
         self.getUserToolFilterCategoryUseCase = getUserToolFilterCategoryUseCase
         self.getUserToolFilterLanguageUseCase = getUserToolFilterLanguageUseCase
+        self.getUserPersonalizedToolFilterLanguageUseCase = getUserPersonalizedToolFilterLanguageUseCase
+        self.getPersonalizedToolFilterCategoriesUseCase = getPersonalizedToolFilterCategoriesUseCase
+        self.getLocalizationSettingsUseCase = getLocalizationSettingsUseCase
         self.selectedToolFilterCategoryUseCase = selectedToolFilterCategoryUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getSearchBarStringsUseCase = getSearchBarStringsUseCase
@@ -71,31 +87,69 @@ final class ToolFilterCategorySelectionViewModel: ObservableObject {
             .dropFirst()
             .map { (appLanguage: AppLanguageDomainModel) in
                 
-                Publishers.CombineLatest(
-                    getUserToolFilterCategoryUseCase.execute(appLanguage: appLanguage),
-                    getUserToolFilterLanguageUseCase.execute(appLanguage: appLanguage)
-                )
+                getUserToolFilterCategoryUseCase.execute(appLanguage: appLanguage)
             }
             .switchToLatest()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (categoryFilter: ToolFilterCategoryDomainModel, languageFilter: ToolFilterLanguageDomainModel) in
-            
-                self?.selectedCategory = categoryFilter
-                self?.selectedLanguageId = languageFilter.languageId
-            }
-            .store(in: &cancellables)
+            .assign(to: &$selectedCategory)
         
-        Publishers.CombineLatest(
+        $appLanguage
+            .dropFirst()
+            .map { (appLanguage: AppLanguageDomainModel) -> AnyPublisher<String?, Never> in
+
+                switch mode {
+
+                case .allTools:
+                    return getUserToolFilterLanguageUseCase
+                        .execute(appLanguage: appLanguage)
+                        .map { $0.languageId }
+                        .eraseToAnyPublisher()
+
+                case .personalized:
+                    return getUserPersonalizedToolFilterLanguageUseCase
+                        .execute(appLanguage: appLanguage)
+                        .map { $0?.languageId }
+                        .replaceError(with: nil)
+                        .eraseToAnyPublisher()
+                }
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$selectedLanguageId)
+
+        getLocalizationSettingsUseCase
+            .execute()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$localizationSettings)
+
+        Publishers.CombineLatest3(
             $appLanguage.dropFirst(),
-            $selectedLanguageId
+            $selectedLanguageId,
+            $localizationSettings
         )
-        .map { (appLanguage: AppLanguageDomainModel, selectedLanguageId: String?) in
-            
-            getToolFilterCategoriesUseCase
-                .execute(
-                    appLanguage: appLanguage,
-                    filteredByLanguageId: selectedLanguageId
-                )
+        .map { (
+            appLanguage: AppLanguageDomainModel,
+            selectedLanguageId: String?,
+            localizationSettings: UserLocalizationSettingsDomainModel?
+        ) -> AnyPublisher<[ToolFilterCategoryDomainModel], Error> in
+
+            switch mode {
+
+            case .allTools:
+                return getToolFilterCategoriesUseCase
+                    .execute(
+                        appLanguage: appLanguage,
+                        filteredByLanguageId: selectedLanguageId
+                    )
+
+            case .personalized:
+                return getPersonalizedToolFilterCategoriesUseCase
+                    .execute(
+                        appLanguage: appLanguage,
+                        country: localizationSettings?.selectedCountry,
+                        filterByLanguageId: selectedLanguageId
+                    )
+            }
         }
         .switchToLatest()
         .receive(on: DispatchQueue.main)

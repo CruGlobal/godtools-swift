@@ -9,14 +9,14 @@
 "dashboard.personalizedLessonFooter.title" = "Displaying localized Lessons list";
 "dashboard.personalizedLessonFooter.subtitle" = "The lessons shown in your Personalized Lessons page are selected based on your Language and Localization setting. You can alter this by editing your setting.";
 
-"localizationSettings.preferNotToSay" = "I'd prefer not to say";
+"localizationSettings.preferNotToSay" = "I prefer not to say";
 "localizationSettings.navBar.title" = "Select a country";
 "localizationSettings.localizationHeader.title" = "Select your localization";
-"localizationSettings.localizationHeader.description" = "Choose from a country below to set your localization and see prioritized content and recommendations based on your location.";
+"localizationSettings.localizationHeader.description" = "Choose a country below to set your localization and get prioritized content and recommendations based on your location.";
 "localizationSettings.confirmation.title" = "You have selected %@ as your localization.";
 "localizationSettings.confirmation.titleNoCountry" = "You have not selected a localization for your GodTools experience.";
 "localizationSettings.confirmation.description" = "Would you like to continue?";
-"localizationSettings.confirmation.detail" = "Note: You can change this setting at anytime from within the menu.";
+"localizationSettings.confirmation.detail" = "Note: You can change this setting at any time from within the menu.";
 "localizationSettings.confirmation.cancelButton" = "Edit Localization";
 "localizationSettings.confirmation.confirmButton" = "Continue";
 
@@ -422,5 +422,7 @@ Press the About button on any tool for more info.";
 
 "shareToolQrCode.message" = "Share by QR Code";
 
+"tools.pageTitle" = "Tools made for you";
+"tools.pageSubtitle" = "Unique tools designed to help you have more and better conversations about Jesus.";
 "tools.featured.title" = "Featured";
 "tools.featured.subtitle" = "Here are some tools we thought you might like";

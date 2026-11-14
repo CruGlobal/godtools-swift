@@ -10,6 +10,8 @@ import SwiftUI
 
 struct LessonsView: View {
 
+    private static let additionalCardSpacingToMatchToolCards: CGFloat = 10
+
     private let contentHorizontalInsets: CGFloat
     private let lessonCardSpacing: CGFloat
 
@@ -34,7 +36,7 @@ struct LessonsView: View {
             
             VStack(alignment: .center, spacing: 0) {
 
-                if GodToolsApp.showsPersonalization {
+                if viewModel.personalizationIsEnabled {
                     
                     PersonalizedToolToggle(
                         geometry: geometry,
@@ -58,7 +60,7 @@ struct LessonsView: View {
                             .padding(.vertical, 16)
                             .padding(.horizontal, contentHorizontalInsets)
 
-                        if !viewModel.featuredLessons.isEmpty {
+                        if viewModel.selectedToggle == .personalized && !viewModel.featuredLessons.isEmpty {
 
                             FeaturedLessonsView(
                                 viewModel: viewModel,
@@ -113,7 +115,7 @@ struct LessonsView: View {
                         }
                         else if !viewModel.lessonsList.isEmpty {
                             
-                            LazyVStack(alignment: .center, spacing: lessonCardSpacing) {
+                            LazyVStack(alignment: .center, spacing: lessonCardSpacing + LessonsView.additionalCardSpacingToMatchToolCards) {
 
                                 ForEach(viewModel.lessonsList) { (lessonListItem: LessonListItemDomainModel) in
 
@@ -174,6 +176,7 @@ struct LessonsView_Preview: PreviewProvider {
             getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsUseCase(),
             getFeaturedLessonsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getFeaturedLessonsUseCase(),
             getPersonalizedLessonsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedLessonsUseCase(),
+            getPersonalizationEnabledUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizationEnabledUseCase(),
             getLessonsStringsUseCase: appDiContainer.feature.lessons.domainLayer.getLessonsStringsUseCase(),
             getAllLessonsUseCase: appDiContainer.feature.lessons.domainLayer.getAllLessonsUseCase(),
             getUserLessonFilterLanguageUseCase: appDiContainer.feature.lessonFilter.domainLayer.getUserLessonFilterLanguageUseCase(),

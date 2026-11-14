@@ -20,6 +20,7 @@ final class LessonsViewModel: ObservableObject {
     private let getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase
     private let getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase
     private let getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase
+    private let getPersonalizationEnabledUseCase: GetPersonalizationEnabledUseCase
     private let getLessonsStringsUseCase: GetLessonsStringsUseCase
     private let getAllLessonsUseCase: GetAllLessonsUseCase
     private let getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase
@@ -38,6 +39,7 @@ final class LessonsViewModel: ObservableObject {
     @Published private var selectedAllLessonsFilterLanguage: LessonFilterLanguageDomainModel?
     @Published private var selectedPersonalizedLessonsFilterLanguage: PersonalizedLessonFilterLanguageDomainModel?
     
+    @Published private(set) var personalizationIsEnabled: Bool = false
     @Published private(set) var toggleOptions: [PersonalizationToggleOption] = []
     @Published private(set) var strings: LessonsStringsDomainModel = .emptyValue
     @Published private(set) var languageFilterActionTitle: String = ""
@@ -45,7 +47,7 @@ final class LessonsViewModel: ObservableObject {
     @Published private(set) var featuredLessons: [FeaturedLessonDomainModel] = Array()
     @Published private(set) var lessonsList: [LessonListItemDomainModel] = []
 
-    @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
+    @Published var selectedToggle: PersonalizationToggleOptionValue = .all
 
     init(
         stepEmitter: FlowStepEmitter,
@@ -54,6 +56,7 @@ final class LessonsViewModel: ObservableObject {
         getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase,
         getFeaturedLessonsUseCase: GetFeaturedLessonsUseCase,
         getPersonalizedLessonsUseCase: GetPersonalizedLessonsUseCase,
+        getPersonalizationEnabledUseCase: GetPersonalizationEnabledUseCase,
         getLessonsStringsUseCase: GetLessonsStringsUseCase,
         getAllLessonsUseCase: GetAllLessonsUseCase,
         getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase,
@@ -70,6 +73,7 @@ final class LessonsViewModel: ObservableObject {
         self.getLocalizationSettingsUseCase = getLocalizationSettingsUseCase
         self.getFeaturedLessonsUseCase = getFeaturedLessonsUseCase
         self.getPersonalizedLessonsUseCase = getPersonalizedLessonsUseCase
+        self.getPersonalizationEnabledUseCase = getPersonalizationEnabledUseCase
         self.getLessonsStringsUseCase = getLessonsStringsUseCase
         self.getAllLessonsUseCase = getAllLessonsUseCase
         self.getUserLessonFilterLanguageUseCase = getUserLessonFilterLanguageUseCase
@@ -79,10 +83,27 @@ final class LessonsViewModel: ObservableObject {
         self.getToolBannerUseCase = getToolBannerUseCase
         self.imageCache = imageCache
         
-        if !GodToolsApp.showsPersonalization {
-            selectedToggle = .all
+        Task { [weak self] in
+
+            let personalizationIsEnabled: Bool = await getPersonalizationEnabledUseCase.execute()
+
+            self?.personalizationIsEnabled = personalizationIsEnabled
+
+            if personalizationIsEnabled {
+                self?.selectedToggle = .personalized
+            }
         }
-                
+
+        Publishers.CombineLatest(
+            $strings,
+            $personalizationIsEnabled
+        )
+        .map { (strings: LessonsStringsDomainModel, personalizationIsEnabled: Bool) in
+
+            Self.getPersonalizedToggleOptions(strings: strings, personalizationIsEnabled: personalizationIsEnabled)
+        }
+        .assign(to: &$toggleOptions)
+
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
@@ -98,16 +119,18 @@ final class LessonsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$localizationSettings)
 
-        Publishers.CombineLatest(
+        Publishers.CombineLatest3(
             $appLanguage.dropFirst(),
-            $localizationSettings
+            $localizationSettings,
+            $selectedPersonalizedLessonsFilterLanguage.dropFirst()
         )
-        .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?) in
+        .map { (appLanguage: AppLanguageDomainModel, localizationSettings: UserLocalizationSettingsDomainModel?, languageFilter: PersonalizedLessonFilterLanguageDomainModel?) in
 
             getFeaturedLessonsUseCase
                 .execute(
                     appLanguage: appLanguage,
-                    country: localizationSettings?.selectedCountry
+                    country: localizationSettings?.selectedCountry,
+                    filterLessonsByLanguageId: languageFilter?.languageId
                 )
         }
         .switchToLatest()
@@ -265,14 +288,32 @@ final class LessonsViewModel: ObservableObject {
         pullToRefreshLessonsTask?.cancel()
     }
 
+    var headerTitle: String {
+
+        switch selectedToggle {
+        case .personalized:
+            return strings.title
+        case .all:
+            return strings.allTitle
+        }
+    }
+
+    private var selectedLanguageFilterLanguageId: String? {
+
+        switch selectedToggle {
+        case .personalized:
+            return selectedPersonalizedLessonsFilterLanguage?.languageId
+        case .all:
+            return selectedAllLessonsFilterLanguage?.languageId
+        }
+    }
+
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
         let strings = getLessonsStringsUseCase
             .execute(translateInLanguage: appLanguage)
 
         self.strings = strings
-
-        toggleOptions = Self.getPersonalizedToggleOptions(strings: strings)
     }
 
     // MARK: - Analytics
@@ -381,9 +422,9 @@ final class LessonsViewModel: ObservableObject {
         }
     }
 
-    private static func getPersonalizedToggleOptions(strings: LessonsStringsDomainModel) -> [PersonalizationToggleOption] {
-        
-        if !GodToolsApp.showsPersonalization {
+    private static func getPersonalizedToggleOptions(strings: LessonsStringsDomainModel, personalizationIsEnabled: Bool) -> [PersonalizationToggleOption] {
+
+        if !personalizationIsEnabled {
             return [PersonalizationToggleOption(title: strings.allLessonsToggleTitle, selection: .all, buttonAccessibility: .allLessons)]
         }
         
@@ -407,7 +448,7 @@ final class LessonsViewModel: ObservableObject {
                 .execute(
                     appLanguage: weakSelf.appLanguage,
                     country: weakSelf.localizationSettings?.selectedCountry,
-                    languageFilterLanguageId: weakSelf.selectedAllLessonsFilterLanguage?.languageId
+                    languageFilterLanguageId: weakSelf.selectedLanguageFilterLanguageId
                 )
         }
     }
@@ -459,7 +500,7 @@ extension LessonsViewModel {
         stepEmitter.emit(
             step: AppFlowStep.lessonTappedFromLessonsList(
                 lessonListItem: lessonListItem,
-                languageFilterLanguageId: selectedAllLessonsFilterLanguage?.languageId
+                languageFilterLanguageId: selectedLanguageFilterLanguageId
             )
         )
 
@@ -468,7 +509,12 @@ extension LessonsViewModel {
 
     func featuredLessonTapped(featuredLesson: FeaturedLessonDomainModel) {
 
-        stepEmitter.emit(step: AppFlowStep.featuredLessonTappedFromLessons(featuredLesson: featuredLesson))
+        stepEmitter.emit(
+            step: AppFlowStep.featuredLessonTappedFromLessons(
+                featuredLesson: featuredLesson,
+                languageFilterLanguageId: selectedPersonalizedLessonsFilterLanguage?.languageId
+            )
+        )
 
         trackFeaturedLessonTappedAnalytics(featuredLesson: featuredLesson)
     }

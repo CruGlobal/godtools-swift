@@ -515,8 +515,17 @@ final class AppDataLayerDependencies: Sendable {
     
     func getRemoteConfigRepository() -> RemoteConfigRepository {
         return RemoteConfigRepository(
-            remoteDatabase: sharedAppConfig.firebaseEnabled ? getFirebaseRemoteConfig() : DisabledRemoteConfigDatabase()
+            remoteDatabase: getRemoteConfigRemoteDatabase()
         )
+    }
+
+    private func getRemoteConfigRemoteDatabase() -> RemoteConfigRemoteDatabaseInterface {
+
+        if sharedAppBuild.target == .uiTests {
+            return UITestsRemoteConfigDatabase()
+        }
+
+        return sharedAppConfig.firebaseEnabled ? getFirebaseRemoteConfig() : DisabledRemoteConfigDatabase()
     }
     
     func getRequestSender() -> RequestSenderInterface {

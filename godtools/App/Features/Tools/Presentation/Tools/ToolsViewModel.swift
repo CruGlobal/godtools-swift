@@ -21,6 +21,7 @@ final class ToolsViewModel: ObservableObject {
     private let getToolsStringsUseCase: GetToolsStringsUseCase
     private let getAllToolsUseCase: GetAllToolsUseCase
     private let getPersonalizedToolsUseCase: GetPersonalizedToolsUseCase
+    private let getPersonalizationEnabledUseCase: GetPersonalizationEnabledUseCase
     private let getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase
     private let getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase
     private let favoritingToolMessageCache: FavoritingToolMessageCache
@@ -46,7 +47,8 @@ final class ToolsViewModel: ObservableObject {
     @Published private var localizationSettings: UserLocalizationSettingsDomainModel?
     @Published private var allToolsList: [ToolListItemDomainModel] = Array()
     
-    @Published private(set) var toggleOptions: [PersonalizationToggleOption] = ToolsViewModel.getPersonalizedToggleOptions(strings: ToolsStringsDomainModel.emptyValue)
+    @Published private(set) var personalizationIsEnabled: Bool = false
+    @Published private(set) var toggleOptions: [PersonalizationToggleOption] = ToolsViewModel.getPersonalizedToggleOptions(strings: ToolsStringsDomainModel.emptyValue, personalizationIsEnabled: false)
     @Published private(set) var strings: ToolsStringsDomainModel = .emptyValue
     @Published private(set) var showsFavoritingToolBanner: Bool = false
     @Published private(set) var featuredTools: [FeaturedToolListItemDomainModel] = Array()
@@ -55,7 +57,7 @@ final class ToolsViewModel: ObservableObject {
     @Published private(set) var personalizedTools = PersonalizedToolsDomainModel.emptyValue
     @Published private(set) var toolsList: [ToolListItemDomainModel] = Array()
 
-    @Published var selectedToggle: PersonalizationToggleOptionValue = .personalized
+    @Published var selectedToggle: PersonalizationToggleOptionValue = .all
 
     init(
         stepEmitter: FlowStepEmitter,
@@ -63,6 +65,7 @@ final class ToolsViewModel: ObservableObject {
         getToolsStringsUseCase: GetToolsStringsUseCase,
         getAllToolsUseCase: GetAllToolsUseCase,
         getPersonalizedToolsUseCase: GetPersonalizedToolsUseCase,
+        getPersonalizationEnabledUseCase: GetPersonalizationEnabledUseCase,
         getCurrentAppLanguageUseCase: GetCurrentAppLanguageUseCase,
         getLocalizationSettingsUseCase: GetLocalizationSettingsUseCase,
         favoritingToolMessageCache: FavoritingToolMessageCache,
@@ -83,6 +86,7 @@ final class ToolsViewModel: ObservableObject {
         self.getToolsStringsUseCase = getToolsStringsUseCase
         self.getAllToolsUseCase = getAllToolsUseCase
         self.getPersonalizedToolsUseCase = getPersonalizedToolsUseCase
+        self.getPersonalizationEnabledUseCase = getPersonalizationEnabledUseCase
         self.getCurrentAppLanguageUseCase = getCurrentAppLanguageUseCase
         self.getLocalizationSettingsUseCase = getLocalizationSettingsUseCase
         self.favoritingToolMessageCache = favoritingToolMessageCache
@@ -104,10 +108,27 @@ final class ToolsViewModel: ObservableObject {
             self?.showsFavoritingToolBanner = !favoritingToolMessageDisabled
         }
         
-        if !GodToolsApp.showsPersonalization {
-            selectedToggle = .all
+        Task { [weak self] in
+
+            let personalizationIsEnabled: Bool = await getPersonalizationEnabledUseCase.execute()
+
+            self?.personalizationIsEnabled = personalizationIsEnabled
+
+            if personalizationIsEnabled {
+                self?.selectedToggle = .personalized
+            }
         }
-        
+
+        Publishers.CombineLatest(
+            $strings,
+            $personalizationIsEnabled
+        )
+        .map { (strings: ToolsStringsDomainModel, personalizationIsEnabled: Bool) in
+
+            Self.getPersonalizedToggleOptions(strings: strings, personalizationIsEnabled: personalizationIsEnabled)
+        }
+        .assign(to: &$toggleOptions)
+
         getCurrentAppLanguageUseCase
             .execute()
             .receive(on: DispatchQueue.main)
@@ -123,21 +144,24 @@ final class ToolsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .assign(to: &$localizationSettings)
         
-        Publishers.CombineLatest3(
+        Publishers.CombineLatest4(
             $appLanguage.dropFirst(),
             $selectedPersonalizedToolsFilterLanguage.dropFirst(),
-            $localizationSettings
+            $localizationSettings,
+            $toolFilterCategorySelection.dropFirst()
         )
         .map { (
             appLanguage: AppLanguageDomainModel,
             toolFilterLanguage: PersonalizedToolFilterLanguageDomainModel?,
-            localizationSettings: UserLocalizationSettingsDomainModel?
+            localizationSettings: UserLocalizationSettingsDomainModel?,
+            toolFilterCategory: ToolFilterCategoryDomainModel
         ) in
-            
+
             getPersonalizedToolsUseCase
                 .execute(
                     appLanguage: appLanguage,
                     country: localizationSettings?.selectedCountry,
+                    filterToolsByCategory: toolFilterCategory,
                     filterByLanguageId: toolFilterLanguage?.languageId
                 )
         }
@@ -207,19 +231,22 @@ final class ToolsViewModel: ObservableObject {
         }
         .store(in: &cancellables)
         
-        Publishers.CombineLatest(
+        Publishers.CombineLatest3(
             $appLanguage.dropFirst(),
+            $selectedPersonalizedToolsFilterLanguage.dropFirst(),
             $localizationSettings
         )
         .map { (
             appLanguage: AppLanguageDomainModel,
+            toolFilterLanguage: PersonalizedToolFilterLanguageDomainModel?,
             localizationSettings: UserLocalizationSettingsDomainModel?
         ) in
-            
+
             getFeaturedToolsUseCase
                 .execute(
                     appLanguage: appLanguage,
-                    country: localizationSettings?.selectedCountry
+                    country: localizationSettings?.selectedCountry,
+                    filterByLanguageId: toolFilterLanguage?.languageId
                 )
         }
         .switchToLatest()
@@ -318,14 +345,32 @@ final class ToolsViewModel: ObservableObject {
         pullToRefreshToolsTask?.cancel()
     }
 
+    var headerTitle: String {
+
+        switch selectedToggle {
+        case .personalized:
+            return strings.title
+        case .all:
+            return strings.allTitle
+        }
+    }
+
+    private var selectedLanguageFilterLanguageId: String? {
+
+        switch selectedToggle {
+        case .personalized:
+            return selectedPersonalizedToolsFilterLanguage?.languageId
+        case .all:
+            return selectedAllToolsFilterLanguage?.languageId
+        }
+    }
+
     private func didSetAppLanguage(appLanguage: AppLanguageDomainModel) {
 
         let strings = getToolsStringsUseCase
             .execute(translateInLanguage: appLanguage)
 
         self.strings = strings
-
-        toggleOptions = Self.getPersonalizedToggleOptions(strings: strings)
     }
     
     private var analyticsScreenName: String {
@@ -415,9 +460,9 @@ final class ToolsViewModel: ObservableObject {
         }
     }
     
-    private static func getPersonalizedToggleOptions(strings: ToolsStringsDomainModel) -> [PersonalizationToggleOption] {
-        
-        if !GodToolsApp.showsPersonalization {
+    private static func getPersonalizedToggleOptions(strings: ToolsStringsDomainModel, personalizationIsEnabled: Bool) -> [PersonalizationToggleOption] {
+
+        if !personalizationIsEnabled {
             
             return [PersonalizationToggleOption(title: strings.allToolsToggleTitle, selection: .all, buttonAccessibility: .allTools)]
         }
@@ -442,7 +487,7 @@ final class ToolsViewModel: ObservableObject {
                 .execute(
                     appLanguage: weakSelf.appLanguage,
                     country: weakSelf.localizationSettings?.selectedCountry,
-                    filterToolsByLanguageId: weakSelf.selectedAllToolsFilterLanguage?.languageId
+                    filterToolsByLanguageId: weakSelf.selectedLanguageFilterLanguageId
                 )
         }
     }
@@ -499,6 +544,11 @@ extension ToolsViewModel {
         
         stepEmitter.emit(step: AppFlowStep.toolCategoryFilterTappedFromTools)
     }
+
+    func personalizedToolCategoryFilterTapped() {
+
+        stepEmitter.emit(step: AppFlowStep.personalizedToolCategoryFilterTappedFromTools)
+    }
     
     func toolLanguageFilterTapped() {
         
@@ -519,7 +569,7 @@ extension ToolsViewModel {
         
         trackToolTappedAnalytics(tool: featuredTool)
         
-        stepEmitter.emit(step: AppFlowStep.featuredToolTappedFromTools(featuredTool: featuredTool, toolFilterLanguageId: selectedAllToolsFilterLanguage?.languageId))
+        stepEmitter.emit(step: AppFlowStep.featuredToolTappedFromTools(featuredTool: featuredTool, toolFilterLanguageId: selectedPersonalizedToolsFilterLanguage?.languageId))
     }
     
     func toolFavoriteTapped(tool: ToolListItemDomainModel) {
@@ -531,7 +581,7 @@ extension ToolsViewModel {
 
         trackToolTappedAnalytics(tool: tool)
 
-        stepEmitter.emit(step: AppFlowStep.toolTappedFromTools(tool: tool, toolFilterLanguageId: selectedAllToolsFilterLanguage?.languageId))
+        stepEmitter.emit(step: AppFlowStep.toolTappedFromTools(tool: tool, toolFilterLanguageId: selectedLanguageFilterLanguageId))
     }
 
     func changeLocalizationSettingsTapped() {

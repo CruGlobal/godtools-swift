@@ -44,7 +44,7 @@ final class LocalizationSettingsCountriesRepository: LocalizationSettingsCountri
                 countryNameTranslatedInCurrentAppLanguage: nameInAppLanguage
             )
         }
-        .sorted { $0.countryNameTranslatedInCurrentAppLanguage < $1.countryNameTranslatedInCurrentAppLanguage }
+        .sorted { $0.countryNameTranslatedInCurrentAppLanguage.compare($1.countryNameTranslatedInCurrentAppLanguage, locale: appLocale) == .orderedAscending }
         
         return countries
     }

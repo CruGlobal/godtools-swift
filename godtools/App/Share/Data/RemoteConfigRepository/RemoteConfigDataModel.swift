@@ -15,4 +15,5 @@ struct RemoteConfigDataModel: Sendable {
     let optInNotificationEnabled: Bool?
     let optInNotificationPromptLimit: Int?
     let optInNotificationTimeInterval: Int?
+    let personalizationIsEnabled: Bool?
 }

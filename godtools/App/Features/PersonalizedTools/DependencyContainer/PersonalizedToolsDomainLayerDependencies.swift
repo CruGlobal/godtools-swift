@@ -25,6 +25,7 @@ final class PersonalizedToolsDomainLayerDependencies: Sendable {
             resourcesRepository: core.dataLayer.getResourcesRepository(),
             personalizedToolsRepository: dataLayer.getPersonalizedToolsRepository(),
             languagesRepository: core.dataLayer.getLanguagesRepository(),
+            getLanguageElseAppLanguage: core.domainLayer.supporting.getLanguageElseAppLanguage(),
             getTranslatedToolName: core.domainLayer.supporting.getTranslatedToolName(),
             getTranslatedToolLanguageAvailability: core.domainLayer.supporting.getTranslatedToolLanguageAvailability(),
             lessonProgressRepository: core.dataLayer.getUserLessonProgressRepository(),
@@ -38,7 +39,7 @@ final class PersonalizedToolsDomainLayerDependencies: Sendable {
             resourcesRepository: core.dataLayer.getResourcesRepository(),
             personalizedToolsRepository: dataLayer.getPersonalizedToolsRepository(),
             favoritedResourcesRepository: core.dataLayer.getFavoritedResourcesRepository(),
-            languagesRepository: core.dataLayer.getLanguagesRepository(),
+            getLanguageElseAppLanguage: core.domainLayer.supporting.getLanguageElseAppLanguage(),
             getTranslatedToolName: core.domainLayer.supporting.getTranslatedToolName(),
             getTranslatedToolCategory: core.domainLayer.supporting.getTranslatedToolCategory(),
             getToolListItemStrings: core.domainLayer.supporting.getToolListItemStrings(),
@@ -87,7 +88,14 @@ final class PersonalizedToolsDomainLayerDependencies: Sendable {
         )
     }
 
-    func getPersonalizedLessonFilterLanguagesStringsUseCase() -> GetPersonalizedLessonFilterLanguagesStringsUseCase {
+    func getPersonalizationEnabledUseCase() -> GetPersonalizationEnabledUseCase {
+
+        return GetPersonalizationEnabledUseCase(
+            remoteConfigRepository: core.dataLayer.getRemoteConfigRepository()
+        )
+    }
+
+    func getPersonalizedLessonFilterLanguagesStringsUseCase() ->GetPersonalizedLessonFilterLanguagesStringsUseCase {
 
         return GetPersonalizedLessonFilterLanguagesStringsUseCase(
             localizationServices: core.dataLayer.getLocalizationServices()
@@ -131,11 +139,34 @@ final class PersonalizedToolsDomainLayerDependencies: Sendable {
         )
     }
 
+    func getPersonalizedToolFilterCategoriesUseCase() -> GetPersonalizedToolFilterCategoriesUseCase {
+
+        return GetPersonalizedToolFilterCategoriesUseCase(
+            resourcesRepository: core.dataLayer.getResourcesRepository(),
+            personalizedToolsRepository: dataLayer.getPersonalizedToolsRepository(),
+            getPersonalizedToolResources: getPersonalizedToolResources(),
+            getLanguageElseAppLanguage: core.domainLayer.supporting.getLanguageElseAppLanguage(),
+            getToolFilterCategory: GetToolFilterCategory(
+                resourcesRepository: core.dataLayer.getResourcesRepository(),
+                localizationServices: core.dataLayer.getLocalizationServices(),
+                stringWithLocaleCount: core.dataLayer.getStringWithLocaleCount()
+            )
+        )
+    }
+
+    func getPersonalizedToolResources() -> GetPersonalizedToolResources {
+
+        return GetPersonalizedToolResources(
+            personalizedToolsRepository: dataLayer.getPersonalizedToolsRepository()
+        )
+    }
+
     func getPersonalizedToolsUseCase() -> GetPersonalizedToolsUseCase {
 
         return GetPersonalizedToolsUseCase(
             resourcesRepository: core.dataLayer.getResourcesRepository(),
             personalizedToolsRepository: dataLayer.getPersonalizedToolsRepository(),
+            getPersonalizedToolResources: getPersonalizedToolResources(),
             getLanguageElseAppLanguage: core.domainLayer.supporting.getLanguageElseAppLanguage(),
             getToolsListItems: core.domainLayer.supporting.getToolsListItems(),
             localizationServices: core.dataLayer.getLocalizationServices()

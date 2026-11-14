@@ -35,25 +35,20 @@ final class GetLocalizationSettingsCountryListUseCase: Sendable {
             ))
         }
         
-        let listItems: [LocalizationSettingsCountryListItem]
-        
-        if showsPreferNotToSay {
-            
-            let preferNotToSay = createPreferNotToSayOption(
-                appLanguage: appLanguage
-            )
-            
-            listItems = [preferNotToSay] + countryListItems
-        }
-        else {
-            
-            listItems = countryListItems
-        }
-        
-        return moveSelectedCountryToTopOfList(
-            listItems: listItems,
+        let countryListItemsWithSelectedCountryOnTop: [LocalizationSettingsCountryListItem] = moveSelectedCountryToTopOfList(
+            listItems: countryListItems,
             selectedCountryIsoRegionCode: selectedCountryIsoRegionCode
         )
+
+        guard showsPreferNotToSay else {
+            return countryListItemsWithSelectedCountryOnTop
+        }
+
+        let preferNotToSay = createPreferNotToSayOption(
+            appLanguage: appLanguage
+        )
+
+        return [preferNotToSay] + countryListItemsWithSelectedCountryOnTop
     }
 
     private func moveSelectedCountryToTopOfList(listItems: [LocalizationSettingsCountryListItem], selectedCountryIsoRegionCode: String?) -> [LocalizationSettingsCountryListItem] {

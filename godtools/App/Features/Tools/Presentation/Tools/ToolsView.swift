@@ -31,7 +31,7 @@ struct ToolsView: View {
             
             VStack(alignment: .center, spacing: 0) {
 
-                if GodToolsApp.showsPersonalization {
+                if viewModel.personalizationIsEnabled {
                     
                     PersonalizedToolToggle(
                         geometry: geometry,
@@ -53,24 +53,28 @@ struct ToolsView: View {
 
                     VStack(alignment: .leading, spacing: 0) {
 
-                        if !viewModel.featuredTools.isEmpty {
-                            
+                        ToolsHeaderView(
+                            viewModel: viewModel
+                        )
+                        .padding([.top], 24)
+                        .padding(.horizontal, contentHorizontalInsets)
+
+                        SeparatorView()
+                            .padding(.vertical, 16)
+                            .padding(.horizontal, contentHorizontalInsets)
+
+                        if viewModel.selectedToggle == .personalized && !viewModel.featuredTools.isEmpty {
+
                             FeaturedToolsView(
                                 viewModel: viewModel,
                                 geometry: geometry,
                                 contentHorizontalInsets: contentHorizontalInsets
                             )
-                            .padding([.top], 24)
 
                             SeparatorView()
                                 .padding([.top], 15)
                                 .padding([.bottom], 11)
                                 .padding([.leading, .trailing], contentHorizontalInsets)
-                        }
-                        else {
-                            
-                            Spacer()
-                                    .frame(height: 20)
                         }
 
                         ToolsFilterSectionView(
@@ -165,6 +169,7 @@ struct AllToolsView_Preview: PreviewProvider {
             getToolsStringsUseCase: appDiContainer.feature.tools.domainLayer.getToolsStringsUseCase(),
             getAllToolsUseCase: appDiContainer.feature.tools.domainLayer.getAllToolsUseCase(),
             getPersonalizedToolsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizedToolsUseCase(),
+            getPersonalizationEnabledUseCase: appDiContainer.feature.personalizedTools.domainLayer.getPersonalizationEnabledUseCase(),
             getCurrentAppLanguageUseCase: appDiContainer.feature.appLanguage.domainLayer.getCurrentAppLanguageUseCase(),
             getLocalizationSettingsUseCase: appDiContainer.feature.personalizedTools.domainLayer.getLocalizationSettingsUseCase(),
             favoritingToolMessageCache: appDiContainer.core.dataLayer.getFavoritingToolMessageCache(),

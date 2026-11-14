@@ -37,6 +37,7 @@ struct GetPersonalizedLessonsUseCaseTests {
     struct ResourceFixture {
         let id: String
         let resourceType: ResourceType
+        let isHidden: Bool
         let languageCodes: [LanguageCodeDomainModel]
     }
 
@@ -142,6 +143,44 @@ struct GetPersonalizedLessonsUseCaseTests {
         )
 
         #expect(!personalizedLessons.lessons.map({ $0.dataModelId }).contains("tool-1"))
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: A ranked lesson for the user's selected country is hidden.
+        When: Personalized lessons are requested.
+        Then: I expect the hidden lesson to be excluded.
+        """
+    )
+    @MainActor func hiddenRankedLessonsAreExcludedFromPersonalizedLessons() async throws {
+
+        let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: LocalizationSettingsCountryDomainModel(isoRegionCode: TestPersonalizedLessonsCountry.unitedStatesWithRankedLessons),
+            filterLessonsByLanguageId: nil
+        )
+
+        #expect(!personalizedLessons.lessons.map({ $0.dataModelId }).contains("lesson-hidden"))
+    }
+
+    @available(iOS 17.4, *)
+    @Test(
+        """
+        Given: A default order lesson is hidden.
+        When: Personalized lessons are requested.
+        Then: I expect the hidden lesson to be excluded.
+        """
+    )
+    @MainActor func hiddenDefaultOrderLessonsAreExcludedFromPersonalizedLessons() async throws {
+
+        let personalizedLessons: PersonalizedLessonsDomainModel = try await getPersonalizedLessons(
+            appLanguage: LanguageCodeDomainModel.english.value,
+            country: nil,
+            filterLessonsByLanguageId: nil
+        )
+
+        #expect(!personalizedLessons.lessons.map({ $0.dataModelId }).contains("lesson-hidden"))
     }
 
     @available(iOS 17.4, *)
@@ -409,6 +448,7 @@ extension GetPersonalizedLessonsUseCaseTests {
             let resource = SwiftResource()
             resource.id = fixture.id
             resource.resourceType = fixture.resourceType.rawValue
+            resource.isHidden = fixture.isHidden
 
             for languageCode in fixture.languageCodes {
 
@@ -448,9 +488,9 @@ extension GetPersonalizedLessonsUseCaseTests {
     private var resourceIdsByPersonalizedToolsId: [String: [String]] {
 
         return [
-            TestPersonalizedLessonsId.defaultOrderEnglish: ["lesson-1", "lesson-2", "tool-1"],
+            TestPersonalizedLessonsId.defaultOrderEnglish: ["lesson-1", "lesson-hidden", "lesson-2", "tool-1"],
             TestPersonalizedLessonsId.defaultOrderFrench: ["lesson-4"],
-            TestPersonalizedLessonsId.rankedUnitedStatesEnglish: ["lesson-3", "lesson-1"],
+            TestPersonalizedLessonsId.rankedUnitedStatesEnglish: ["lesson-3", "lesson-hidden", "lesson-1"],
             TestPersonalizedLessonsId.rankedUnitedStatesFrench: ["lesson-1"],
             TestPersonalizedLessonsId.rankedMexicoEnglish: ["tool-1"]
         ]
@@ -459,11 +499,12 @@ extension GetPersonalizedLessonsUseCaseTests {
     private var allResources: [ResourceFixture] {
 
         return [
-            ResourceFixture(id: "lesson-1", resourceType: .lesson, languageCodes: [.english, .french]),
-            ResourceFixture(id: "lesson-2", resourceType: .lesson, languageCodes: [.english]),
-            ResourceFixture(id: "lesson-3", resourceType: .lesson, languageCodes: [.english]),
-            ResourceFixture(id: "lesson-4", resourceType: .lesson, languageCodes: [.french]),
-            ResourceFixture(id: "tool-1", resourceType: .tract, languageCodes: [.english])
+            ResourceFixture(id: "lesson-1", resourceType: .lesson, isHidden: false, languageCodes: [.english, .french]),
+            ResourceFixture(id: "lesson-2", resourceType: .lesson, isHidden: false, languageCodes: [.english]),
+            ResourceFixture(id: "lesson-3", resourceType: .lesson, isHidden: false, languageCodes: [.english]),
+            ResourceFixture(id: "lesson-4", resourceType: .lesson, isHidden: false, languageCodes: [.french]),
+            ResourceFixture(id: "lesson-hidden", resourceType: .lesson, isHidden: true, languageCodes: [.english]),
+            ResourceFixture(id: "tool-1", resourceType: .tract, isHidden: false, languageCodes: [.english])
         ]
     }
 }

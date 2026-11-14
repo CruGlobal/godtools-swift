@@ -223,6 +223,8 @@ enum LocalizableStringKeys: String {
     case toolsFilterSectionTitle = "allTools.filter.title"
     case toolsFilterToolsAvailable = "tools.filter.toolsAvailable"
     case toolsPersonalizationUnavailableMessage = "tools.personalizationUnavailable.message"
+    case toolsPageTitle = "tools.pageTitle"
+    case toolsPageSubtitle = "tools.pageSubtitle"
     case toolsPersonalizationUnavailableTitle = "tools.personalizationUnavailable.title"
     case toolsPersonalizationUnavailableViewAllTools = "tools.personalizationUnavailable.viewAllTools"
     case totalViews = "total_views"

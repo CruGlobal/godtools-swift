@@ -22,6 +22,13 @@ actor FirebaseRemoteConfigWrapper: RemoteConfigRemoteDatabaseInterface {
         settings.minimumFetchInterval = secondsInHour * minFetchInHours
         
         remoteConfig.configSettings = settings
+
+        remoteConfig.setDefaults([
+            "ui_dashboard_personalization_enabled": true as NSNumber,
+            "ui_opt_in_notification_enabled": true as NSNumber,
+            "ui_opt_in_notification_time_interval": 41 as NSNumber,
+            "ui_opt_in_notification_prompt_limit": 5 as NSNumber
+        ])
     }
     
     func syncFromRemoteDatabase() async throws {
@@ -40,7 +47,8 @@ actor FirebaseRemoteConfigWrapper: RemoteConfigRemoteDatabaseInterface {
             toolContentFeaturePageCollectionPageEnabled: remoteConfig.configValue(forKey: "tool_content_feature_page_collection_page_enabled").boolValue,
             optInNotificationEnabled: remoteConfig.configValue(forKey: "ui_opt_in_notification_enabled").boolValue,
             optInNotificationPromptLimit: Int(truncating: remoteConfig.configValue(forKey: "ui_opt_in_notification_prompt_limit").numberValue),
-            optInNotificationTimeInterval: Int(truncating: remoteConfig.configValue(forKey: "ui_opt_in_notification_time_interval").numberValue)
+            optInNotificationTimeInterval: Int(truncating: remoteConfig.configValue(forKey: "ui_opt_in_notification_time_interval").numberValue),
+            personalizationIsEnabled: remoteConfig.configValue(forKey: "ui_dashboard_personalization_enabled").boolValue
         )
     }
     

@@ -133,6 +133,7 @@ final class GetPersonalizedLessonsUseCase: Sendable {
                 resourceTypes: [.lesson],
                 sortByResponse: true
             )
+            .filter { !$0.isHidden }
     }
 
     private func getLessonsUnavailable(appLanguage: AppLanguageDomainModel) -> PersonalizedLessonsUnavailableDomainModel {

@@ -25,12 +25,12 @@ struct YourFavoriteToolsHeaderView: View {
         HStack(alignment: .bottom) {
             
             Text(viewModel.strings.favoriteToolsTitle)
-                .font(FontLibrary.sfProTextRegular.font(size: 22))
+                .font(FontLibrary.sfProTextRegular.font(size: 28))
                 .foregroundColor(ColorPalette.gtGrey.color)
                 .fixedSize(horizontal: false, vertical: true) // This is necessary for multiline text to push HStack height.
                 .padding(.leading, contentHorizontalInsets)
         }
-        .padding([.top], 6)
+        .padding([.top], 24)
     }
 }
 
