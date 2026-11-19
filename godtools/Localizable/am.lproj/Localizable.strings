@@ -122,8 +122,6 @@
 "toolSettings.chooseLanguage.title" = "ሁለት ቋንቋ";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "ትይዪ";
 "toolSettings.shareables.title" = "ተዛማጅ ግራፊክስ";
-"allTools.spotlight.title" = "የተመረጡ ቡክሌቶች";
-"allTools.spotlight.description" = "ሊወዷቸው ይችላሉ ብለን ያሰብናቸውን ቡክሌቶች ከታች ያገኛሉ።";
 "training_tip_ask" = "ይጠይቁ";
 "training_tip_consider" = "አስቡበት";
 "training_tip_prepare" = "ያዘጋጁ";

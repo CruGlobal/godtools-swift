@@ -122,8 +122,6 @@
 "toolSettings.chooseLanguage.title" = "並列言語";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "並列";
 "toolSettings.shareables.title" = "関連する画像";
-"allTools.spotlight.title" = "注目のツール";
-"allTools.spotlight.description" = "あなたにおすすめのツールです";
 "training_tip_ask" = "尋ねる";
 "training_tip_consider" = "考える";
 "training_tip_prepare" = "準備する";

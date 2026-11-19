@@ -122,8 +122,6 @@
 "toolSettings.chooseLanguage.title" = "সমান্তরাল ভাষা";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "সমান্তরাল";
 "toolSettings.shareables.title" = "সম্পর্কিত গ্রাফিক্স";
-"allTools.spotlight.title" = "টুল স্পটলাইট";
-"allTools.spotlight.description" = "এখানে কিছু টুল রয়েছে যা আমরা ভেবেছি যে আপনি পছন্দ করতে পারেন";
 "training_tip_ask" = "জিজ্ঞাসা করুন";
 "training_tip_consider" = "বিবেচনা করুন";
 "training_tip_prepare" = "প্রস্তুত করুন";

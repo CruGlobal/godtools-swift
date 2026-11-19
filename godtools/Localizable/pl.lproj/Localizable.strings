@@ -33,8 +33,6 @@
 "toolSettings.chooseLanguage.title" = "Język równoległy";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Równoległe";
 "toolSettings.shareables.title" = "Powiązane obrazy";
-"allTools.spotlight.title" = "Wybrane narzędzia";
-"allTools.spotlight.description" = "Oto kilka narzędzi, które mogą Ci się spodobać";
 "tool_menu_item.lessons" = "Lekcje";
 
 "onboardingTutorial.beginButton.title" = "Zacznij";

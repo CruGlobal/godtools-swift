@@ -32,8 +32,6 @@
 "toolSettings.chooseLanguage.title" = "Paralelní jazyk";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Paralelní";
 "toolSettings.shareables.title" = "Související grafika";
-"allTools.spotlight.title" = "Upoutávka na nástroj";
-"allTools.spotlight.description" = "Tady jsou nějaké nástroje, o kterých jsme si mysleli, že by vás mohly zaujmout";
 "tool_menu_item.lessons" = "Lekce";
 
 "onboardingTutorial.beginButton.title" = "Začněte";

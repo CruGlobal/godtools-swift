@@ -33,8 +33,6 @@
 "toolSettings.chooseLanguage.title" = "Rinnakkaiskieli";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Rinnakkainen";
 "toolSettings.shareables.title" = "Vastaavat grafiikat";
-"allTools.spotlight.title" = "Työkalujen valokeila";
-"allTools.spotlight.description" = "Tässä on työkaluja, joista saattaisit pitää";
 "tool_menu_item.lessons" = "Oppitunnit";
 "tool_offline_favorite_message" = "Ota työkalu käyttöön offline-tilassa sydänkuvaketta napauttamalla, jolloin se lisätään suosikkeihisi.";
 

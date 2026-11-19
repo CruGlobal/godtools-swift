@@ -33,8 +33,6 @@
 "toolSettings.chooseLanguage.title" = "Παράλληλη Γλώσσα";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Παράλληλη";
 "toolSettings.shareables.title" = "Συναφή γραφικά";
-"allTools.spotlight.title" = "Εργαλείο Spotlight";
-"allTools.spotlight.description" = "Ακολουθούν ορισμένα εργαλεία που πιστεύαμε ότι μπορεί να σας αρέσουν";
 "tool_menu_item.lessons" = "Μαθήματα";
 
 "onboardingTutorial.beginButton.title" = "Αρχίστε";

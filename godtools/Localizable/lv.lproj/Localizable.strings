@@ -122,8 +122,6 @@
 "toolSettings.chooseLanguage.title" = "Paralēlā valoda";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "paralēlā";
 "toolSettings.shareables.title" = "Saistītie attēli";
-"allTools.spotlight.title" = "Izmēģini rīku";
-"allTools.spotlight.description" = "Lūk, daži rīki, kas tev varētu patikt";
 "training_tip_ask" = "Jautā";
 "training_tip_consider" = "Ņem vērā";
 "training_tip_prepare" = "Sagatavojies";

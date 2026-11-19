@@ -122,8 +122,6 @@
 "toolSettings.chooseLanguage.title" = "Параллельный язык";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Дополнительно";
 "toolSettings.shareables.title" = "Связанные изображения";
-"allTools.spotlight.title" = "Обзор инструментов";
-"allTools.spotlight.description" = "Вам могут понравиться эти инструменты";
 "training_tip_ask" = "Задать вопрос";
 "training_tip_consider" = "Подумайте";
 "training_tip_prepare" = "Подготовьтесь";

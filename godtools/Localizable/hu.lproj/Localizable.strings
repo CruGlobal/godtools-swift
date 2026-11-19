@@ -33,8 +33,6 @@
 "toolSettings.chooseLanguage.title" = "Párhuzamos nyelv";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Párhuzamos";
 "toolSettings.shareables.title" = "Kapcsolódó grafika";
-"allTools.spotlight.title" = "Eszköz reflektorfényben";
-"allTools.spotlight.description" = "Íme néhány eszköz, amelyről úgy gondoltuk, hogy tetszeni fog";
 "tool_menu_item.lessons" = "Szentleckék";
 
 "onboardingTutorial.beginButton.title" = "Kezdés";

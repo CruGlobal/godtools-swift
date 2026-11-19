@@ -33,8 +33,6 @@
 "toolSettings.chooseLanguage.title" = "Usporedni jezik";
 "toolSettings.chooseLanguage.noParallelLanguageTitle" = "Paralelno";
 "toolSettings.shareables.title" = "POvezane grafike";
-"allTools.spotlight.title" = "Naglašavanje alata";
-"allTools.spotlight.description" = "Evo neki od alata koji bi vam se mogli sviđati";
 "tool_menu_item.lessons" = "Lekcije";
 
 "onboardingTutorial.beginButton.title" = "Započni";
