@@ -7,17 +7,22 @@
 //
 
 import SwiftUI
-import Lottie
 
 struct LessonSwipeTutorialView: View {
     
     private let topGradientColor = Color.getColorWithRGB(red: 12, green: 37, blue: 50, opacity: 1)
     private let bottomGradientColor = Color.getColorWithRGB(red: 17, green: 49, blue: 66, opacity: 0.75)
+    private let swipeAnimationViewModel: AnimatedViewModel
     
     @ObservedObject private var viewModel: LessonSwipeTutorialViewModel
     
     init(viewModel: LessonSwipeTutorialViewModel) {
         self.viewModel = viewModel
+        self.swipeAnimationViewModel = AnimatedViewModel(
+            animationDataResource: .mainBundleJsonFile(filename: Self.getLottieAnimationFileName()),
+            autoPlay: true,
+            loop: true
+        )
     }
     
     var body: some View {
@@ -45,8 +50,7 @@ struct LessonSwipeTutorialView: View {
                     let lottieWidth = buttonWidth * 1.5
                     let lottieHeightRatio: CGFloat = 243/191
                     
-                    LottieView(animation: .named(getLottieAnimationFileName()))
-                        .looping()
+                    AnimatedSwiftUIView(viewModel: swipeAnimationViewModel, contentMode: .fit)
                         .frame(width: lottieWidth, height: lottieHeightRatio * lottieWidth)
                     
                     GTButton(
@@ -69,7 +73,7 @@ struct LessonSwipeTutorialView: View {
         .environment(\.layoutDirection, ApplicationLayout.shared.layoutDirection)
     }
     
-    private func getLottieAnimationFileName() -> String {
+    private static func getLottieAnimationFileName() -> String {
         if ApplicationLayout.shared.layoutDirection == .rightToLeft {
             return "lesson_tutorial_page_swipe-RTL"
         } else {

@@ -35,7 +35,7 @@ struct LearnToShareToolItemView: View {
                 
                 AnimatedSwiftUIView(
                     viewModel: animationViewModel,
-                    contentMode: .scaleAspectFit
+                    contentMode: .fit
                 )
                 .frame(maxWidth: animationWidth, maxHeight: animationHeight)
             

@@ -58,7 +58,7 @@ struct TutorialItemView: View {
                     
                     AnimatedSwiftUIView(
                         viewModel: AnimatedViewModel(animationDataResource: animatedResource, autoPlay: true, loop: true),
-                        contentMode: .scaleAspectFit
+                        contentMode: .fit
                     )
                 
                 case .image(let name):

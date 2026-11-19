@@ -11,11 +11,14 @@ import Lottie
 
 final class AnimatedViewModel: Sendable {
     
+    let animationDataResource: AnimatedResource
     let animationData: LottieAnimation?
     let autoPlay: Bool
     let loop: Bool
     
     init(animationDataResource: AnimatedResource, autoPlay: Bool, loop: Bool) {
+        
+        self.animationDataResource = animationDataResource
         
         switch animationDataResource {
         
