@@ -52,15 +52,12 @@ struct OptionalImage: View {
     }
 }
 
-struct OptionalImage_Previews: PreviewProvider {
+#Preview {
     
-    static var previews: some View {
-        
-        OptionalImage(
-            imageData: nil,
-            imageSize: .fixed(width: 300, height: 150),
-            contentMode: .fill,
-            placeholderColor: .blue
-        )
-    }
+    OptionalImage(
+        imageData: nil,
+        imageSize: .fixed(width: 300, height: 150),
+        contentMode: .fill,
+        placeholderColor: .blue
+    )
 }

@@ -114,15 +114,12 @@ struct FullScreenDownloadProgressView: View {
     }
 }
 
-struct FullScreenDownloadProgressView_Preview: PreviewProvider {
-                   
-    static var previews: some View {
-        
-        FullScreenDownloadProgressView(
-            downloadMessage: "Download message here...",
-            hidesSpinner: false,
-            downloadProgress: 0,
-            downloadProgressString: ""
-        )
-    }
+#Preview {
+    
+    FullScreenDownloadProgressView(
+        downloadMessage: "Download message here...",
+        hidesSpinner: false,
+        downloadProgress: 0,
+        downloadProgressString: ""
+    )
 }
