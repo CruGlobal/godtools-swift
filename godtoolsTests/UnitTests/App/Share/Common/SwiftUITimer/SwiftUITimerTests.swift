@@ -13,73 +13,31 @@ import Combine
 struct SwiftUITimerTests {
     
     @Test
-    @MainActor func timerStartPublisherRunsOnce() async {
+    @MainActor func timerStartPublisherRunsOnce() async throws {
                 
         let timer = SwiftUITimer(intervalSeconds: 0.1, repeats: false)
         
-        var cancellables: Set<AnyCancellable> = Set()
-        var triggerCount: Int = 0
-        
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            timer
-                .startPublisher()
-                .sink { _ in
-                    
-                    triggerCount += 1
-                    
-                    if triggerCount == 1 {
-                        
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                }
-                .store(in: &cancellables)
-        }
+        _ = try await timer
+            .startPublisher()
+            .awaitFirstValue()
         
         #expect(timer.isRunning == false)
     }
     
     @Test
-    @MainActor func timerRunsUntilStopped() async {
+    @MainActor func timerRunsUntilStopped() async throws {
                 
         let timer = SwiftUITimer(intervalSeconds: 0.1, repeats: true)
         
         let maxTimerCount: Int = 3
         
-        var cancellables: Set<AnyCancellable> = Set()
-        var triggerCount: Int = 0
+        _ = try await timer
+            .startPublisher()
+            .awaitValues(count: maxTimerCount)
         
-        await withCheckedContinuation { continuation in
-            
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-            
-            timer
-                .startPublisher()
-                .sink { _ in
-                    
-                    triggerCount += 1
-                    
-                    if triggerCount == maxTimerCount {
-                        
-                        timer.stop()
-                        
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                }
-                .store(in: &cancellables)
-        }
+        #expect(timer.isRunning == true)
+        
+        timer.stop()
         
         #expect(timer.isRunning == false)
     }

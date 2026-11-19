@@ -41,34 +41,14 @@ struct GetUserLessonFilterLanguageUseCaseTests {
 
         let getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase = try getUserLessonFilterLanguageUseCase(addSwiftObjects: swiftObjectsToAdd)
 
-        var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
+        let userLessonFilterLanguage: LessonFilterLanguageDomainModel? = try await getUserLessonFilterLanguageUseCase
+            .execute(appLanguage: appLanguageSpanish)
+            .awaitFirstValue()
 
-        var cancellables: Set<AnyCancellable> = Set()
+        let lessonLanguageFilter: LessonFilterLanguageDomainModel = try #require(userLessonFilterLanguage)
 
-        await withCheckedContinuation { continuation in
-
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-
-            getUserLessonFilterLanguageUseCase
-                .execute(appLanguage: appLanguageSpanish)
-                .sink(receiveCompletion: { _ in
-
-                }, receiveValue: { (userLessonFilterLanguage: LessonFilterLanguageDomainModel?) in
-
-                    lessonLanguageFilterRef = userLessonFilterLanguage
-
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                })
-                .store(in: &cancellables)
-        }
-
-        #expect(lessonLanguageFilterRef?.languageNamePair.nameInOwnLanguage == "Español")
-        #expect(lessonLanguageFilterRef?.languageNamePair.nameInAppLanguage == "Español")
+        #expect(lessonLanguageFilter.languageNamePair.nameInOwnLanguage == "Español")
+        #expect(lessonLanguageFilter.languageNamePair.nameInAppLanguage == "Español")
     }
 
     @available(iOS 17.4, *)
@@ -107,34 +87,14 @@ struct GetUserLessonFilterLanguageUseCaseTests {
 
         let getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase = try getUserLessonFilterLanguageUseCase(addSwiftObjects: swiftObjectsToAdd)
 
-        var lessonLanguageFilterRef: LessonFilterLanguageDomainModel?
+        let userLessonFilterLanguage: LessonFilterLanguageDomainModel? = try await getUserLessonFilterLanguageUseCase
+            .execute(appLanguage: appLanguageFrench)
+            .awaitFirstValue()
 
-        var cancellables: Set<AnyCancellable> = Set()
+        let lessonLanguageFilter: LessonFilterLanguageDomainModel = try #require(userLessonFilterLanguage)
 
-        await withCheckedContinuation { continuation in
-
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
-
-            getUserLessonFilterLanguageUseCase
-                .execute(appLanguage: appLanguageFrench)
-                .sink(receiveCompletion: { _ in
-
-                }, receiveValue: { (userLessonFilterLanguage: LessonFilterLanguageDomainModel?) in
-
-                    lessonLanguageFilterRef = userLessonFilterLanguage
-
-                    // When finished be sure to call:
-                    timeoutTask.cancel()
-                    continuation.resume(returning: ())
-                })
-                .store(in: &cancellables)
-        }
-
-        #expect(lessonLanguageFilterRef?.languageNamePair.nameInOwnLanguage == "Français")
-        #expect(lessonLanguageFilterRef?.languageNamePair.nameInAppLanguage == "Français")
+        #expect(lessonLanguageFilter.languageNamePair.nameInOwnLanguage == "Français")
+        #expect(lessonLanguageFilter.languageNamePair.nameInAppLanguage == "Français")
     }
 
     @available(iOS 17.4, *)
@@ -165,55 +125,28 @@ struct GetUserLessonFilterLanguageUseCaseTests {
 
         let getUserLessonFilterLanguageUseCase: GetUserLessonFilterLanguageUseCase = getUserLessonFilterLanguageUseCase(testsDiContainer: testsDiContainer)
 
-        var originalLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
-        var selectedLessonLanguageFilterRef: LessonFilterLanguageDomainModel?
+        let userToolFilterSettingsRepository: UserToolFilterSettingsRepository = testsDiContainer.core.dataLayer.getUserToolFilterSettingsRepository()
 
-        var cancellables: Set<AnyCancellable> = Set()
-        var triggerCount: Int = 0
+        let spanishLanguageId: String = spanishLanguage.id
 
-        await withCheckedContinuation { continuation in
+        let lessonLanguageFilters: [LessonFilterLanguageDomainModel?] = try await getUserLessonFilterLanguageUseCase
+            .execute(appLanguage: appLanguageFrench)
+            .awaitValues(count: 2, whileObserving: {
 
-            let timeoutTask = Task {
-                try await Task.defaultTestSleep()
-                continuation.resume(returning: ())
-            }
+                try await userToolFilterSettingsRepository.storeSettingValue(
+                    settingType: .lessonsLanguageFilter,
+                    value: spanishLanguageId
+                )
+            })
 
-            getUserLessonFilterLanguageUseCase
-                .execute(appLanguage: appLanguageFrench)
-                .sink(receiveCompletion: { _ in
+        let originalLessonLanguageFilter: LessonFilterLanguageDomainModel = try #require(lessonLanguageFilters[0])
+        let selectedLessonLanguageFilter: LessonFilterLanguageDomainModel = try #require(lessonLanguageFilters[1])
 
-                }, receiveValue: { (userLessonFilterLanguage: LessonFilterLanguageDomainModel?) in
+        #expect(originalLessonLanguageFilter.languageNamePair.nameInOwnLanguage == "Français")
+        #expect(originalLessonLanguageFilter.languageNamePair.nameInAppLanguage == "Français")
 
-                    triggerCount += 1
-
-                    if triggerCount == 1 {
-
-                        originalLessonLanguageFilterRef = userLessonFilterLanguage
-
-                        Task {
-                            try await testsDiContainer.core.dataLayer.getUserToolFilterSettingsRepository().storeSettingValue(
-                                settingType: .lessonsLanguageFilter,
-                                value: spanishLanguage.id
-                            )
-                        }
-                    }
-                    else if triggerCount == 2 {
-
-                        selectedLessonLanguageFilterRef = userLessonFilterLanguage
-
-                        // When finished be sure to call:
-                        timeoutTask.cancel()
-                        continuation.resume(returning: ())
-                    }
-                })
-                .store(in: &cancellables)
-        }
-
-        #expect(originalLessonLanguageFilterRef?.languageNamePair.nameInOwnLanguage == "Français")
-        #expect(originalLessonLanguageFilterRef?.languageNamePair.nameInAppLanguage == "Français")
-
-        #expect(selectedLessonLanguageFilterRef?.languageNamePair.nameInOwnLanguage == "Español")
-        #expect(selectedLessonLanguageFilterRef?.languageNamePair.nameInAppLanguage == "Espagnol")
+        #expect(selectedLessonLanguageFilter.languageNamePair.nameInOwnLanguage == "Español")
+        #expect(selectedLessonLanguageFilter.languageNamePair.nameInAppLanguage == "Espagnol")
     }
 }
 
